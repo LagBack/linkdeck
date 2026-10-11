@@ -126,11 +126,10 @@ function shotUrl(it) {
 function thumbHtml(it) {
   const icon = it.type === "extension" ? it.icon : favicon(it.url);
   const s = shotUrl(it);
-  const shot = s ? `<img class="shot" ${s.remote ? 'loading="lazy"' : ""} src="${esc(s.src)}" alt="" onerror="this.remove()">` : "";
-  const mid = s && !s.remote ? ""
-    : icon ? `<img class="big" src="${esc(icon)}" alt="">`
+  const fallback = icon ? `<img class="big" src="${esc(icon)}" alt="">`
     : `<span class="letter">${esc(it.title[0]?.toUpperCase() || "?")}</span>`;
-  return `<div class="thumb${s ? " has-shot" : " placeholder"}">${mid}${shot}</div>`;
+  const shot = s ? `<img class="shot" ${s.remote ? 'loading="lazy"' : ""} src="${esc(s.src)}" alt="" onerror="this.remove();this.parentElement.classList.remove('has-shot');this.parentElement.classList.add('placeholder')">` : "";
+  return `<div class="thumb${s ? " has-shot" : " placeholder"}">${fallback}${shot}</div>`;
 }
 
 function render() {
