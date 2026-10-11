@@ -1271,3 +1271,17 @@ hr { border-color: var(--line-soft) !important; }
 :root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-cancel-button,
 :root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-results-button,
 :root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-results-decoration { -webkit-appearance:none; }
+
+
+/* Pixel Night badge: user's own moon sprite, with the same slight tilt as the other theme badges. */
+.pixel-mark { display:none; width:40px; height:40px; align-items:center; justify-content:center; }
+.pixel-mark img { display:block; width:24px; height:31px; object-fit:contain; image-rendering:pixelated; animation:pixel-moon-drift 3.2s steps(4,end) infinite; }
+:root[data-theme="pixel"] .heading-mark { display:grid; width:54px; height:54px; box-sizing:border-box; padding:5px; background:#1a2f59; border:2px solid #5577b5; box-shadow:3px 3px 0 #050b20; color:#ffe29b; transform:rotate(3deg); }
+:root[data-theme="pixel"] .heading-mark > span:first-child,
+:root[data-theme="pixel"] .heading-mark .scene-mark,
+:root[data-theme="pixel"] .heading-mark .gxsc-mark,
+:root[data-theme="pixel"] .heading-mark .cutecore-mark { display:none; }
+:root[data-theme="pixel"] .heading-mark .pixel-mark { display:flex; }
+@keyframes pixel-moon-drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-1.5px); } }
+@media (max-width:430px) { :root[data-theme="pixel"] .heading-mark { display:grid; width:42px; height:42px; padding:2px; } :root[data-theme="pixel"] .heading-mark .pixel-mark img { width:21px; height:27px; } }
+@media (prefers-reduced-motion:reduce) { :root[data-theme="pixel"] .pixel-mark img { animation:none !important; } }
