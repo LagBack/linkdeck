@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinkDeck</title>
+  <link rel="icon" href="icons/48.png">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="logo" src="icons/128.png" alt="">
+        <div class="brand-text">LinkDeck<small>Bookmarks &amp; extensions</small></div>
+      </div>
+
+      <nav id="typeNav" class="nav"></nav>
+
+      <div class="nav-head">
+        <span>Categories</span>
+        <button id="addCatBtn" class="icon-btn small" title="New category">+</button>
+      </div>
+      <nav id="catNav" class="nav"></nav>
+
+      <div class="spacer"></div>
+      <button id="settingsBtn" class="nav-item"><span class="ico">⚙</span><span class="label">Settings</span></button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="search">
+          <span class="ico">⌕</span>
+          <input id="search" type="search" placeholder="Search titles, URLs, tags and notes…  ( / )" autocomplete="off">
+        </div>
+        <div class="seg">
+          <button id="gridBtn" title="Grid view">▦</button>
+          <button id="listBtn" title="List view">☰</button>
+        </div>
+        <button id="addBtn" class="btn primary">+ Add</button>
+      </header>
+
+      <div id="status" class="status"></div>
+      <section id="grid" class="grid"></section>
+      <div id="empty" class="empty" hidden>
+        <div class="empty-ico">🔎</div>
+        <p>Nothing here yet.</p>
+      </div>
+    </main>
+
+    <aside id="panel" class="panel" hidden></aside>
+  </div>
+
+  <dialog id="addDialog">
+    <form method="dialog" id="addForm" class="dlg">
+      <div class="dlg-head"><h3>Add bookmark</h3><button type="button" class="icon-btn" data-close>✕</button></div>
+      <label>URL<input id="addUrl" type="url" placeholder="https://example.com" required></label>
+      <label>Name<input id="addTitle" type="text" placeholder="Website name"></label>
+      <label>Notes (optional)<textarea id="addNotes" rows="3" placeholder="Add a note…"></textarea></label>
+      <label>Category<select id="addCat"></select></label>
+      <button class="btn primary wide" type="submit">Save</button>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <div class="dlg">
+      <div class="dlg-head"><h3>Settings</h3><button type="button" class="icon-btn" data-close>✕</button></div>
+      <label class="check">
+        <input id="localShotsToggle" type="checkbox">
+        <span>Capture page previews as I browse
+          <small>Saves a screenshot of a bookmarked page when you visit it. Stored only on this computer. Needs permission to read pages.</small>
+        </span>
+      </label>
+      <div class="row">
+        <button id="genBtn" class="btn">Generate previews now</button>
+        <button id="stopBtn" class="btn" hidden>Stop</button>
+        <button id="clearShotsBtn" class="btn">Clear previews</button>
+      </div>
+      <div id="genStatus" class="hint"></div>
+      <label class="check">
+        <input id="previewsToggle" type="checkbox">
+        <span>Online preview service (for pages without a screenshot)
+          <small>Uses thum.io, so the URLs of those bookmarks are sent to that service. Off by default.</small>
+        </span>
+      </label>
+      <label class="check">
+        <input id="extToggle" type="checkbox">
+        <span>Show installed extensions<small>Lists your Chrome extensions with shortcuts to their settings.</small></span>
+      </label>
+      <div class="row">
+        <button id="exportBtn" class="btn">Export notes</button>
+        <button id="importBtn" class="btn">Import notes</button>
+        <input id="importFile" type="file" accept="application/json" hidden>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="shots.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

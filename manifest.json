@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "LinkDeck",
+  "version": "1.2.0",
+  "description": "Your bookmarks and extensions as a visual deck of cards, with page previews, notes, tags and categories.",
+  "permissions": [
+    "bookmarks",
+    "management",
+    "storage",
+    "unlimitedStorage",
+    "favicon",
+    "tabs"
+  ],
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "Open LinkDeck",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}
