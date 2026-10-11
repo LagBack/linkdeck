@@ -6,7 +6,7 @@ function initThemeToggle() {
   const toggle = document.getElementById("themeToggle");
   const menu = document.getElementById("themeMenu");
   if (!toggle || !menu) return;
-  const validThemes = new Set(["light", "xp", "dark", "scenecore", "gxsc"]);
+  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel"]);
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
@@ -21,8 +21,8 @@ function initThemeToggle() {
       item.classList.toggle("selected", selected);
     });
     toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight",scenecore:"Scenecore",gxsc:"GXSC"}[current]}`);
-    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight",scenecore:"Scenecore",gxsc:"GXSC"}[current]}`;
+    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night"}[current]}`);
+    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night"}[current]}`;
   };
   const closeMenu = (returnFocus = false) => {
     menu.hidden = true;
@@ -35,7 +35,14 @@ function initThemeToggle() {
     else root.dataset.theme = theme;
     try { localStorage.setItem("linkdeck-theme", theme); } catch (_) {}
     closeMenu();
+    document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
+      const selected = card.dataset.onboardingTheme === theme;
+      card.setAttribute("aria-pressed", String(selected));
+      card.classList.toggle("selected", selected);
+    });
   };
+  window.linkdeckSetTheme = setTheme;
+  window.linkdeckGetTheme = getTheme;
   toggle.addEventListener("click", () => {
     menu.hidden = !menu.hidden;
     sync();
@@ -370,6 +377,17 @@ $("#settingsBtn").onclick = async () => {
   $("#extToggle").checked = state.settings.showExtensions;
   $("#settingsDialog").showModal();
 };
+$("#reopenSetupBtn").onclick = () => {
+  $("#settingsDialog").close();
+  const currentTheme = window.linkdeckGetTheme?.() || "light";
+  document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
+    const selected = card.dataset.onboardingTheme === currentTheme;
+    card.classList.toggle("selected", selected);
+    card.setAttribute("aria-pressed", String(selected));
+  });
+  showOnboardingStep(1);
+  $("#firstRunDialog").showModal();
+};
 const hasHostAccess = () => chrome.permissions.contains({ origins: ["<all_urls>"] });
 async function ensureHostAccess() { return (await hasHostAccess()) || chrome.permissions.request({ origins: ["<all_urls>"] }); }
 
@@ -452,15 +470,36 @@ function showOnboardingStep(step) {
   document.querySelectorAll("[data-onboarding-step]").forEach((el) => {
     el.hidden = Number(el.dataset.onboardingStep) !== step;
   });
-  const labels = { 1: "1 / 3", 2: "2 / 3", 3: "3 / 3" };
+  const labels = { 1: "1 / 4", 2: "2 / 4", 3: "3 / 4", 4: "4 / 4" };
+  const stageLabels = { 1: "THE LOOK COMES FIRST", 2: "MAKE IT YOURS", 3: "YOUR ORGANIZING STYLE", 4: "READY WHEN YOU ARE" };
   $("#onboardingProgress").textContent = labels[step];
+  $("#onboardingStageLabel").textContent = stageLabels[step];
+  $("#onboardingTitle").textContent = step === 1 ? "Make LinkDeck yours." : step === 4 ? "You're all set." : "A couple quick preferences.";
   $("#onboardingBack").hidden = step === 1;
-  $("#onboardingNext").textContent = step === 3 ? "Start organizing →" : "Continue →";
+  $("#onboardingNext").textContent = step === 1 ? "Choose this look →" : step === 4 ? "Start organizing →" : "Continue →";
 }
+
+document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
+  card.addEventListener("click", () => {
+    const theme = card.dataset.onboardingTheme;
+    window.linkdeckSetTheme?.(theme);
+    document.querySelectorAll("[data-onboarding-theme]").forEach((other) => {
+      const selected = other === card;
+      other.classList.toggle("selected", selected);
+      other.setAttribute("aria-pressed", String(selected));
+    });
+  });
+});
 
 $("#onboardingBack").onclick = () => showOnboardingStep(Math.max(1, onboardingStep - 1));
 $("#onboardingNext").onclick = async () => {
   if (onboardingStep === 1) {
+    const selectedTheme = document.querySelector('[data-onboarding-theme][aria-pressed="true"]')?.dataset.onboardingTheme || "light";
+    window.linkdeckSetTheme?.(selectedTheme);
+    showOnboardingStep(2);
+    return;
+  }
+  if (onboardingStep === 2) {
     const choice = document.querySelector('input[name="previewChoice"]:checked')?.value || "none";
     onboardingPreviewChoice = choice;
     state.settings.previews = choice === "online";
@@ -474,10 +513,10 @@ $("#onboardingNext").onclick = async () => {
         : "You chose no previews. LinkDeck will use the clean icon-based thumbnails.";
     persist();
     render();
-    showOnboardingStep(2);
+    showOnboardingStep(3);
     return;
   }
-  if (onboardingStep === 2) {
+  if (onboardingStep === 3) {
     const wantsSort = document.querySelector('input[name="sortChoice"]:checked')?.value === "yes";
     const bookmarkCount = state.items.filter((i) => i.type === "bookmark").length;
     if (wantsSort && bookmarkCount) {
@@ -492,7 +531,7 @@ $("#onboardingNext").onclick = async () => {
     }
     persist();
     render();
-    showOnboardingStep(3);
+    showOnboardingStep(4);
     return;
   }
   await chrome.storage.local.set({ linkdeckFirstRunDone: true });
@@ -666,6 +705,12 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
   // Show first-run prompt if this is the user's first time opening LinkDeck
   const { linkdeckFirstRunDone } = await chrome.storage.local.get("linkdeckFirstRunDone");
   if (!linkdeckFirstRunDone) {
+    const currentTheme = window.linkdeckGetTheme?.() || "light";
+    document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
+      const selected = card.dataset.onboardingTheme === currentTheme;
+      card.classList.toggle("selected", selected);
+      card.setAttribute("aria-pressed", String(selected));
+    });
     showOnboardingStep(1);
     $("#firstRunDialog").showModal();
   }

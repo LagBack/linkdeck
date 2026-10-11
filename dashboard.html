@@ -15,13 +15,16 @@
         <svg class="logo-xp" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
           <path d="M7 4h27l8 8v32H7z" fill="#f5f5f5" stroke="#173b70" stroke-width="2"/>
           <path d="M34 4v9h8" fill="#c8d7ed" stroke="#173b70" stroke-width="1.5"/>
-          <g transform="translate(12 16) skewY(-8)">
-            <path d="M0 0h10v10H0z" fill="#f44336"/><path d="M12 0h10v10H12z" fill="#69b92e"/>
-            <path d="M0 12h10v10H0z" fill="#1689e8"/><path d="M12 12h10v10H12z" fill="#f7c928"/>
+          <g transform="translate(12 15)">
+            <path d="M0 0h22v18H0z" fill="#0b64c0" stroke="#173b70" stroke-width="1.5"/>
+            <path d="M0 0h22v4H0z" fill="#fff" opacity=".95"/>
+            <path d="M10 4v14M0 11h22" stroke="#d7e8fb" stroke-width="1.5"/>
+            <path d="M3 2h2M7 2h2" stroke="#0b64c0" stroke-width="1"/>
           </g>
         </svg>
         <img class="logo-scene" src="assets/epic-face.png" alt="" aria-hidden="true">
         <img class="logo-gxsc" src="assets/gxsc-logo.png" alt="" aria-hidden="true">
+        <img class="logo-pixel" src="assets/pixel-night-logo.png" alt="" aria-hidden="true">
         <div class="brand-text">LinkDeck<small>Bookmarks &amp; extensions</small></div>
       </div>
 
@@ -50,18 +53,20 @@
             <div id="themeMenu" class="theme-menu" role="menu" aria-label="Choose a theme" hidden>
               <button type="button" role="menuitemradio" data-theme-choice="light" aria-checked="true"><span class="theme-swatch swatch-original" aria-hidden="true"></span><span><strong>LinkDeck Original</strong><small>Warm paper &amp; mustard</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
               <button type="button" role="menuitemradio" data-theme-choice="xp" aria-checked="false"><span class="theme-swatch swatch-xp" aria-hidden="true"></span><span><strong>Windows 98 / XP</strong><small>Classic desktop nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="dark" aria-checked="false"><span class="theme-swatch swatch-dark" aria-hidden="true"></span><span><strong>Midnight</strong><small>Low-glare charcoal</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
               <button type="button" role="menuitemradio" data-theme-choice="scenecore" aria-checked="false"><span class="theme-swatch swatch-scene" aria-hidden="true"></span><span><strong>Scenecore</strong><small>Neon chaos &amp; web nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
               <button type="button" role="menuitemradio" data-theme-choice="gxsc" aria-checked="false"><span class="theme-swatch swatch-gxsc" aria-hidden="true"></span><span><strong>GXSC</strong><small>Gen X Soft Club · Y2K haze</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
+              <button type="button" role="menuitemradio" data-theme-choice="pixel" aria-checked="false"><span class="theme-swatch swatch-pixel" aria-hidden="true"></span><span><strong>pixel night</strong><small>cozy game desk · 16-bit dreams</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="heading-mark" aria-hidden="true"><span>↗</span><span class="scene-mark">★</span><span class="gxsc-mark">✧</span></div>
         </div>
       </div>
       <header class="topbar">
+
         <div class="search">
           <span class="ico">⌕</span>
           <input id="search" type="search" placeholder="Search titles, URLs, tags and notes…  ( / )" autocomplete="off">
+          <span class="pixel-cat-sprite" aria-hidden="true"></span>
         </div>
         <div class="seg">
           <button id="gridBtn" title="Grid view">▦</button>
@@ -89,6 +94,11 @@
   <div class="gxsc-deco gxsc-orb gxsc-orb-two" aria-hidden="true"></div>
   <div class="gxsc-deco gxsc-rings" aria-hidden="true"></div>
   <div class="gxsc-deco gxsc-stamp" aria-hidden="true">SOFT<br>CLUB <span>✧</span></div>
+  <div class="pixel-deco pixel-moon" aria-hidden="true"></div>
+  <div class="pixel-deco pixel-stars pixel-stars-one" aria-hidden="true">✦</div>
+  <div class="pixel-deco pixel-stars pixel-stars-two" aria-hidden="true">✧</div>
+  <div class="pixel-deco pixel-plant" aria-hidden="true"><span></span></div>
+  <div class="pixel-deco pixel-status" aria-hidden="true"><span>☾</span> save point <b>✦</b></div>
 
   <dialog id="addDialog">
     <form method="dialog" id="addForm" class="dlg">
@@ -103,9 +113,35 @@
 
   <dialog id="firstRunDialog" class="onboarding-dialog">
     <div class="dlg onboarding">
-      <div class="dlg-head"><div><p class="page-kicker">WELCOME TO LINKDECK</p><h3>Set up your web desk</h3></div><button type="button" class="icon-btn" id="firstRunLater" aria-label="Skip setup">✕</button></div>
-      <div class="onboarding-progress"><span>QUICK SETUP</span><span id="onboardingProgress">1 / 3</span></div>
+      <div class="dlg-head"><div><h3 id="onboardingTitle">Make LinkDeck yours.</h3></div><button type="button" class="icon-btn" id="firstRunLater" aria-label="Skip setup">✕</button></div>
+      <div class="onboarding-progress"><span id="onboardingStageLabel">THE LOOK COMES FIRST</span><span id="onboardingProgress">1 / 4</span></div>
       <section data-onboarding-step="1">
+        <h2>Themes are the heart of LinkDeck.</h2>
+        <p class="onboarding-copy">Your bookmarks stay yours — the theme sets the whole mood. Pick one to preview it live, or keep LinkDeck Original and continue. You can switch anytime.</p>
+        <div class="theme-preview-grid" role="group" aria-label="Choose a LinkDeck theme">
+          <button type="button" class="theme-preview-card" data-onboarding-theme="light" aria-pressed="true">
+            <span class="theme-preview-art preview-original"><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">LinkDeck Original</span><span class="theme-preview-desc">Warm paper &amp; mustard</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="xp" aria-pressed="false">
+            <span class="theme-preview-art preview-xp"><span class="preview-titlebar">LinkDeck</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">Windows 98 / XP</span><span class="theme-preview-desc">Classic desktop nostalgia</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="scenecore" aria-pressed="false">
+            <span class="theme-preview-art preview-scene"><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">Scenecore</span><span class="theme-preview-desc">Neon chaos &amp; web nostalgia</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="gxsc" aria-pressed="false">
+            <span class="theme-preview-art preview-gxsc"><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">GXSC</span><span class="theme-preview-desc">Y2K haze &amp; soft chrome</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="pixel" aria-pressed="false">
+            <span class="theme-preview-art preview-pixel"><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">Pixel Night</span><span class="theme-preview-desc">Cozy game desk · 16-bit dreams</span>
+          </button>
+        </div>
+      </section>
+      <section data-onboarding-step="2" hidden>
         <h2>How should thumbnails work?</h2>
         <p class="onboarding-copy">Choose what appears on each bookmark card. You can change this later in Settings.</p>
         <label class="choice-card"><input type="radio" name="previewChoice" value="online"><span><strong>Online previews</strong><small>Load page screenshots from thum.io. Bookmark URLs are sent to that service.</small></span></label>
@@ -113,20 +149,20 @@
         <label class="choice-card"><input type="radio" name="previewChoice" value="none" checked><span><strong>No screenshots</strong><small>Keep the clean icon-based thumbnails. Nothing is sent to a preview service.</small></span></label>
         <p id="onboardingPermissionNote" class="hint" hidden>Page access wasn't granted, so local capture is off. You can enable it later in Settings.</p>
       </section>
-      <section data-onboarding-step="2" hidden>
+      <section data-onboarding-step="3" hidden>
         <h2>Want a head start organizing?</h2>
         <p class="onboarding-copy">Auto-sort suggests categories and tags from bookmark URLs. You can change every result afterward.</p>
         <label class="choice-card"><input type="radio" name="sortChoice" value="yes" checked><span><strong>Yes, auto-sort my bookmarks</strong><small>Group bookmarks into useful categories and add relevant tags.</small></span></label>
         <label class="choice-card"><input type="radio" name="sortChoice" value="no"><span><strong>I’ll organize them myself</strong><small>Leave my existing bookmarks as they are.</small></span></label>
       </section>
-      <section data-onboarding-step="3" hidden>
+      <section data-onboarding-step="4" hidden>
         <div class="onboarding-finish-mark" aria-hidden="true">✓</div>
         <h2>Your desk is ready.</h2>
         <p id="onboardingSortSummary" class="onboarding-copy">You’re ready to organize your bookmarks.</p>
         <p id="onboardingPreviewSummary" class="onboarding-copy"></p>
         <p class="onboarding-copy">Pin favorites, edit categories, add notes, and search your whole collection from the dashboard.</p>
       </section>
-      <div class="onboarding-actions"><button id="onboardingBack" class="btn" hidden>← Back</button><button id="onboardingNext" class="btn primary">Continue →</button></div>
+      <div class="onboarding-actions"><button id="onboardingBack" class="btn" hidden>← Back</button><button id="onboardingNext" class="btn primary">Choose this look →</button></div>
     </div>
   </dialog>
 
@@ -147,7 +183,7 @@
       <div id="genStatus" class="hint"></div>
       <hr style="border:none;border-top:1px solid var(--line);margin:4px 0;">
       <div class="row" style="flex-wrap:wrap;gap:6px">
-        <button id="autoSortBtn" class="btn">⚡ Auto-sort</button>
+        <button id="autoSortBtn" class="btn">Auto-sort</button>
         <small style="color:var(--muted);line-height:1.5">Reads all bookmarks, assigns categories and tags from domain heuristics.</small>
       </div>
       <div id="autoSortStatus" class="hint"></div>
@@ -162,12 +198,15 @@
         <span>Show installed extensions<small>Lists your Chrome extensions with shortcuts to their settings.</small></span>
       </label>
       <div class="row">
+        <button id="reopenSetupBtn" class="btn">↻ Open setup guide</button>
+      </div>
+      <div class="row">
         <button id="exportBtn" class="btn">Export notes</button>
         <button id="importBtn" class="btn">Import notes</button>
         <input id="importFile" type="file" accept="application/json" hidden>
       </div>
       <div class="settings-links" aria-label="LinkDeck project links">
-        <span class="settings-links-label">LINKDECK</span>
+        <span class="settings-links-label">LINKDECK <span class="settings-credit">made by lagb2ck ♡</span></span>
         <a href="privacy.html" target="_blank" rel="noopener">Privacy policy ↗</a>
         <a href="https://github.com/LagBack/linkdeck" target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>
         <a href="https://github.com/LagBack/linkdeck/issues" target="_blank" rel="noopener noreferrer">Report a bug / request a feature ↗</a>
