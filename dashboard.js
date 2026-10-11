@@ -1,5 +1,32 @@
 "use strict";
 
+// Theme controls live in the extension's external script because MV3 blocks inline JS.
+function initThemeToggle() {
+  const root = document.documentElement;
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+  try {
+    if (localStorage.getItem("linkdeck-theme") === "dark") root.dataset.theme = "dark";
+  } catch (_) {}
+  const sync = () => {
+    const dark = root.dataset.theme === "dark";
+    toggle.setAttribute("aria-pressed", String(dark));
+    toggle.title = dark ? "Switch to light mode" : "Switch to dark mode";
+    toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    toggle.querySelector(".theme-icon").textContent = dark ? "☀" : "☾";
+    toggle.querySelector(".theme-label").textContent = dark ? "Light mode" : "Dark mode";
+  };
+  sync();
+  toggle.addEventListener("click", () => {
+    const dark = root.dataset.theme !== "dark";
+    if (dark) root.dataset.theme = "dark";
+    else delete root.dataset.theme;
+    try { localStorage.setItem("linkdeck-theme", dark ? "dark" : "light"); } catch (_) {}
+    sync();
+  });
+}
+initThemeToggle();
+
 const $ = (s) => document.querySelector(s);
 const DEFAULT_CATS = ["Discussions/Forums", "Projects", "Learning", "Tools", "Development", "Entertainment", "Social", "Shopping", "Work", "Other"];
 

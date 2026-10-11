@@ -28,6 +28,17 @@
     </aside>
 
     <main class="main">
+      <div class="page-heading">
+        <div>
+          <p class="page-kicker">YOUR PERSONAL WEB DESK</p>
+          <h1>Keep the good stuff.</h1>
+          <p class="page-subtitle">Bookmarks, tools, and little things worth coming back to.</p>
+        </div>
+        <div class="heading-actions">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" title="Switch to dark mode"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark mode</span></button>
+          <div class="heading-mark" aria-hidden="true"><span>↗</span></div>
+        </div>
+      </div>
       <header class="topbar">
         <div class="search">
           <span class="ico">⌕</span>
@@ -43,7 +54,7 @@
       <div id="status" class="status"></div>
       <section id="grid" class="grid"></section>
       <div id="empty" class="empty" hidden>
-        <div class="empty-ico">🔎</div>
+        <div class="empty-ico" aria-hidden="true">⌕</div>
         <p>Nothing here yet.</p>
       </div>
     </main>
@@ -116,5 +127,6 @@
 
   <script src="shots.js"></script>
   <script src="dashboard.js"></script>
+
 </body>
 </html>
