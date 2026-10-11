@@ -52,12 +52,6 @@ function displayNameFor(it) {
   return (m.displayName && m.displayName.trim()) ? m.displayName.trim() : it.title;
 }
 
-function gradient(seed) {
-  let h = 0;
-  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) % 360;
-  return `linear-gradient(135deg, hsl(${h} 55% 28%), hsl(${(h + 45) % 360} 60% 20%))`;
-}
-
 let saveTimer;
 function persist() {
   clearTimeout(saveTimer);
@@ -119,7 +113,7 @@ async function loadShots() {
   } catch { /* previews are optional */ }
 }
 
-// Real screenshot if we have one, else the online service (if enabled), else the gradient.
+// Real screenshot if available; otherwise use a quiet, theme-aware fallback tile.
 function shotUrl(it) {
   if (it.type !== "bookmark") return null;
   const local = state.shots.get(Shots.norm(it.url));
@@ -131,13 +125,12 @@ function shotUrl(it) {
 
 function thumbHtml(it) {
   const icon = it.type === "extension" ? it.icon : favicon(it.url);
-  const bg = gradient(it.title + it.url);
   const s = shotUrl(it);
   const shot = s ? `<img class="shot" ${s.remote ? 'loading="lazy"' : ""} src="${esc(s.src)}" alt="" onerror="this.remove()">` : "";
   const mid = s && !s.remote ? ""
     : icon ? `<img class="big" src="${esc(icon)}" alt="">`
     : `<span class="letter">${esc(it.title[0]?.toUpperCase() || "?")}</span>`;
-  return `<div class="thumb" style="background:${bg}">${mid}${shot}</div>`;
+  return `<div class="thumb${s ? " has-shot" : " placeholder"}">${mid}${shot}</div>`;
 }
 
 function render() {
@@ -420,21 +413,63 @@ $("#autoSortBtn").onclick = async () => {
   render();
 };
 
-$("#firstRunYes").onclick = async () => {
-  const bookmarkCount = state.items.filter((i) => i.type === "bookmark").length;
-  if (bookmarkCount) {
-    autoSort();
-    const tagSet = new Set();
-    for (const m of Object.values(state.meta)) { if (m.tags) m.tags.forEach((t) => tagSet.add(t)); }
-    $("#autoSortStatus").textContent = `Auto-sorted ${bookmarkCount} bookmarks · ${tagSet.size} unique tags added.`;
+let onboardingStep = 1;
+let onboardingPreviewChoice = "none";
+function showOnboardingStep(step) {
+  onboardingStep = step;
+  document.querySelectorAll("[data-onboarding-step]").forEach((el) => {
+    el.hidden = Number(el.dataset.onboardingStep) !== step;
+  });
+  const labels = { 1: "1 / 3", 2: "2 / 3", 3: "3 / 3" };
+  $("#onboardingProgress").textContent = labels[step];
+  $("#onboardingBack").hidden = step === 1;
+  $("#onboardingNext").textContent = step === 3 ? "Start organizing →" : "Continue →";
+}
+
+$("#onboardingBack").onclick = () => showOnboardingStep(Math.max(1, onboardingStep - 1));
+$("#onboardingNext").onclick = async () => {
+  if (onboardingStep === 1) {
+    const choice = document.querySelector('input[name="previewChoice"]:checked')?.value || "none";
+    onboardingPreviewChoice = choice;
+    state.settings.previews = choice === "online";
+    // Local screenshots are intentionally captured on demand from Settings, not silently during setup.
+    state.settings.localShots = false;
+    $("#onboardingPermissionNote").hidden = true;
+    $("#onboardingPreviewSummary").textContent = choice === "online"
+      ? "Thumbnails will use the online preview service. You can switch this off in Settings."
+      : choice === "local"
+        ? "When you’re ready, open Settings → Generate previews now to capture screenshots locally. LinkDeck will ask for page access at that point."
+        : "You chose no previews. LinkDeck will use the clean icon-based thumbnails.";
+    persist();
+    render();
+    showOnboardingStep(2);
+    return;
   }
-  persist();
-  render();
+  if (onboardingStep === 2) {
+    const wantsSort = document.querySelector('input[name="sortChoice"]:checked')?.value === "yes";
+    const bookmarkCount = state.items.filter((i) => i.type === "bookmark").length;
+    if (wantsSort && bookmarkCount) {
+      autoSort();
+      const tagSet = new Set();
+      for (const m of Object.values(state.meta)) if (m.tags) m.tags.forEach((t) => tagSet.add(t));
+      $("#onboardingSortSummary").textContent = `Organized ${bookmarkCount} bookmarks and added ${tagSet.size} unique tags.`;
+    } else if (wantsSort) {
+      $("#onboardingSortSummary").textContent = "There are no bookmarks to sort yet. You can add some anytime.";
+    } else {
+      $("#onboardingSortSummary").textContent = "No automatic changes made. You can sort or edit everything yourself.";
+    }
+    persist();
+    render();
+    showOnboardingStep(3);
+    return;
+  }
+  await chrome.storage.local.set({ linkdeckFirstRunDone: true });
   $("#firstRunDialog").close();
+  render();
 };
 
-$("#firstRunLater").onclick = () => {
-  chrome.storage.local.set({ linkdeckFirstRunDone: true });
+$("#firstRunLater").onclick = async () => {
+  await chrome.storage.local.set({ linkdeckFirstRunDone: true });
   $("#firstRunDialog").close();
 };
 
@@ -599,6 +634,7 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
   // Show first-run prompt if this is the user's first time opening LinkDeck
   const { linkdeckFirstRunDone } = await chrome.storage.local.get("linkdeckFirstRunDone");
   if (!linkdeckFirstRunDone) {
+    showOnboardingStep(1);
     $("#firstRunDialog").showModal();
   }
 

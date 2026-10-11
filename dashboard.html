@@ -73,16 +73,32 @@
     </form>
   </dialog>
 
-  <dialog id="firstRunDialog">
-    <div class="dlg">
-      <div class="dlg-head"><h3>Welcome to LinkDeck!</h3><button type="button" class="icon-btn" data-close>✕</button></div>
-      <p style="color:var(--muted);font-size:14px;line-height:1.6">
-        We noticed this is your first time opening LinkDeck. Would you like to run <strong>Auto-sort</strong> on all your bookmarks now? It will automatically organize them into categories based on their content.
-      </p>
-      <div class="row" style="gap:8px;margin-top:4px">
-        <button id="firstRunYes" class="btn primary">⚡ Auto-sort now</button>
-        <button id="firstRunLater" class="btn">Maybe later</button>
-      </div>
+  <dialog id="firstRunDialog" class="onboarding-dialog">
+    <div class="dlg onboarding">
+      <div class="dlg-head"><div><p class="page-kicker">WELCOME TO LINKDECK</p><h3>Set up your web desk</h3></div><button type="button" class="icon-btn" id="firstRunLater" aria-label="Skip setup">✕</button></div>
+      <div class="onboarding-progress"><span>QUICK SETUP</span><span id="onboardingProgress">1 / 3</span></div>
+      <section data-onboarding-step="1">
+        <h2>How should thumbnails work?</h2>
+        <p class="onboarding-copy">Choose what appears on each bookmark card. You can change this later in Settings.</p>
+        <label class="choice-card"><input type="radio" name="previewChoice" value="online"><span><strong>Online previews</strong><small>Load page screenshots from thum.io. Bookmark URLs are sent to that service.</small></span></label>
+        <label class="choice-card"><input type="radio" name="previewChoice" value="local"><span><strong>Capture screenshots locally</strong><small>Capture screenshots for selected bookmarks from Settings when you choose. Nothing is sent to a preview service.</small></span></label>
+        <label class="choice-card"><input type="radio" name="previewChoice" value="none" checked><span><strong>No screenshots</strong><small>Keep the clean icon-based thumbnails. Nothing is sent to a preview service.</small></span></label>
+        <p id="onboardingPermissionNote" class="hint" hidden>Page access wasn't granted, so local capture is off. You can enable it later in Settings.</p>
+      </section>
+      <section data-onboarding-step="2" hidden>
+        <h2>Want a head start organizing?</h2>
+        <p class="onboarding-copy">Auto-sort suggests categories and tags from bookmark URLs. You can change every result afterward.</p>
+        <label class="choice-card"><input type="radio" name="sortChoice" value="yes" checked><span><strong>Yes, auto-sort my bookmarks</strong><small>Group bookmarks into useful categories and add relevant tags.</small></span></label>
+        <label class="choice-card"><input type="radio" name="sortChoice" value="no"><span><strong>I’ll organize them myself</strong><small>Leave my existing bookmarks as they are.</small></span></label>
+      </section>
+      <section data-onboarding-step="3" hidden>
+        <div class="onboarding-finish-mark" aria-hidden="true">✓</div>
+        <h2>Your desk is ready.</h2>
+        <p id="onboardingSortSummary" class="onboarding-copy">You’re ready to organize your bookmarks.</p>
+        <p id="onboardingPreviewSummary" class="onboarding-copy"></p>
+        <p class="onboarding-copy">Pin favorites, edit categories, add notes, and search your whole collection from the dashboard.</p>
+      </section>
+      <div class="onboarding-actions"><button id="onboardingBack" class="btn" hidden>← Back</button><button id="onboardingNext" class="btn primary">Continue →</button></div>
     </div>
   </dialog>
 
