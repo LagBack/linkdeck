@@ -347,7 +347,7 @@ hr { border-color: var(--line-soft) !important; }
 :root[data-theme="xp"] .btn.primary:hover { background: linear-gradient(#8bc9ff,#3486d7 50%,#1266c0); }
 :root[data-theme="xp"] .heading-mark { background: linear-gradient(#6bb5fa,#0758b6); border: 1px solid #164d8b; box-shadow: inset 1px 1px 0 #b9e1ff, 2px 2px 0 rgba(0,0,0,.18); transform: none; color: white; }
 :root[data-theme="xp"] .heading-mark span { display: none; }
-:root[data-theme="xp"] .heading-mark::before { content: ""; width: 27px; height: 27px; background: linear-gradient(90deg,#f34d42 0 47%,transparent 47% 53%,#7cce44 53%), linear-gradient(#4ba6f5 0 47%,transparent 47% 53%,#f9d44b 53%); border: 1px solid rgba(0,0,0,.35); }
+:root[data-theme="xp"] .heading-mark::before { content: ""; display: block; width: 44px; height: 46px; background: url("assets/windows98-pc-icon.png") center / contain no-repeat; border: 0; }
 :root[data-theme="xp"] .topbar { background: #d6d2c8; top: -18px; padding: 10px 0 12px; }
 :root[data-theme="xp"] .search { padding: 0 10px; }
 :root[data-theme="xp"] .search:focus-within { outline: 1px dotted #111; }
