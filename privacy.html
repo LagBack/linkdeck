@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Privacy Policy — LinkDeck</title>
+  <style>
+    :root{color-scheme:light;--bg:#f7f1df;--paper:#fff9e9;--card:#fffdf5;--ink:#24221e;--muted:#716b5d;--line:#25231f;--soft:#d8cfb8;--accent:#f5c400;--green:#3d6a4d}
+    *{box-sizing:border-box}body{margin:0;background-color:var(--bg);background-image:linear-gradient(rgba(194,154,46,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(194,154,46,.12) 1px,transparent 1px);background-size:32px 32px;color:var(--ink);font:16px/1.65 "Trebuchet MS","Segoe UI",sans-serif}
+    main{width:min(820px,calc(100% - 32px));margin:48px auto;background:var(--card);border:1px solid var(--line);box-shadow:5px 5px 0 rgba(36,34,30,.13);padding:clamp(22px,5vw,48px)}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{display:grid;place-items:center;width:42px;height:42px;background:var(--accent);border:2px solid var(--line);font-size:23px;font-weight:900}.brand strong{display:block;font-size:18px}.brand small,.meta{color:var(--muted);font-size:12px}
+    .kicker{color:var(--green);font-size:11px;font-weight:900;letter-spacing:1.7px}h1{font-size:clamp(30px,5vw,42px);line-height:1.1;letter-spacing:-1.4px;margin:6px 0 12px}h2{font-size:19px;margin:28px 0 8px;letter-spacing:-.3px}p,li{max-width:72ch}a{color:var(--green);text-underline-offset:3px}li{margin:5px 0}.notice{border-left:4px solid var(--accent);padding:12px 16px;background:var(--paper)}.back{display:inline-block;margin-top:28px;padding:9px 12px;border:1px solid var(--line);box-shadow:2px 2px 0 var(--line);text-decoration:none;color:var(--ink);font-weight:700}
+    @media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#191f1e;--paper:#202826;--card:#252e2b;--ink:#eee9dc;--muted:#b0aa9c;--line:#55534b;--soft:#3c3d3e;--green:#a6c5a9;--accent:#e8bd42}body{background-image:linear-gradient(rgba(225,190,91,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(225,190,91,.045) 1px,transparent 1px);box-shadow:none}main{box-shadow:none}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="brand"><div class="mark" aria-hidden="true">↗</div><div><strong>LinkDeck</strong><small>Bookmarks &amp; extensions</small></div></div>
+  <p class="kicker">PRIVACY, IN PLAIN LANGUAGE</p>
+  <h1>Privacy policy</h1>
+  <p class="meta">Last updated: October 11, 2026</p>
+  <p>LinkDeck is a browser extension that turns your bookmarks into a visual dashboard. It is designed to keep your bookmark data on your device. This policy describes what the extension accesses and when information may leave your device.</p>
+  <div class="notice"><strong>In short:</strong> LinkDeck does not operate an account system or its own analytics server. Bookmark details, categories, tags, notes, preferences, and locally captured previews are stored in your browser. If you enable online previews, the relevant bookmark URLs are sent to the third-party preview provider, thum.io.</div>
+
+  <h2>Information LinkDeck uses</h2>
+  <ul>
+    <li><strong>Bookmarks:</strong> LinkDeck reads your browser bookmarks to display and organize them. If you choose to add, edit, or remove bookmarks, it uses the browser bookmarks API to apply that action.</li>
+    <li><strong>Notes, tags, categories, and preferences:</strong> These are stored locally using Chrome extension storage. The light/dark theme preference is stored in local browser storage.</li>
+    <li><strong>Installed extensions:</strong> If the “Show installed extensions” setting is enabled, LinkDeck reads extension metadata to display your installed extensions and shortcuts.</li>
+    <li><strong>Local screenshots:</strong> If you grant optional page access and enable screenshot capture, LinkDeck can capture visible pages and store those previews locally in extension storage. Screenshots may contain whatever is visible on the page, so only enable this feature on pages you are comfortable saving.</li>
+  </ul>
+
+  <h2>Online previews and third parties</h2>
+  <p>If you enable the online preview option, LinkDeck requests page thumbnails from <a href="https://thum.io/" target="_blank" rel="noopener noreferrer">thum.io</a> using bookmark URLs. This means the URLs you choose to preview are disclosed to that service, which may process requests under its own privacy policy and terms. Disable online previews in Settings if you do not want this sharing. LinkDeck does not send bookmark URLs to thum.io when online previews are off.</p>
+  <p>Opening a bookmark or following a link is a normal browser navigation; the destination website may collect information according to its own policies.</p>
+
+  <h2>Permissions</h2>
+  <p>LinkDeck requests access to bookmarks, local extension storage, tabs, and installed-extension metadata to provide its core features. Access to website pages is optional and requested for screenshot capture. You can review or revoke extension permissions in Chrome’s extension settings; some features will stop working if their required permissions are removed.</p>
+
+  <h2>Retention and security</h2>
+  <p>Locally stored LinkDeck data remains in your browser until you remove it, clear extension data, or uninstall the extension. Chrome’s own data and sync behavior may also apply. LinkDeck does not currently provide cloud sync or a remote account. Avoid saving sensitive information in notes or screenshots.</p>
+
+  <h2>Children and changes</h2>
+  <p>LinkDeck is a general-purpose productivity tool and is not designed to collect personal information from children. This policy may be updated as the extension changes; the “Last updated” date above will be revised when that happens.</p>
+
+  <h2>Contact and support</h2>
+  <p>For questions, bug reports, or privacy concerns, open an issue in the <a href="https://github.com/LagBack/linkdeck/issues" target="_blank" rel="noopener noreferrer">LinkDeck GitHub issue tracker</a>. Please do not include private bookmark URLs or other sensitive information in public issues.</p>
+  <p><a href="https://github.com/LagBack/linkdeck" target="_blank" rel="noopener noreferrer">View LinkDeck source code on GitHub ↗</a></p>
+  <a class="back" href="dashboard.html">← Back to LinkDeck</a>
+</main>
+</body>
+</html>

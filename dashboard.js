@@ -1,29 +1,62 @@
 "use strict";
 
-// Theme controls live in the extension's external script because MV3 blocks inline JS.
+// Theme selector: each visual world is applied to the whole document and remembered locally.
 function initThemeToggle() {
   const root = document.documentElement;
   const toggle = document.getElementById("themeToggle");
-  if (!toggle) return;
+  const menu = document.getElementById("themeMenu");
+  if (!toggle || !menu) return;
+  const validThemes = new Set(["light", "xp", "dark"]);
   try {
-    if (localStorage.getItem("linkdeck-theme") === "dark") root.dataset.theme = "dark";
+    const saved = localStorage.getItem("linkdeck-theme");
+    if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
   } catch (_) {}
+
+  const getTheme = () => root.dataset.theme || "light";
   const sync = () => {
-    const dark = root.dataset.theme === "dark";
-    toggle.setAttribute("aria-pressed", String(dark));
-    toggle.title = dark ? "Switch to light mode" : "Switch to dark mode";
-    toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
-    toggle.querySelector(".theme-icon").textContent = dark ? "☀" : "☾";
-    toggle.querySelector(".theme-label").textContent = dark ? "Light mode" : "Dark mode";
+    const current = getTheme();
+    menu.querySelectorAll("[data-theme-choice]").forEach((item) => {
+      const selected = item.dataset.themeChoice === current;
+      item.setAttribute("aria-checked", String(selected));
+      item.classList.toggle("selected", selected);
+    });
+    toggle.setAttribute("aria-expanded", String(!menu.hidden));
+    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight"}[current]}`);
+    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight"}[current]}`;
   };
-  sync();
-  toggle.addEventListener("click", () => {
-    const dark = root.dataset.theme !== "dark";
-    if (dark) root.dataset.theme = "dark";
-    else delete root.dataset.theme;
-    try { localStorage.setItem("linkdeck-theme", dark ? "dark" : "light"); } catch (_) {}
+  const closeMenu = (returnFocus = false) => {
+    menu.hidden = true;
     sync();
+    if (returnFocus) toggle.focus();
+  };
+  const setTheme = (theme) => {
+    if (!validThemes.has(theme)) return;
+    if (theme === "light") delete root.dataset.theme;
+    else root.dataset.theme = theme;
+    try { localStorage.setItem("linkdeck-theme", theme); } catch (_) {}
+    closeMenu();
+  };
+  toggle.addEventListener("click", () => {
+    menu.hidden = !menu.hidden;
+    sync();
+    if (!menu.hidden) menu.querySelector(`[data-theme-choice="${getTheme()}"]`)?.focus();
   });
+  menu.querySelectorAll("[data-theme-choice]").forEach((item) => {
+    item.addEventListener("click", () => setTheme(item.dataset.themeChoice));
+    item.addEventListener("keydown", (event) => {
+      const options = [...menu.querySelectorAll("[data-theme-choice]")];
+      const index = options.indexOf(item);
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault(); options[(index + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length].focus();
+      }
+      if (event.key === "Escape") { event.preventDefault(); closeMenu(true); }
+    });
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (!event.target.closest(".theme-picker-wrap")) closeMenu();
+  });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) closeMenu(true); });
+  sync();
 }
 initThemeToggle();
 

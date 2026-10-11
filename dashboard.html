@@ -12,6 +12,14 @@
     <aside class="sidebar">
       <div class="brand">
         <img class="logo" src="icons/128.png" alt="">
+        <svg class="logo-xp" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <path d="M7 4h27l8 8v32H7z" fill="#f5f5f5" stroke="#173b70" stroke-width="2"/>
+          <path d="M34 4v9h8" fill="#c8d7ed" stroke="#173b70" stroke-width="1.5"/>
+          <g transform="translate(12 16) skewY(-8)">
+            <path d="M0 0h10v10H0z" fill="#f44336"/><path d="M12 0h10v10H12z" fill="#69b92e"/>
+            <path d="M0 12h10v10H0z" fill="#1689e8"/><path d="M12 12h10v10H12z" fill="#f7c928"/>
+          </g>
+        </svg>
         <div class="brand-text">LinkDeck<small>Bookmarks &amp; extensions</small></div>
       </div>
 
@@ -35,7 +43,14 @@
           <p class="page-subtitle">Bookmarks, tools, and little things worth coming back to.</p>
         </div>
         <div class="heading-actions">
-          <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" title="Switch to dark mode"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark mode</span></button>
+          <div class="theme-picker-wrap">
+            <button id="themeToggle" class="theme-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" title="Choose appearance"><span class="theme-icon" aria-hidden="true">▤</span><span class="theme-label">Theme</span><span class="theme-caret" aria-hidden="true">▾</span></button>
+            <div id="themeMenu" class="theme-menu" role="menu" aria-label="Choose a theme" hidden>
+              <button type="button" role="menuitemradio" data-theme-choice="light" aria-checked="true"><span class="theme-swatch swatch-original" aria-hidden="true"></span><span><strong>LinkDeck Original</strong><small>Warm paper &amp; mustard</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
+              <button type="button" role="menuitemradio" data-theme-choice="xp" aria-checked="false"><span class="theme-swatch swatch-xp" aria-hidden="true"></span><span><strong>Windows 98 / XP</strong><small>Classic desktop nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
+              <button type="button" role="menuitemradio" data-theme-choice="dark" aria-checked="false"><span class="theme-swatch swatch-dark" aria-hidden="true"></span><span><strong>Midnight</strong><small>Low-glare charcoal</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
+            </div>
+          </div>
           <div class="heading-mark" aria-hidden="true"><span>↗</span></div>
         </div>
       </div>
@@ -137,6 +152,12 @@
         <button id="exportBtn" class="btn">Export notes</button>
         <button id="importBtn" class="btn">Import notes</button>
         <input id="importFile" type="file" accept="application/json" hidden>
+      </div>
+      <div class="settings-links" aria-label="LinkDeck project links">
+        <span class="settings-links-label">LINKDECK</span>
+        <a href="privacy.html" target="_blank" rel="noopener">Privacy policy ↗</a>
+        <a href="https://github.com/LagBack/linkdeck" target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>
+        <a href="https://github.com/LagBack/linkdeck/issues" target="_blank" rel="noopener noreferrer">Report a bug / request a feature ↗</a>
       </div>
     </div>
   </dialog>
