@@ -1173,3 +1173,101 @@ hr { border-color: var(--line-soft) !important; }
 :root[data-theme="pixel"] .page-kicker { font-size:11px; line-height:1.65; letter-spacing:.65px; }
 :root[data-theme="pixel"] .settings-links-label { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }
 .settings-credit { font:inherit; letter-spacing:inherit; text-transform:none; }
+
+/* Cutecore — a pastel sticker diary with a little early-web sweetness. */
+.logo-cutecore { display:none; width:54px; height:54px; flex:0 0 54px; object-fit:contain; }
+.cutecore-mark { display:none; }
+.theme-swatch.swatch-cutecore { background:linear-gradient(135deg,#fff8fc 0 34%,#f6a9ce 34% 66%,#e8d9ff 66%); border:1px solid #e7a0c3; }
+:root[data-theme="cutecore"] {
+ color-scheme:light;
+ --bg:#fff4fa; --bg2:#ffe8f3; --card:#fffafd; --card-h:#ffedf6;
+ --line:#d985b0; --line-soft:#f0c4db; --text:#713d5a; --muted:#986782;
+ --accent:#f3a5cb; --accent-ink:#6e3453; --accent-soft:#ffe0ef;
+ --green:#548f7c; --green-soft:#e2f5ee; --danger:#c35b84; --shadow:0 5px 14px rgba(204,111,161,.13);
+}
+:root[data-theme="cutecore"] body { background-color:var(--bg); background-image:linear-gradient(45deg,rgba(244,177,211,.15) 25%,transparent 25%,transparent 75%,rgba(244,177,211,.15) 75%),linear-gradient(45deg,rgba(244,177,211,.15) 25%,transparent 25%,transparent 75%,rgba(244,177,211,.15) 75%); background-size:28px 28px; background-position:0 0,14px 14px; }
+:root[data-theme="cutecore"] .sidebar { background:rgba(255,232,243,.94); border-right:2px solid #edb0cf; }
+:root[data-theme="cutecore"] .brand { border-bottom:1px dashed #e6a3c4; }
+:root[data-theme="cutecore"] .logo-cutecore { display:block; filter:drop-shadow(0 3px 3px rgba(199,103,153,.18)); }
+:root[data-theme="cutecore"] .logo,:root[data-theme="cutecore"] .logo-xp,:root[data-theme="cutecore"] .logo-scene,:root[data-theme="cutecore"] .logo-gxsc,:root[data-theme="cutecore"] .logo-pixel { display:none; }
+:root[data-theme="cutecore"] .brand-text { color:#a84f7d; letter-spacing:-.6px; }
+:root[data-theme="cutecore"] .brand-text small { color:#a66b89; }
+:root[data-theme="cutecore"] .nav-head { color:#b16f91; border-top-color:#efc1d8; }
+:root[data-theme="cutecore"] .nav-item { color:#814b67; border-radius:9px; }
+:root[data-theme="cutecore"] .nav-item:hover { background:#fff6fb; border-color:#efc1d8; }
+:root[data-theme="cutecore"] .nav-item.active { background:#f6b6d6; color:#713652; border-color:#df8db7; box-shadow:0 2px 0 #e9a5c8; }
+:root[data-theme="cutecore"] .nav-item .ico { color:#d66f9f; }
+:root[data-theme="cutecore"] .main { background:rgba(255,248,252,.72); border-radius:18px 0 0 0; }
+:root[data-theme="cutecore"] .page-kicker { color:#bd6b95; letter-spacing:1.5px; }
+:root[data-theme="cutecore"] .page-heading h1 { color:#a84978; letter-spacing:-1.1px; }
+:root[data-theme="cutecore"] .page-subtitle { color:#96617d; }
+:root[data-theme="cutecore"] .heading-mark { background:#ffd6e9; border:2px solid #e79bc0; box-shadow:0 4px 0 #f0bfd8; transform:rotate(3deg); }
+:root[data-theme="cutecore"] .heading-mark > span:first-child,:root[data-theme="cutecore"] .heading-mark .scene-mark,:root[data-theme="cutecore"] .heading-mark .gxsc-mark { display:none; }
+:root[data-theme="cutecore"] .cutecore-mark { display:block; color:#cf6498; font-size:30px; text-shadow:1px 2px #fff; }
+:root[data-theme="cutecore"] .theme-toggle,:root[data-theme="cutecore"] .btn,:root[data-theme="cutecore"] .icon-btn,:root[data-theme="cutecore"] .search { border-radius:9px; border-color:#e6a4c4; box-shadow:0 2px 0 rgba(197,103,151,.13); }
+:root[data-theme="cutecore"] .theme-toggle { background:#fffafd; color:#914c70; }
+:root[data-theme="cutecore"] .theme-toggle:hover,:root[data-theme="cutecore"] .btn:hover,:root[data-theme="cutecore"] .icon-btn:hover { background:#ffe8f3; border-color:#d985b0; }
+:root[data-theme="cutecore"] .btn.primary { background:#f6b1d2; border-color:#d985b0; color:#713652; box-shadow:0 3px 0 #e5a0c3; }
+:root[data-theme="cutecore"] .btn.primary:hover { background:#ffc9e1; }
+:root[data-theme="cutecore"] .topbar { background:rgba(255,244,250,.92); }
+:root[data-theme="cutecore"] .search { background:#fffafd; border-color:#e9b2ce; }
+:root[data-theme="cutecore"] .search:focus-within { outline:2px solid #e7a0c3; }
+:root[data-theme="cutecore"] .search input::placeholder { color:#a97891; }
+:root[data-theme="cutecore"] .seg { border-radius:9px; border-color:#e5a5c5; background:#fffafd; }
+:root[data-theme="cutecore"] .seg button { color:#986782; border-right-color:#f0c4db; }
+:root[data-theme="cutecore"] .seg button.on { background:#ffe0ef; color:#8f456b; }
+:root[data-theme="cutecore"] .card { border-radius:12px; border-color:#efc0d8; background:#fffafd; box-shadow:0 4px 0 rgba(226,155,190,.16); }
+:root[data-theme="cutecore"] .card:hover { border-color:#dc8fb7; background:#fff; box-shadow:0 7px 15px rgba(204,111,161,.13); transform:translateY(-2px); }
+:root[data-theme="cutecore"] .thumb { background:#ffe3f0; border-bottom-color:#efc0d8; }
+:root[data-theme="cutecore"] .thumb::before { background:linear-gradient(#fff8fc,#f8d5e7); border-bottom-color:#edbfd6; }
+:root[data-theme="cutecore"] .thumb.placeholder { background:linear-gradient(135deg,#ffe6f2,#f4e6ff 55%,#e0f6f0); }
+:root[data-theme="cutecore"] .thumb.placeholder .letter { background:#fffafd; border-color:#e5a5c5; color:#bd5f91; }
+:root[data-theme="cutecore"] .title,:root[data-theme="cutecore"] .card-title { color:#91476d; }
+:root[data-theme="cutecore"] .desc,:root[data-theme="cutecore"] .card-desc,:root[data-theme="cutecore"] .card-note { color:#966782; }
+:root[data-theme="cutecore"] .card-foot { border-top-color:#f0c4db; }
+:root[data-theme="cutecore"] .badge { background:#ffe0ef; color:#91476d; }
+:root[data-theme="cutecore"] .badge.bm { background:#e0f5ec; color:#3f7965; }
+:root[data-theme="cutecore"] .tag { background:#fff0f7; border-color:#efc0d8; color:#925171; }
+:root[data-theme="cutecore"] .note-btn:hover,:root[data-theme="cutecore"] .note-btn.has { background:#ffe0ef; border-color:#e29bc0; }
+:root[data-theme="cutecore"] .panel { background:#fff5fa; border-left:1px solid #efbfd7; }
+:root[data-theme="cutecore"] .panel-head { border-bottom-color:#f0c4db; }
+:root[data-theme="cutecore"] .panel-head .t { color:#91476d; }
+:root[data-theme="cutecore"] .panel-head .u { color:#986782; }
+:root[data-theme="cutecore"] .panel-close { background:#fffafd; border:1px solid #e7a8c7; color:#91476d; border-radius:8px; }
+:root[data-theme="cutecore"] textarea,:root[data-theme="cutecore"] input[type="text"],:root[data-theme="cutecore"] input[type="url"],:root[data-theme="cutecore"] input[type="search"],:root[data-theme="cutecore"] select { background:#fffafd; color:#713d5a; border:1px solid #e4a3c4; border-radius:8px; }
+:root[data-theme="cutecore"] textarea:focus,:root[data-theme="cutecore"] input:focus,:root[data-theme="cutecore"] select:focus { border-color:#cc6c9d; box-shadow:0 0 0 2px rgba(220,143,183,.16); }
+:root[data-theme="cutecore"] .field-label,:root[data-theme="cutecore"] .hint { color:#966782; }
+:root[data-theme="cutecore"] dialog { background:#fff5fa; color:#713d5a; border:1px solid #e5a5c5; border-radius:14px; box-shadow:0 18px 45px rgba(160,77,119,.2); }
+:root[data-theme="cutecore"] dialog::backdrop { background:rgba(115,57,87,.25); backdrop-filter:blur(2px); }
+:root[data-theme="cutecore"] .dlg-head { background:linear-gradient(100deg,#f6b1d2,#ffe1ef); border-bottom:1px solid #e6a4c4; color:#793e5d; }
+:root[data-theme="cutecore"] .onboarding section h2 { color:#a84978; }
+:root[data-theme="cutecore"] .onboarding-copy { color:#966782; }
+:root[data-theme="cutecore"] .theme-menu { background:#fff7fb; border-color:#e8a7c7; border-radius:12px; box-shadow:0 12px 28px rgba(160,77,119,.17); }
+:root[data-theme="cutecore"] .theme-menu button { color:#814b67; border-radius:8px; }
+:root[data-theme="cutecore"] .theme-menu button:hover,:root[data-theme="cutecore"] .theme-menu button.selected { background:#ffe7f2; border-color:#e7a0c3; }
+:root[data-theme="cutecore"] .theme-menu button small { color:#986782; }
+:root[data-theme="cutecore"] .theme-check { color:#b74f83; }
+:root[data-theme="cutecore"] .swatch-cutecore { box-shadow:inset 0 0 0 2px #fff8fc; }
+:root[data-theme="cutecore"] .empty { color:#966782; }
+:root[data-theme="cutecore"] .empty-ico { color:#d66f9f; }
+:root[data-theme="cutecore"] ::selection { background:#f3b2d3; color:#63334d; }
+:root[data-theme="cutecore"] :focus-visible { outline:2px solid #bf5b8c; outline-offset:2px; }
+.preview-cutecore { background:repeating-linear-gradient(45deg,#fff7fb 0 10px,#fbe1ee 10px 20px); border-color:#e6a4c4; }
+.preview-cutecore .preview-sidebar { background:#f7c3dc; border-color:#e6a4c4; }
+.preview-cutecore .preview-line { background:#d97eaa; }
+.preview-cutecore .preview-line.short { background:#c6b0e9; }
+.preview-cutecore .preview-tile { background:#fffafd; border-color:#e9b2ce; box-shadow:0 2px 0 #f1c5dc; }
+@media (max-width:760px) { :root[data-theme="cutecore"] .main { border-radius:0; } }
+@media (prefers-reduced-motion:reduce) { :root[data-theme="cutecore"] *, :root[data-theme="cutecore"] *::before, :root[data-theme="cutecore"] *::after { transition:none !important; animation:none !important; } }
+
+
+/* Cutecore finishing touches: keep the global form styling out of the search shell. */
+.cutecore-brand-deco, .cutecore-heading-deco { display:none; }
+:root[data-theme="cutecore"] .cutecore-brand-deco { display:inline; color:#d66f9f; font-size:.78em; font-weight:700; letter-spacing:0; white-space:nowrap; vertical-align:middle; }
+:root[data-theme="cutecore"] .cutecore-heading-deco { display:inline; color:#cf6498; font-size:.56em; font-weight:700; letter-spacing:-.03em; white-space:nowrap; vertical-align:middle; }
+:root[data-theme="cutecore"] .search input[type="search"] { appearance:none; -webkit-appearance:none; background:transparent; border:0; border-radius:0; box-shadow:none; outline:0; padding:12px 0; color:#713d5a; min-width:0; }
+:root[data-theme="cutecore"] .search input[type="search"]:focus { border:0; box-shadow:none; outline:0; }
+:root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-decoration,
+:root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-cancel-button,
+:root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-results-button,
+:root[data-theme="cutecore"] .search input[type="search"]::-webkit-search-results-decoration { -webkit-appearance:none; }
