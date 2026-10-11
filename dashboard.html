@@ -55,11 +55,24 @@
     <form method="dialog" id="addForm" class="dlg">
       <div class="dlg-head"><h3>Add bookmark</h3><button type="button" class="icon-btn" data-close>✕</button></div>
       <label>URL<input id="addUrl" type="url" placeholder="https://example.com" required></label>
-      <label>Name<input id="addTitle" type="text" placeholder="Website name"></label>
+      <label>Name (optional override)<input id="addTitle" type="text" placeholder="Uses bookmark title if empty"></label>
       <label>Notes (optional)<textarea id="addNotes" rows="3" placeholder="Add a note…"></textarea></label>
       <label>Category<select id="addCat"></select></label>
       <button class="btn primary wide" type="submit">Save</button>
     </form>
+  </dialog>
+
+  <dialog id="firstRunDialog">
+    <div class="dlg">
+      <div class="dlg-head"><h3>Welcome to LinkDeck!</h3><button type="button" class="icon-btn" data-close>✕</button></div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6">
+        We noticed this is your first time opening LinkDeck. Would you like to run <strong>Auto-sort</strong> on all your bookmarks now? It will automatically organize them into categories based on their content.
+      </p>
+      <div class="row" style="gap:8px;margin-top:4px">
+        <button id="firstRunYes" class="btn primary">⚡ Auto-sort now</button>
+        <button id="firstRunLater" class="btn">Maybe later</button>
+      </div>
+    </div>
   </dialog>
 
   <dialog id="settingsDialog">
@@ -77,6 +90,12 @@
         <button id="clearShotsBtn" class="btn">Clear previews</button>
       </div>
       <div id="genStatus" class="hint"></div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:4px 0;">
+      <div class="row" style="flex-wrap:wrap;gap:6px">
+        <button id="autoSortBtn" class="btn">⚡ Auto-sort</button>
+        <small style="color:var(--muted);line-height:1.5">Reads all bookmarks, assigns categories and tags from domain heuristics.</small>
+      </div>
+      <div id="autoSortStatus" class="hint"></div>
       <label class="check">
         <input id="previewsToggle" type="checkbox">
         <span>Online preview service (for pages without a screenshot)

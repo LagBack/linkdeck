@@ -1,11 +1,11 @@
 "use strict";
 
 const $ = (s) => document.querySelector(s);
-const DEFAULT_CATS = ["Development", "Learning", "Projects", "Entertainment", "Work", "Other"];
+const DEFAULT_CATS = ["Discussions/Forums", "Projects", "Learning", "Tools", "Development", "Entertainment", "Social", "Shopping", "Work", "Other"];
 
 const state = {
   items: [],
-  meta: {},            // key -> { notes, tags[], category, pinned }
+  meta: {},            // key -> { notes, tags[], category, pinned, displayName }
   cats: [...DEFAULT_CATS],
   settings: { previews: false, localShots: false, showExtensions: true, view: "grid" },
   shots: new Map(),    // normalized url -> object URL of the saved preview
@@ -18,7 +18,12 @@ const state = {
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 const favicon = (u, size = 64) => `${chrome.runtime.getURL("/_favicon/")}?pageUrl=${encodeURIComponent(u)}&size=${size}`;
-const getMeta = (key) => state.meta[key] || (state.meta[key] = { notes: "", tags: [], category: "Other", pinned: false });
+const getMeta = (key) => state.meta[key] || (state.meta[key] = { notes: "", tags: [], category: "Other", pinned: false, displayName: "" });
+
+function displayNameFor(it) {
+  const m = getMeta(it.key);
+  return (m.displayName && m.displayName.trim()) ? m.displayName.trim() : it.title;
+}
 
 function gradient(seed) {
   let h = 0;
@@ -73,9 +78,9 @@ function visible() {
     .filter((it) => {
       if (!q) return true;
       const m = getMeta(it.key);
-      return [it.title, it.url, it.desc, m.notes, m.tags.join(" "), catOf(it)].join(" ").toLowerCase().includes(q);
+      return [it.title, displayNameFor(it), it.url, it.desc, m.notes, m.tags.join(" "), catOf(it)].join(" ").toLowerCase().includes(q);
     })
-    .sort((a, b) => (getMeta(b.key).pinned - getMeta(a.key).pinned) || a.title.localeCompare(b.title));
+    .sort((a, b) => (getMeta(b.key).pinned - getMeta(a.key).pinned) || displayNameFor(a).localeCompare(displayNameFor(b)));
 }
 
 /* ---------- Rendering ---------- */
@@ -121,10 +126,11 @@ function render() {
   grid.innerHTML = items.map((it) => {
     const m = getMeta(it.key);
     const icon = it.type === "extension" ? it.icon : favicon(it.url, 32);
+    const dn = displayNameFor(it);
     return `<article class="card ${it.type === "extension" && !it.enabled ? "disabled" : ""}" data-key="${esc(it.key)}">
       ${thumbHtml(it)}
       <div class="card-body">
-        <div class="title-row">${icon ? `<img class="fav" src="${esc(icon)}" alt="">` : ""}<span class="title">${esc(it.title)}</span></div>
+        <div class="title-row">${icon ? `<img class="fav" src="${esc(icon)}" alt="">` : ""}<span class="title" title="${esc(it.title)}">${esc(dn)}</span></div>
         <div class="desc">${esc(it.desc)}</div>
         ${m.notes ? `<div class="note-preview">${esc(m.notes)}</div>` : ""}
         <div class="card-foot">
@@ -159,6 +165,7 @@ function openPanel(key) {
   const it = state.items.find((i) => i.key === key);
   if (!it) return closePanel();
   const m = getMeta(key);
+  const dn = displayNameFor(it);
   const panel = $("#panel");
   panel.hidden = false;
   panel.innerHTML = `
@@ -167,11 +174,15 @@ function openPanel(key) {
       ${thumbHtml(it)}
     </div>
     <div class="panel-body">
-      <div class="panel-head"><div><div class="t">${esc(it.title)}</div><div class="u">${esc(it.url || it.desc)}</div></div></div>
+      <div class="panel-head"><div><div class="t">${esc(dn)}</div><div class="u">${esc(it.url || it.desc)}</div></div></div>
       <div class="panel-actions">
         <button class="btn primary" data-act="open">${it.type === "extension" ? "Settings" : "Open"}</button>
         ${it.type === "extension" ? `<button class="btn" data-act="toggle">${it.enabled ? "Disable" : "Enable"}</button>` : `<button class="btn danger" data-act="delete">Delete</button>`}
       </div>
+      <label>
+        <span class="field-label"><span>Display name</span><small>Custom label shown on cards (leave empty to use original title)</small></span>
+        <input id="displayNameInput" type="text" value="${esc(m.displayName)}" placeholder="Use bookmark title">
+      </label>
       <div>
         <div class="field-label"><span>Notes</span><span id="noteCount">${m.notes.length}/500</span></div>
         <textarea id="noteInput" rows="6" maxlength="500" placeholder="Reminders, snippets, what to build next…">${esc(m.notes)}</textarea>
@@ -241,6 +252,16 @@ document.addEventListener("input", (e) => {
     $("#noteCount").textContent = `${e.target.value.length}/500`;
     persist(); render();
   }
+  if (e.target.id === "displayNameInput") {
+    getMeta(state.selected).displayName = e.target.value;
+    persist(); render();
+    // Update panel title live without re-opening
+    const it = state.items.find((i) => i.key === state.selected);
+    if (it && state.selected) {
+      const tEl = document.querySelector(".panel-head .t");
+      if (tEl) tEl.textContent = displayNameFor(it);
+    }
+  }
 });
 document.addEventListener("change", (e) => {
   if (e.target.id === "catSelect") { getMeta(state.selected).category = e.target.value; persist(); render(); }
@@ -277,8 +298,13 @@ $("#addBtn").onclick = async () => {
 $("#addForm").addEventListener("submit", async () => {
   let url = $("#addUrl").value.trim();
   if (!/^[a-z]+:/i.test(url)) url = "https://" + url;
-  await chrome.bookmarks.create({ title: $("#addTitle").value.trim() || host(url), url });
+  const title = $("#addTitle").value.trim() || host(url);
+  await chrome.bookmarks.create({ title, url });
   const m = getMeta("b:" + url);
+  // If a custom name was provided, store it as displayName
+  if ($("#addTitle").value.trim()) {
+    m.displayName = $("#addTitle").value.trim();
+  }
   m.notes = $("#addNotes").value.trim();
   m.category = $("#addCat").value;
   persist();
@@ -347,6 +373,191 @@ $("#importFile").onchange = async (e) => {
   } catch { alert("That file doesn't look like a LinkDeck export."); }
 };
 
+$("#autoSortBtn").onclick = async () => {
+  const bookmarkCount = state.items.filter((i) => i.type === "bookmark").length;
+  if (!bookmarkCount) { $("#autoSortStatus").textContent = "No bookmarks to sort."; return; }
+  if (!confirm(`Auto-sort ${bookmarkCount} bookmarks?\n\nThis will assign categories and tags based on each URL's domain and structure.`)) return;
+
+  autoSort();
+
+  const catCounts = {};
+  for (const it of state.items) {
+    const c = getMeta(it.key).category || "Other";
+    catCounts[c] = (catCounts[c] || 0) + 1;
+  }
+  const tagSet = new Set();
+  for (const m of Object.values(state.meta)) { if (m.tags) m.tags.forEach((t) => tagSet.add(t)); }
+
+  $("#autoSortStatus").textContent = `Done! Categorized ${bookmarkCount} bookmarks · ${tagSet.size} unique tags added.`;
+  persist();
+  render();
+};
+
+$("#firstRunYes").onclick = async () => {
+  const bookmarkCount = state.items.filter((i) => i.type === "bookmark").length;
+  if (bookmarkCount) {
+    autoSort();
+    const tagSet = new Set();
+    for (const m of Object.values(state.meta)) { if (m.tags) m.tags.forEach((t) => tagSet.add(t)); }
+    $("#autoSortStatus").textContent = `Auto-sorted ${bookmarkCount} bookmarks · ${tagSet.size} unique tags added.`;
+  }
+  persist();
+  render();
+  $("#firstRunDialog").close();
+};
+
+$("#firstRunLater").onclick = () => {
+  chrome.storage.local.set({ linkdeckFirstRunDone: true });
+  $("#firstRunDialog").close();
+};
+
+/* ---------- Auto-sort helpers ---------- */
+const DOMAIN_CATS = [
+  { patterns: ["youtube.com", "vimeo.com", "twitch.tv", "netflix.com", "hulu.com", "disneyplus.com", "spotify.com"], category: "Entertainment" },
+  { patterns: ["twitter.com", "x.com", "linkedin.com", "facebook.com", "instagram.com", "tiktok.com", "mastodon.social"], category: "Social" },
+  { patterns: ["amazon.com", "shopify.com", "ebay.com", "etsy.com", "walmart.com", "target.com"], category: "Shopping" },
+  { patterns: ["gmail.com", "outlook.com", "mail.google.com", "proton.me"], category: "Work" },
+  { patterns: ["drive.google.com", "docs.google.com", "sheets.google.com", "dropbox.com", "onedrive.live.com", "notion.so", "linear.app", "figma.com", "slack.com", "discord.com", "jira.atlassian.net", "confluence"], category: "Work" },
+  { patterns: ["wikipedia.org", "w3.org", "caniuse.com", "pub.dev", "golang.org", "rust-lang.org", "python.org"], category: "Learning" },
+];
+
+const DOMAIN_TAGS = [
+  { patterns: ["github.com", "gitlab.com", "bitbucket.org"], tags: ["code", "vcs"] },
+  { patterns: ["youtube.com"], tags: ["video", "tutorials"] },
+  { patterns: ["stackoverflow.com"], tags: ["qa", "coding-help"] },
+  { patterns: ["twitter.com", "x.com"], tags: ["social", "microblog"] },
+  { patterns: ["reddit.com"], tags: ["community", "forums"] },
+  { patterns: ["netflix.com", "hulu.com"], tags: ["streaming"] },
+  { patterns: ["medium.com", "dev.to"], tags: ["articles", "tech-blog"] },
+];
+
+const DISCUSSION_KEYWORDS = ["forum", "discussion", "community", "board", "threads", "conversation", "comments", "review", "reviews"];
+const PROJECT_KEYWORDS = ["project", "projects", "repository", "repos", "repo", "workspace", "workspace", "site:demo", "live-demo", "showcase", "portfolio", "hackathon", "open-source", "oss", "challenge", "competition"];
+const LEARNING_KEYWORDS = ["blog", "articles", "tutorial", "learn", "academy", "course", "lesson", "guide", "handbook", "manual", "documentation", "docs", "wiki", "notes"];
+const TOOL_KEYWORDS = ["converter", "calculator", "editor", "compress", "resize", "crop", "trim", "viewer", "format", "generator", "builder", "maker", "creator", "previewer", "linter", "formatter", "beautifier", "minifier", "validator"];
+
+function inferCategory(url) {
+  if (!url || !/^https?:/.test(url)) return null;
+
+  // Priority 1: Discussions/Forums — path keywords first (questions, community, forum, etc.)
+  const lowerUrl = url.toLowerCase();
+  for (const kw of DISCUSSION_KEYWORDS) {
+    if (lowerUrl.includes(kw)) return "Discussions/Forums";
+  }
+  // Also check hostname for known question/community sites
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+    const discussionHosts = [
+      "stackoverflow.com", "superuser.com", "serverfault.com", "askubuntu.com",
+      "quora.com", "groups.google.com", "discourse.org",
+      "talk.google.com", "forums.",
+    ];
+    for (const dh of discussionHosts) { if (host.includes(dh)) return "Discussions/Forums"; }
+  } catch {}
+
+  // Priority 2: Projects — path keywords or known project hosts
+  for (const pk of PROJECT_KEYWORDS) {
+    if (lowerUrl.includes(pk)) return "Projects";
+  }
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./, "").toLowerCase();
+    const projPaths = ["org", "repos", "repo", "pulled", "pull-request", "pr/", "issues", "settings"];
+    for (const pp of projPaths) { if (u.pathname.split("/").some(p => p.toLowerCase() === pp)) return "Projects"; }
+    const projectHosts = ["github.com", "gitlab.com", "bitbucket.org", "heroku.com", "vercel.com", "netlify.app", "railway.app", "render.com", "codepen.io", "jsfiddle.net", "codesandbox.io", "replit.com", "glitch.com"];
+    for (const ph of projectHosts) { if (host === ph || host.endsWith("." + ph)) return "Projects"; }
+  } catch {}
+
+  // Priority 3: Learning — path keywords or known learning hosts
+  for (const lk of LEARNING_KEYWORDS) {
+    if (lowerUrl.includes(lk)) return "Learning";
+  }
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+    const learnHosts = [
+      "medium.com", "dev.to", "css-tricks.com", "freecodecamp.org", "coursera.org", "udemy.com",
+      "edx.org", "kaggle.com", "hackernoon.com", "substack.com", "beebom.com", "howtogeek.com",
+      "lifehacker.com", "arxiv.org", "researchgate.net", "scholar.google.com", "w3schools.com",
+    ];
+    for (const lh of learnHosts) { if (host === lh || host.endsWith("." + lh)) return "Learning"; }
+  } catch {}
+
+  // Priority 4: Tools — path keywords or known tool hosts
+  for (const tk of TOOL_KEYWORDS) {
+    if (lowerUrl.includes(tk)) return "Tools";
+  }
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+    const toolHosts = [
+      "iloveimg.com", "tinypng.com", "compress2go.com", "smallpdf.com", "pdf24.org",
+      "remove.bg", "clideo.com", "kapwing.com", "handbrake.fr",
+      "convertio.co", " Zamzar", "online-convert.com",
+      "jsonformatter.org", "regex101.com", "tableconvert.com",
+      "imgbb.com", "imgur.com", "giphy.com",
+      "canva.com", "photoshop.com", "inkscape.org",
+    ];
+    for (const th of toolHosts) { if (host === th || host.endsWith("." + th)) return "Tools"; }
+  } catch {}
+
+  // Fallback: known domain→category mapping
+  for (const entry of DOMAIN_CATS) {
+    const host = (() => { try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return ""; } })();
+    for (const p of entry.patterns) {
+      if (host.includes(p.toLowerCase()) || url.toLowerCase().includes(p.toLowerCase())) return entry.category;
+    }
+  }
+  return null;
+}
+
+function inferTags(url) {
+  if (!url || !/^https?:/.test(url)) return [];
+  const tags = [];
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+    for (const entry of DOMAIN_TAGS) {
+      for (const p of entry.patterns) {
+        if (host.includes(p.toLowerCase()) || url.toLowerCase().includes(p.toLowerCase())) { tags.push(...entry.tags); break; }
+      }
+    }
+  } catch {}
+  try {
+    const u = new URL(url);
+    // Extract path segments as potential tags
+    u.pathname.split("/").filter(Boolean).forEach((seg) => {
+      const clean = seg.replace(/[^a-z0-9-]/gi, "").toLowerCase();
+      if (clean.length > 2 && clean.length < 30 && !tags.includes(clean)) tags.push(clean);
+    });
+    // Add domain-based tag for common services
+    const domainTag = u.hostname.replace(/^www\./, "").split(".")[0];
+    if (!tags.includes(domainTag) && domainTag.length > 2) tags.push(domainTag);
+  } catch {}
+  return [...new Set(tags)]; // unique
+}
+
+function autoSort(progressCb) {
+  let processed = 0;
+  const total = state.items.filter((i) => i.type === "bookmark").length;
+  for (const it of state.items) {
+    if (it.type !== "bookmark") continue;
+    const m = getMeta(it.key);
+    if (!m.category || m.category === "Other" || m.category === "") {
+      const inferred = inferCategory(it.url);
+      if (inferred) m.category = inferred;
+    }
+    if (!m.tags?.length) {
+      const inferredTags = inferTags(it.url);
+      if (inferredTags.length) {
+        for (const t of inferredTags) {
+          if (!m.tags.includes(t)) m.tags.push(t);
+        }
+      }
+    }
+    processed++;
+    progressCb?.(processed, total);
+  }
+  persist();
+}
+
 /* ---------- Init ---------- */
 async function refresh() { await loadItems(); render(); if (state.selected) openPanel(state.selected); }
 
@@ -357,6 +568,13 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
   if (saved.settings) Object.assign(state.settings, saved.settings);
   await loadShots();
   await refresh();
+
+  // Show first-run prompt if this is the user's first time opening LinkDeck
+  const { linkdeckFirstRunDone } = await chrome.storage.local.get("linkdeckFirstRunDone");
+  if (!linkdeckFirstRunDone) {
+    $("#firstRunDialog").showModal();
+  }
+
   for (const ev of ["onCreated", "onRemoved", "onChanged", "onMoved"]) chrome.bookmarks[ev].addListener(() => refresh());
   chrome.management.onInstalled.addListener(refresh);
   chrome.management.onUninstalled.addListener(refresh);
