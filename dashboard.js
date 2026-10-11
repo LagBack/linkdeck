@@ -6,7 +6,7 @@ function initThemeToggle() {
   const toggle = document.getElementById("themeToggle");
   const menu = document.getElementById("themeMenu");
   if (!toggle || !menu) return;
-  const validThemes = new Set(["light", "xp", "dark"]);
+  const validThemes = new Set(["light", "xp", "dark", "scenecore", "gxsc"]);
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
@@ -21,8 +21,8 @@ function initThemeToggle() {
       item.classList.toggle("selected", selected);
     });
     toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight"}[current]}`);
-    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight"}[current]}`;
+    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight",scenecore:"Scenecore",gxsc:"GXSC"}[current]}`);
+    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",dark:"Midnight",scenecore:"Scenecore",gxsc:"GXSC"}[current]}`;
   };
   const closeMenu = (returnFocus = false) => {
     menu.hidden = true;
