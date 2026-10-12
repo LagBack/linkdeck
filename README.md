@@ -41,7 +41,7 @@ Themes are the **most important part** of LinkDeck!!! Switch between distinct lo
       <p align="center"><strong>Pixel Night</strong><br>A cozy 16-bit inspired desk with crisp pixel details.</p>
     </td>
     <td width="50%">
-      <p align="center">More little refinements are always possible — the theme you choose is saved locally.</p>
+      <p align="center">More themes soon to come! Keep yourself updated by downloading the extension</p>
     </td>
   </tr>
 </table>
@@ -61,18 +61,9 @@ Themes are the **most important part** of LinkDeck!!! Switch between distinct lo
 
 Some features are optional and may require permissions or enabling them in Settings.
 
-## Install in Chrome
+## How to install?
 
-LinkDeck is currently installed as an unpacked Chrome extension (soon to be in the store):
-
-1. Download the project ZIP from the repository (or clone the repository).
-2. Extract the ZIP to a folder on your computer.
-3. Open `chrome://extensions` in Chrome.
-4. Turn on **Developer mode**.
-5. Click **Load unpacked** and select the extracted `linkdeck` extension folder — the folder containing `manifest.json`.
-6. Open LinkDeck from the extension icon, then choose your favorite theme.
-
-When you download an updated version, keep a backup of any files you have customized. Browser-stored bookmarks and settings are separate from the extension's code, but it is always wise to keep your own backups.
+LinkDeck is available for free on the chrome web store, [check it out!](https://chromewebstore.google.com/detail/linkdeck/gefiaoeappodpgialcmkphahgjadfbhg)
 
 ## Privacy
 
