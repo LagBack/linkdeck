@@ -1285,3 +1285,151 @@ hr { border-color: var(--line-soft) !important; }
 @keyframes pixel-moon-drift { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-1.5px); } }
 @media (max-width:430px) { :root[data-theme="pixel"] .heading-mark { display:grid; width:42px; height:42px; padding:2px; } :root[data-theme="pixel"] .heading-mark .pixel-mark img { width:21px; height:27px; } }
 @media (prefers-reduced-motion:reduce) { :root[data-theme="pixel"] .pixel-mark img { animation:none !important; } }
+
+
+/* WEBCORE — personal homepage energy, circa 1998–2003 */
+.theme-swatch.swatch-webcore,
+.swatch-webcore { background: repeating-linear-gradient(135deg,#ffef74 0 5px,#ff9b42 5px 10px); border-color:#ff4e00; color:#a000b7; }
+:root[data-theme="webcore"] {
+  --bg:#180b36; --card:#fff4c9; --card-h:#fffbdc; --text:#32105b; --muted:#7e4d88;
+  --line:#e35bce; --line-soft:#f0a4e4; --green:#008b52;
+  color-scheme:light;
+}
+:root[data-theme="webcore"] body {
+  background-color:#180b36;
+  background-image:radial-gradient(circle at 12px 12px,#ff6de8 1.2px,transparent 1.8px),radial-gradient(circle at 32px 32px,#72f8ff 1.2px,transparent 1.8px);
+  background-size:40px 40px;
+  font-family:"Trebuchet MS",Verdana,sans-serif;
+}
+:root[data-theme="webcore"] * { border-radius:2px !important; }
+:root[data-theme="webcore"] .app { gap:12px; padding:14px; }
+:root[data-theme="webcore"] .sidebar,
+:root[data-theme="webcore"] .panel {
+  background:#ffefb5; border:3px ridge #ff83df;
+  box-shadow:5px 5px 0 #6c25a3, inset 0 0 0 2px #fff;
+}
+:root[data-theme="webcore"] .brand { border-bottom:2px dotted #ec50bd; padding-bottom:15px; }
+:root[data-theme="webcore"] .logo { filter:drop-shadow(2px 2px 0 #ff5bce); }
+:root[data-theme="webcore"] .brand-text { color:#a000b7; font-family:"Trebuchet MS",Verdana,sans-serif; font-weight:900; text-shadow:1px 1px #fff,2px 2px #ff79d9; }
+:root[data-theme="webcore"] .brand-text small { color:#6b3b83; }
+:root[data-theme="webcore"] .nav-head { color:#a000b7; border-bottom:1px dotted #e35bce; }
+:root[data-theme="webcore"] .nav-item { color:#541273; border:1px solid transparent; }
+:root[data-theme="webcore"] .nav-item:hover,
+:root[data-theme="webcore"] .nav-item:focus-visible { background:#fff; border:1px dashed #e400a8; box-shadow:0 0 10px #ff73dc; }
+:root[data-theme="webcore"] .nav-item.active { color:#fff; background:linear-gradient(#ff55bd,#b900b8); border:2px outset #ffb2e9; text-shadow:1px 1px #7a0076; box-shadow:0 0 12px #ff62d8; }
+:root[data-theme="webcore"] .main { background:#fff6d5; border:3px ridge #ff83df; box-shadow:5px 5px 0 #6c25a3; }
+:root[data-theme="webcore"] .page-kicker { color:#b000a5; letter-spacing:2px; font-weight:900; }
+:root[data-theme="webcore"] .page-heading h1 { color:#a000b7; text-shadow:2px 2px #fff,4px 4px #ff9cdd; font-family:"Trebuchet MS",Verdana,sans-serif; }
+:root[data-theme="webcore"] .page-subtitle { color:#6d3984; }
+
+:root[data-theme="webcore"] .topbar { background:#fff6d5; border-bottom:2px dotted #e35bce; }
+:root[data-theme="webcore"] .search,
+:root[data-theme="webcore"] .theme-toggle,
+:root[data-theme="webcore"] .btn,
+:root[data-theme="webcore"] .icon-btn,
+:root[data-theme="webcore"] .seg { border:2px outset #ff9bdd; background:#fffbe8; color:#5d1879; box-shadow:2px 2px 0 #e9a0db; }
+:root[data-theme="webcore"] .btn.primary { background:linear-gradient(#ff75c9,#e500a8); color:#fff; border-color:#ffb4e9; text-shadow:1px 1px #9c006c; }
+:root[data-theme="webcore"] .btn:hover,
+:root[data-theme="webcore"] .icon-btn:hover,
+:root[data-theme="webcore"] .theme-toggle:hover { background:#ffffa3; border-color:#ff4bd0; box-shadow:0 0 12px #ff68d8; transform:translateY(-1px); }
+:root[data-theme="webcore"] .seg button.on { background:#ffb9e9; color:#85008b; box-shadow:inset 1px 1px 3px #bc65b1; }
+:root[data-theme="webcore"] .card { background:#fffbe9; border:2px outset #ff9bdd; box-shadow:3px 3px 0 #dba1dc; }
+:root[data-theme="webcore"] .card:hover { background:#fff; border-color:#ff45c9; transform:translateY(-3px) rotate(-.25deg); box-shadow:0 0 0 2px #ff8de0,0 0 18px #ff55d2,4px 5px 0 #7b36aa; }
+:root[data-theme="webcore"] .thumb { border-bottom:2px ridge #ff9bdd; background:#f7d8ff; }
+:root[data-theme="webcore"] .title { color:#9a00a7; }
+:root[data-theme="webcore"] .desc,
+:root[data-theme="webcore"] .status { color:#71417e; }
+:root[data-theme="webcore"] .badge { background:#ffcef0; color:#970083; border:1px solid #ff83d8; }
+:root[data-theme="webcore"] .tag { background:#e6faff; color:#006e8d; border:1px dashed #52cfe9; }
+:root[data-theme="webcore"] .pin.on { background:#ffdb58; color:#6b3500; box-shadow:0 0 8px #ffcf3f; }
+:root[data-theme="webcore"] .theme-menu { background:#fff4c9; border:3px ridge #ff83df; box-shadow:5px 5px 0 #6c25a3; }
+:root[data-theme="webcore"] .theme-menu button { color:#541273; }
+:root[data-theme="webcore"] .theme-menu button:hover,
+:root[data-theme="webcore"] .theme-menu button.selected { background:#ffe1f6; border-color:#e35bce; }
+:root[data-theme="webcore"] ::selection { background:#ff8bdc; color:#3d0754; }
+:root[data-theme="webcore"] .main::before { content:"✧･ﾟ: *✧･ﾟ:*  WELCOME TO MY WEB DESK  *:･ﾟ✧*:･ﾟ✧"; display:block; color:#bd00a7; font-size:10px; font-weight:900; text-align:center; letter-spacing:1px; padding:5px; border-bottom:1px dotted #e35bce; margin-bottom:10px; }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-theme="webcore"] .card:hover { animation:webcore-wiggle .28s ease-out; }
+  @keyframes webcore-wiggle { 0%{transform:translateY(0) rotate(0)} 45%{transform:translateY(-4px) rotate(.6deg)} 100%{transform:translateY(-3px) rotate(-.25deg)} }
+}
+
+.webcore-logo-gif,.webcore-good-gif,.webcore-here-gif { display:none; }
+:root[data-theme="webcore"] .logo,
+:root[data-theme="webcore"] .brand-text { display:none; }
+:root[data-theme="webcore"] .webcore-logo-gif { display:block; width:min(100%,210px); height:auto; image-rendering:auto; }
+:root[data-theme="webcore"] .webcore-heading-text { display:none; }
+:root[data-theme="webcore"] .webcore-good-gif { display:inline-block; width:min(100%,min(420px,45vw)); height:auto; vertical-align:middle; margin:0; }
+:root[data-theme="webcore"] .webcore-here-gif { display:none; }
+
+/* Webcore search focus: keep the keyboard cue, without the default mustard halo. */
+:root[data-theme="webcore"] .search:focus-within {
+  outline: none;
+  border-color: #e500a8;
+  box-shadow: inset 0 0 0 1px #ffb9e9, 2px 2px 0 #e9a0db;
+}
+:root[data-theme="webcore"] .search input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Webcore's corner arrow becomes a candy-pink, beveled retro badge. */
+:root[data-theme="webcore"] .heading-mark {
+  background: linear-gradient(145deg, #fff0b8 0%, #ffb9e9 55%, #ff75c9 100%);
+  border: 3px outset #ff9bdd;
+  box-shadow: 4px 4px 0 #6c25a3, inset 1px 1px 0 #fffdf0;
+  transform: rotate(3deg);
+  color: #8b0097;
+  text-shadow: 1px 1px 0 #fff;
+}
+:root[data-theme="webcore"] .heading-mark > span:first-child {
+  font-weight: 900;
+}
+
+/* Webcore scrollbars — candy-pink beveled chrome on a warm paper track. */
+:root[data-theme="webcore"] {
+  scrollbar-color: auto;
+}
+:root[data-theme="webcore"] *,
+:root[data-theme="webcore"] *::before,
+:root[data-theme="webcore"] *::after {
+  scrollbar-color: auto;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar-track {
+  background: #fff0b8;
+  border: 1px solid #e35bce;
+  box-shadow: inset 1px 1px 0 #fffdf0;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #ffb9e9 0%, #ff70cf 48%, #e500a8 100%);
+  border: 2px outset #ffc7ef;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.72), 1px 1px 0 #b64bb2;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #ffe0f7 0%, #ff91dc 48%, #f000b5 100%);
+  border-color: #fff0fb;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(90deg, #e500a8 0%, #ff70cf 100%);
+  border-style: inset;
+}
+:root[data-theme="webcore"] *::-webkit-scrollbar-corner {
+  background: #fff0b8;
+}
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-theme="webcore"],
+  :root[data-theme="webcore"] * {
+    scrollbar-color: #f05ac5 #fff0b8;
+    scrollbar-width: thin;
+  }
+}
+@media (forced-colors: active) {
+  :root[data-theme="webcore"],
+  :root[data-theme="webcore"] * {
+    scrollbar-color: auto;
+  }
+}
