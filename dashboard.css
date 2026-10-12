@@ -1433,3 +1433,84 @@ hr { border-color: var(--line-soft) !important; }
     scrollbar-color: auto;
   }
 }
+
+/* Theme-matched scrollbars for the remaining palettes. Scenecore and Old Web
+   keep their existing dedicated scrollbar treatments above. */
+:root[data-theme="light"],
+:root[data-theme="light"] *,
+:root[data-theme="light"] *::before,
+:root[data-theme="light"] *::after,
+:root[data-theme="xp"],
+:root[data-theme="xp"] body,
+:root[data-theme="xp"] *,
+:root[data-theme="xp"] *::before,
+:root[data-theme="xp"] *::after,
+:root[data-theme="gxsc"],
+:root[data-theme="gxsc"] *,
+:root[data-theme="gxsc"] *::before,
+:root[data-theme="gxsc"] *::after,
+:root[data-theme="pixel"],
+:root[data-theme="pixel"] *,
+:root[data-theme="pixel"] *::before,
+:root[data-theme="pixel"] *::after,
+:root[data-theme="cutecore"],
+:root[data-theme="cutecore"] *,
+:root[data-theme="cutecore"] *::before,
+:root[data-theme="cutecore"] *::after {
+  scrollbar-color: auto;
+}
+
+/* LinkDeck Original — mustard accents on warm paper. */
+:root[data-theme="light"] *::-webkit-scrollbar { width: 12px; height: 12px; }
+:root[data-theme="light"] *::-webkit-scrollbar-track { background: #eee5c9; border: 1px solid #d8cfb8; }
+:root[data-theme="light"] *::-webkit-scrollbar-thumb { background: linear-gradient(90deg,#ffe78a,#e7b900); border: 2px solid #fff2bd; border-radius: 2px; box-shadow: inset 0 0 0 1px #b99400; }
+:root[data-theme="light"] *::-webkit-scrollbar-thumb:hover { background: linear-gradient(90deg,#fff0a8,#ffd21b); }
+:root[data-theme="light"] *::-webkit-scrollbar-thumb:active { background: #d7a900; }
+:root[data-theme="light"] *::-webkit-scrollbar-corner { background: #eee5c9; }
+
+/* Windows 98 / XP — classic gray trough and raised blue controls. */
+:root[data-theme="xp"] *::-webkit-scrollbar { width: 14px; height: 14px; }
+:root[data-theme="xp"] *::-webkit-scrollbar-track { background: #d6d2c8; border: 1px solid #aaa69b; box-shadow: inset 1px 1px 0 #f8f7f2; }
+:root[data-theme="xp"] *::-webkit-scrollbar-thumb { background: linear-gradient(90deg,#dbe9f9,#8bbcf0 48%,#4c91d9); border: 2px outset #f8f7f2; border-radius: 0; box-shadow: inset 1px 1px 0 #fff; }
+:root[data-theme="xp"] *::-webkit-scrollbar-thumb:hover { background: linear-gradient(90deg,#eff7ff,#a8d2ff 48%,#5aa4ed); }
+:root[data-theme="xp"] *::-webkit-scrollbar-thumb:active { border-style: inset; background: #8bbcf0; }
+:root[data-theme="xp"] *::-webkit-scrollbar-corner { background: #d6d2c8; }
+
+/* GXSC — cool, misty cyan glass against deep blue surfaces. */
+:root[data-theme="gxsc"] *::-webkit-scrollbar { width: 11px; height: 11px; }
+:root[data-theme="gxsc"] *::-webkit-scrollbar-track { background: rgba(8,20,35,.82); border: 1px solid #36566f; }
+:root[data-theme="gxsc"] *::-webkit-scrollbar-thumb { background: linear-gradient(135deg,#a8e8f2,#679fbb 55%,#466985); border: 2px solid #203d55; border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(235,253,255,.32); }
+:root[data-theme="gxsc"] *::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg,#d8faff,#9bdce9 55%,#6facc7); border-color: #8dcddd; }
+:root[data-theme="gxsc"] *::-webkit-scrollbar-thumb:active { background: #7bbfd5; }
+:root[data-theme="gxsc"] *::-webkit-scrollbar-corner { background: #14283d; }
+
+/* Pixel Night — chunky navy rails with a warm 16-bit gold thumb. */
+:root[data-theme="pixel"] *::-webkit-scrollbar { width: 13px; height: 13px; }
+:root[data-theme="pixel"] *::-webkit-scrollbar-track { background: #080e25; border: 2px solid #2d4778; }
+:root[data-theme="pixel"] *::-webkit-scrollbar-thumb { background: #ffc66e; border: 2px solid #ffe2a6; border-radius: 0; box-shadow: inset -2px -2px 0 #b87943, inset 2px 2px 0 #fff0c9; }
+:root[data-theme="pixel"] *::-webkit-scrollbar-thumb:hover { background: #ffdb91; }
+:root[data-theme="pixel"] *::-webkit-scrollbar-thumb:active { background: #e7a94f; border-color: #ffc66e; }
+:root[data-theme="pixel"] *::-webkit-scrollbar-corner { background: #080e25; }
+
+/* Cutecore — soft rose tracks and candy-pink pill-like thumbs. */
+:root[data-theme="cutecore"] *::-webkit-scrollbar { width: 12px; height: 12px; }
+:root[data-theme="cutecore"] *::-webkit-scrollbar-track { background: #ffe8f3; border: 1px solid #f0c4db; }
+:root[data-theme="cutecore"] *::-webkit-scrollbar-thumb { background: linear-gradient(135deg,#f8c5df,#e89bc3); border: 2px solid #fff4fa; border-radius: 6px; box-shadow: inset 0 0 0 1px #d985b0; }
+:root[data-theme="cutecore"] *::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg,#ffd8eb,#f3a5cb); }
+:root[data-theme="cutecore"] *::-webkit-scrollbar-thumb:active { background: #df8db7; }
+:root[data-theme="cutecore"] *::-webkit-scrollbar-corner { background: #ffe8f3; }
+
+@supports not selector(::-webkit-scrollbar) {
+  :root[data-theme="light"], :root[data-theme="light"] * { scrollbar-color: #e7b900 #eee5c9; scrollbar-width: thin; }
+  :root[data-theme="xp"], :root[data-theme="xp"] body, :root[data-theme="xp"] * { scrollbar-color: #4c91d9 #d6d2c8; scrollbar-width: thin; }
+  :root[data-theme="gxsc"], :root[data-theme="gxsc"] * { scrollbar-color: #8dcddd #10243a; scrollbar-width: thin; }
+  :root[data-theme="pixel"], :root[data-theme="pixel"] * { scrollbar-color: #ffc66e #080e25; scrollbar-width: thin; }
+  :root[data-theme="cutecore"], :root[data-theme="cutecore"] * { scrollbar-color: #e89bc3 #ffe8f3; scrollbar-width: thin; }
+}
+@media (forced-colors: active) {
+  :root[data-theme="light"], :root[data-theme="light"] *,
+  :root[data-theme="xp"], :root[data-theme="xp"] *,
+  :root[data-theme="gxsc"], :root[data-theme="gxsc"] *,
+  :root[data-theme="pixel"], :root[data-theme="pixel"] *,
+  :root[data-theme="cutecore"], :root[data-theme="cutecore"] * { scrollbar-color: auto; }
+}
