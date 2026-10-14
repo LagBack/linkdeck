@@ -6,7 +6,7 @@ function initThemeToggle() {
   const toggle = document.getElementById("themeToggle");
   const menu = document.getElementById("themeMenu");
   if (!toggle || !menu) return;
-  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore"]);
+  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal"]);
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
@@ -21,8 +21,8 @@ function initThemeToggle() {
       item.classList.toggle("selected", selected);
     });
     toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web"}[current]}`);
-    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web"}[current]}`;
+    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"Terminal"}[current]}`);
+    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"Terminal"}[current]}`;
   };
   const closeMenu = (returnFocus = false) => {
     menu.hidden = true;
@@ -66,6 +66,29 @@ function initThemeToggle() {
   sync();
 }
 initThemeToggle();
+
+// A playful, reversible CRT overlay available in the Terminal theme.
+(function initCrtToggle() {
+  const root = document.documentElement;
+  const button = document.getElementById("crtToggle");
+  if (!button) return;
+  const sync = () => {
+    const isTerminal = root.dataset.theme === "terminal";
+    if (!isTerminal) root.classList.remove("terminal-crt");
+    const enabled = isTerminal && root.classList.contains("terminal-crt");
+    button.setAttribute("aria-pressed", String(enabled));
+    button.setAttribute("aria-label", enabled ? "Turn off CRT screen effect" : "Turn on CRT screen effect");
+    button.disabled = !isTerminal;
+  };
+  button.addEventListener("click", () => {
+    if (root.dataset.theme !== "terminal") return;
+    root.classList.toggle("terminal-crt");
+    sync();
+  });
+  const observer = new MutationObserver(sync);
+  observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  sync();
+})();
 
 const $ = (s) => document.querySelector(s);
 const DEFAULT_CATS = ["Discussions/Forums", "Projects", "Learning", "Tools", "Development", "Entertainment", "Social", "Shopping", "Work", "Other"];

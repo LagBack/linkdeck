@@ -20,6 +20,7 @@
         <img class="logo-scene" src="assets/epic-face.png" alt="" aria-hidden="true">
         <img class="logo-gxsc" src="assets/gxsc-logo.png" alt="" aria-hidden="true">
         <img class="logo-pixel" src="assets/pixel-night-logo.png" alt="" aria-hidden="true">
+        <img class="logo-terminal" src="assets/terminal-linkdeck.svg" alt="" aria-hidden="true">
         <img class="logo-cutecore" src="assets/cutecore-logo.svg" alt="" aria-hidden="true">
         <img class="webcore-logo-gif" src="assets/webcore-linkdeck.gif" alt="LinkDeck" aria-hidden="true"><div class="brand-text">LinkDeck<span class="cutecore-brand-deco" aria-hidden="true"> ⊹ ࣪ ˖ ໒꒱</span><small>Bookmarks &amp; extensions</small></div>
       </div>
@@ -40,7 +41,24 @@
       <div class="page-heading">
         <div>
           <p class="page-kicker">YOUR PERSONAL WEB DESK</p>
-          <h1><span class="webcore-heading-text">Keep the good stuff.</span><img class="webcore-good-gif" src="assets/webcore-good-stuff.gif" alt="Keep the good stuff." aria-hidden="true"><span class="cutecore-heading-deco" aria-hidden="true"> (˶&gt;⩊&lt;˶)</span></h1>
+          <div class="heading-title-row"><h1><span class="webcore-heading-text">Keep the good stuff.</span><img class="webcore-good-gif" src="assets/webcore-good-stuff.gif" alt="Keep the good stuff." aria-hidden="true"><span class="cutecore-heading-deco" aria-hidden="true"> (˶&gt;⩊&lt;˶)</span></h1><button id="crtToggle" class="crt-toggle" type="button" aria-pressed="false" aria-label="Turn on CRT screen effect">
+            <svg class="crt-tv-icon" viewBox="0 0 96 76" role="img" aria-label="Retro green CRT television">
+              <g fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter">
+                <path d="M35 13 23 3M58 13 72 3" stroke-width="2.5"/>
+                <circle cx="23" cy="3" r="2" fill="currentColor" stroke="none"/>
+                <circle cx="72" cy="3" r="2" fill="currentColor" stroke="none"/>
+                <path d="M9 16H87V61H9Z" stroke-width="3"/>
+                <path d="M14 21H66V55H14Z" stroke-width="2"/>
+                <path d="M18 25H62M18 29H62M18 33H62M18 37H62M18 41H62M18 45H62M18 49H62" stroke-width="1" opacity=".75"/>
+                <path d="M72 25H81M72 32H81M72 39H81" stroke-width="2"/>
+                <circle cx="76.5" cy="49" r="4" stroke-width="2"/>
+                <path d="M22 61 18 68H78L74 61M36 68V72M60 68V72" stroke-width="2.5"/>
+              </g>
+              <rect x="18" y="24" width="44" height="28" fill="currentColor" opacity=".09"/>
+              <path d="M18 27H62M18 35H62M18 43H62M18 51H62" stroke="#42ff91" stroke-width="1" opacity=".6"/>
+              <path d="M22 47 31 38 38 43 48 31 59 41" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".85"/>
+            </svg>
+          </button></div>
           <p class="page-subtitle">Bookmarks, tools, and little things worth coming back to.</p>
         </div>
         <div class="heading-actions">
@@ -54,6 +72,7 @@
               <button type="button" role="menuitemradio" data-theme-choice="pixel" aria-checked="false"><span class="theme-swatch swatch-pixel" aria-hidden="true"></span><span><strong>pixel night</strong><small>cozy game desk · 16-bit dreams</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
               <button type="button" role="menuitemradio" data-theme-choice="cutecore" aria-checked="false"><span class="theme-swatch swatch-cutecore" aria-hidden="true"></span><span><strong>Cutecore</strong><small>Pastel stickers &amp; sweet nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
               <button type="button" role="menuitemradio" data-theme-choice="webcore" aria-checked="false"><span class="theme-swatch swatch-webcore" aria-hidden="true"></span><span><strong>Old Web</strong><small>2000s internet vibe</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
+              <button type="button" role="menuitemradio" data-theme-choice="terminal" aria-checked="false"><span class="theme-swatch swatch-terminal" aria-hidden="true"></span><span><strong>terminal</strong><small>command-line era</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="heading-mark" aria-hidden="true"><span>↗</span><span class="scene-mark">★</span><span class="gxsc-mark">✧</span><span class="cutecore-mark">♡</span><span class="pixel-mark"><img src="assets/pixel-moon-sprite.png" alt="" aria-hidden="true"></span></div>
@@ -141,6 +160,14 @@
             <span class="theme-preview-art preview-cutecore"><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
             <span class="theme-preview-name">Cutecore</span><span class="theme-preview-desc">Pink gingham · bows &amp; hearts</span>
           </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="webcore" aria-pressed="false">
+            <span class="theme-preview-art preview-webcore"><span class="preview-titlebar">WELCOME TO MY WEB DESK</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">Old Web</span><span class="theme-preview-desc">Retro web nostalgia · bright colors</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="terminal" aria-pressed="false">
+            <span class="theme-preview-art preview-terminal"><span class="preview-titlebar">LINKDECK.EXE</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">terminal</span><span class="theme-preview-desc">command-line era</span>
+          </button>
         </div>
       </section>
       <section data-onboarding-step="2" hidden>
@@ -219,5 +246,11 @@
   <script src="shots.js"></script>
   <script src="dashboard.js"></script>
 
+  <svg class="crt-filter-defs" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;overflow:hidden">
+    <filter id="terminal-crt-warp" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="1" seed="7" result="signal"/>
+      <feDisplacementMap in="SourceGraphic" in2="signal" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
 </body>
 </html>
