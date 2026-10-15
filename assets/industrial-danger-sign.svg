@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 170" role="img" aria-label="Danger: authorized personnel only">
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#59615d"/><stop offset=".45" stop-color="#252b29"/><stop offset="1" stop-color="#111514"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#e43b32"/><stop offset="1" stop-color="#a91518"/>
+    </linearGradient>
+  </defs>
+  <path d="M10 8H230L236 14V156L228 164H12L4 156V16Z" fill="#090c0b" opacity=".35"/>
+  <path d="M8 5H232L237 10V160L232 165H8L3 160V10Z" fill="url(#metal)" stroke="#87908a" stroke-width="1"/>
+  <path d="M13 15H227V155H13Z" fill="#eeeae0" stroke="#161a18" stroke-width="1.5"/>
+  <path d="M17 19H223V72H17Z" fill="#191d1b"/>
+  <path d="M30 25H210L220 34V56L210 65H30L20 56V34Z" fill="url(#red)" stroke="#fff8eb" stroke-width="2.5"/>
+  <text x="120" y="53" fill="#fffaf0" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="900" text-anchor="middle" letter-spacing="1">DANGER</text>
+  <text x="120" y="91" fill="#202422" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="900" text-anchor="middle" letter-spacing=".5">AUTHORIZED PERSONNEL</text>
+  <text x="120" y="119" fill="#202422" font-family="Arial,Helvetica,sans-serif" font-size="29" font-weight="900" text-anchor="middle" letter-spacing="1">ONLY</text>
+  <path d="M22 133H218" stroke="#b5b9b0" stroke-width="1"/>
+  <g fill="#b6beb8" stroke="#303734" stroke-width="1">
+    <circle cx="10" cy="12" r="3"/><circle cx="230" cy="12" r="3"/><circle cx="10" cy="158" r="3"/><circle cx="230" cy="158" r="3"/>
+  </g>
+</svg>
