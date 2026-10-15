@@ -229,7 +229,7 @@ function render() {
 
 function renderNav() {
   const count = (fn) => state.items.filter(fn).length;
-  const types = [["all", "◫", "All"], ["bookmark", "☆", "Bookmarks"], ["extension", "⧉", "Extensions"]]
+  const types = [["all", '<span class="ico-mask icon-all" aria-hidden="true"></span>', "All"], ["bookmark", '<span class="ico-mask icon-bookmarks" aria-hidden="true"></span>', "Bookmarks"], ["extension", '<span class="ico-mask icon-extensions" aria-hidden="true"></span>', "Extensions"]]
     .filter(([t]) => t !== "extension" || state.settings.showExtensions);
   $("#typeNav").innerHTML = types.map(([t, ico, label]) =>
     `<button class="nav-item ${state.type === t && !state.cat ? "active" : ""}" data-type="${t}">

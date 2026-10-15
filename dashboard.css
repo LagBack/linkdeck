@@ -61,7 +61,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .heading-actions { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
 .theme-toggle { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-soft); border-radius: 4px; padding: 9px 12px; background: var(--card); color: var(--text); font-size: 12px; font-weight: 700; box-shadow: 2px 2px 0 rgba(0,0,0,.08); transition: background .15s ease, border-color .15s ease; }
 .theme-toggle:hover { background: var(--card-h); border-color: var(--line); }
-.theme-icon { font-size: 16px; line-height: 1; }
+.theme-icon { width: 18px; height: 18px; display: inline-block; flex: 0 0 18px; background: var(--accent); -webkit-mask: url("assets/paintbrush-mask.png") center / contain no-repeat; mask: url("assets/paintbrush-mask.png") center / contain no-repeat; }
 .heading-mark { width: 54px; height: 54px; display: grid; place-items: center; flex-shrink: 0; background: var(--accent); border: 2px solid var(--line); box-shadow: 4px 4px 0 var(--line); font-size: 28px; transform: rotate(3deg); }
 .topbar { display: flex; gap: 10px; align-items: center; position: sticky; top: -30px; padding: 13px 0 15px; margin: 0 auto 0; background: var(--bg); z-index: 5; max-width: 1500px; }
 .search { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 0 13px; box-shadow: 2px 2px 0 rgba(36,34,30,.08); }
@@ -2416,3 +2416,67 @@ hr { border-color: var(--line-soft) !important; }
 @media (prefers-reduced-motion:reduce) {
   :root[data-theme="industrial"] .industrial-danger-sign { animation:none; }
 }
+
+
+/* Custom sidebar navigation icons supplied for All, Bookmarks, and Extensions. */
+.nav-item .ico:has(.ico-mask) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  font-size: 0;
+  line-height: 0;
+}
+.nav-item .ico-mask {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+.nav-item .icon-all {
+  -webkit-mask-image: url("assets/nav-all.png");
+  mask-image: url("assets/nav-all.png");
+}
+/* Tiny optical correction to align the All glyph with the other sidebar icons. */
+.nav-item .icon-all {
+  transform: translateX(-1px);
+}
+.nav-item .icon-bookmarks {
+  -webkit-mask-image: url("assets/nav-bookmarks.png");
+  mask-image: url("assets/nav-bookmarks.png");
+  /* This source silhouette fills the full canvas vertically, unlike the other icons. */
+  width: 16px;
+  height: 16px;
+  justify-self: center;
+  align-self: center;
+  margin-inline: 1px;
+}
+.nav-item .icon-extensions {
+  -webkit-mask-image: url("assets/nav-extensions.png");
+  mask-image: url("assets/nav-extensions.png");
+  /* The puzzle piece has transparent padding, so compensate for its smaller visible bounds. */
+  width: 21px;
+  height: 21px;
+  margin: -1.5px;
+  align-self: center;
+}
+
+/* Optical correction: the bookmark silhouette has a heavier right-side outline,
+   so nudge only the visible mark left without moving its navigation slot or label. */
+.nav-item .icon-bookmarks {
+  transform: translateX(-2px);
+}
+
+
+/* Theme picker paintbrush color refinements: original ink and Old Web purple. */
+:root:not([data-theme]) .theme-icon { background-color: #24221e; }
+:root[data-theme="light"] .theme-icon { background-color: #24221e; }
+:root[data-theme="webcore"] .theme-icon { background-color: #a000b7; }
