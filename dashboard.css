@@ -2480,3 +2480,132 @@ hr { border-color: var(--line-soft) !important; }
 :root:not([data-theme]) .theme-icon { background-color: #24221e; }
 :root[data-theme="light"] .theme-icon { background-color: #24221e; }
 :root[data-theme="webcore"] .theme-icon { background-color: #a000b7; }
+
+/* BEACH — breezy illustrated coast, sea-glass color, and sun-warmed paper. */
+.logo-beach { display:none; width:48px; height:48px; flex:0 0 48px; object-fit:contain; }
+:root[data-theme="beach"] .logo-beach { display:block; }
+:root[data-theme="beach"] .logo,
+:root[data-theme="beach"] .logo-xp,
+:root[data-theme="beach"] .logo-scene,
+:root[data-theme="beach"] .logo-gxsc,
+:root[data-theme="beach"] .logo-pixel,
+:root[data-theme="beach"] .logo-terminal,
+:root[data-theme="beach"] .logo-industrial,
+:root[data-theme="beach"] .logo-cutecore,
+:root[data-theme="beach"] .webcore-logo-gif { display:none !important; }
+.swatch-beach { background:linear-gradient(160deg,#f6b65f 0 29%,#fff1cb 29% 49%,#61c8c8 49% 76%,#237f91 76%); border-color:#398f9a!important; }
+.preview-beach { position:relative; overflow:hidden; background:#fff1cb!important; border:1px solid #8bcac6!important; box-shadow:inset 0 0 0 3px rgba(255,255,255,.45); }
+.preview-beach::after { content:""; position:absolute; left:-10%; right:-10%; bottom:-12px; height:30px; background:#58c4c5; border-radius:50% 50% 0 0; box-shadow:0 -7px 0 #fff9e8; }
+.preview-beach .preview-sun { position:absolute; right:14px; top:7px; width:13px; height:13px; border-radius:50%; background:#f3a54e; box-shadow:0 0 0 4px rgba(243,165,78,.18); }
+.preview-beach .preview-sidebar { top:0!important; background:#d8f0e8!important; border-right:1px solid #8bcac6; }
+.preview-beach .preview-line { background:#278b9a!important; height:2px!important; }
+.preview-beach .preview-line.short { background:#efad55!important; }
+.preview-beach .preview-tile { background:#fffaf0!important; border:1px solid #a6d6cc!important; border-radius:4px!important; }
+:root[data-theme="beach"] {
+  color-scheme:light;
+  --bg:#fff2d6;
+  --bg2:#fffbef;
+  --card:#fffdf5;
+  --card-h:#e0f5ed;
+  --line:#286477;
+  --line-soft:#c4dfd7;
+  --text:#193f50;
+  --muted:#4e7880;
+  --accent:#f2ad4e;
+  --accent-ink:#173f4c;
+  --accent-soft:#ffe0a0;
+  --green:#267d79;
+  --green-soft:#d8f0e5;
+  --danger:#c85d4c;
+  --radius:8px;
+  --shadow:0 3px 0 rgba(38,100,119,.12);
+}
+:root[data-theme="beach"] body { background-color:var(--bg); background-image:radial-gradient(circle at 91% 7%,rgba(246,181,92,.23) 0 54px,transparent 55px),linear-gradient(180deg,rgba(255,255,255,.36),transparent 270px); }
+:root[data-theme="beach"] .sidebar { background:#e1f3e9; border-right:2px solid #5aaeb0; box-shadow:inset -5px 0 0 rgba(255,255,255,.35); }
+:root[data-theme="beach"] .brand { position:relative; border-bottom:2px solid #9dd4c8; padding-bottom:20px; }
+:root[data-theme="beach"] .brand::after { content:""; position:absolute; bottom:-3px; left:8px; width:56px; height:4px; border-radius:4px; background:#f2ad4e; }
+:root[data-theme="beach"] .brand-text { color:#174a5a; letter-spacing:-.3px; }
+:root[data-theme="beach"] .brand-text small { color:#4b7c80; }
+:root[data-theme="beach"] .nav-item { border-color:transparent; border-radius:7px; }
+:root[data-theme="beach"] .nav-item:hover { background:#f4fbf2; border-color:#b5ddd2; }
+:root[data-theme="beach"] .nav-item.active { background:#f6c66d; color:#174454; border-color:#d49a3d; box-shadow:0 2px 0 rgba(38,100,119,.16); }
+:root[data-theme="beach"] .nav-item .count { background:#fffaf0; border-color:#b5d8ce; color:#286477; }
+:root[data-theme="beach"] .nav-head { color:#277b83; }
+:root[data-theme="beach"] .nav-head .icon-btn { color:#1d7883; }
+:root[data-theme="beach"] .main { position:relative; background-image:linear-gradient(180deg,rgba(255,255,255,.22),transparent 240px); }
+:root[data-theme="beach"] h1 { color:#16485a; }
+:root[data-theme="beach"] .search { border-radius:9px; border-color:#8fc8bf; box-shadow:0 3px 0 rgba(40,100,119,.08); }
+:root[data-theme="beach"] .search:focus-within { outline-color:#e7a348; }
+:root[data-theme="beach"] .search input::placeholder { color:#60868a; }
+:root[data-theme="beach"] .btn, :root[data-theme="beach"] .seg { border-radius:8px; border-color:#8fc8bf; box-shadow:0 2px 0 rgba(40,100,119,.10); }
+:root[data-theme="beach"] .btn.primary, :root[data-theme="beach"] .seg button.on { background:#f6bf62; border-color:#d49a3d; color:#173f4c; }
+:root[data-theme="beach"] .btn:hover { background:#dff4eb; }
+:root[data-theme="beach"] .card { border-color:#a4d3c8; border-radius:9px; box-shadow:0 3px 0 rgba(38,100,119,.10); }
+:root[data-theme="beach"] .card:hover { box-shadow:0 5px 0 rgba(38,100,119,.15); background:#fffef9; }
+:root[data-theme="beach"] .thumb { background:#e1f4eb; border-bottom-color:#c2e0d6; }
+:root[data-theme="beach"] .thumb::before { height:5px; background:linear-gradient(90deg,#f4b456 0 24%,#fff2d6 24% 34%,#64c8c3 34% 67%,#fff2d6 67% 77%,#f4b456 77%); border:0; }
+:root[data-theme="beach"] .thumb img.big { border-color:#9ccfc5; border-radius:7px; }
+:root[data-theme="beach"] .card-foot { border-top-color:#dcebe2; }
+:root[data-theme="beach"] .badge { background:#ffe1a0; color:#654716; border:1px solid #f0c36c; }
+:root[data-theme="beach"] .badge.bm { background:#d4eee2; color:#215d55; border-color:#9fd4c3; }
+:root[data-theme="beach"] .tag { background:#e7f5ef; color:#286477; border-color:#b5dcd0; }
+:root[data-theme="beach"] .icon-btn:hover { background:#e0f5ed; border-color:#b1dcd0; }
+:root[data-theme="beach"] ::selection { background:#f6c66d; color:#173f4c; }
+:root[data-theme="beach"] * { scrollbar-width:thin; scrollbar-color:#69bcb9 #e2f3e8; }
+:root[data-theme="beach"] *::-webkit-scrollbar { width:11px; height:11px; }
+:root[data-theme="beach"] *::-webkit-scrollbar-track { background:#e2f3e8; border-left:1px solid #bddfd5; }
+:root[data-theme="beach"] *::-webkit-scrollbar-thumb { background:#65b9b8; border:3px solid #e2f3e8; border-radius:10px; }
+:root[data-theme="beach"] *::-webkit-scrollbar-thumb:hover { background:#328e98; }
+:root[data-theme="beach"] .dialog, :root[data-theme="beach"] dialog { border-color:#8fc8bf; }
+@media (prefers-reduced-motion:reduce) { :root[data-theme="beach"] *, :root[data-theme="beach"] *::before, :root[data-theme="beach"] *::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
+
+/* Beach theme: a hand-painted, woodblock-inspired ocean wave behind the thumbnails. */
+:root[data-theme="beach"] .thumb {
+  background-color: #d9f2eb;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 142' preserveAspectRatio='none'%3E%3Cpath fill='%2395d9d1' d='M0 72 C36 60 55 83 87 73 S145 59 176 73 S236 86 266 70 S302 64 320 72 V142 H0Z'/%3E%3Cpath fill='%2348b9b9' d='M0 91 C28 79 52 100 83 91 S137 78 166 91 S220 105 252 89 S294 82 320 91 V142 H0Z'/%3E%3Cpath fill='%232b8798' d='M0 111 C36 98 57 119 91 110 S145 100 176 112 S232 125 262 109 S300 104 320 111 V142 H0Z'/%3E%3Cpath d='M0 72 C36 60 55 83 87 73 S145 59 176 73 S236 86 266 70 S302 64 320 72' fill='none' stroke='%23fff8e9' stroke-width='4'/%3E%3Cpath d='M12 91 Q24 84 37 91 M106 91 Q119 84 132 91 M206 91 Q219 84 232 91 M276 88 Q288 82 300 88' fill='none' stroke='%23eafff7' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-position: center;
+}
+:root[data-theme="beach"] .thumb::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 29px;
+  pointer-events: none;
+  opacity: .92;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 40' preserveAspectRatio='none'%3E%3Cpath fill='%2395d9d1' d='M0 15 C30 5 53 24 84 15 S138 6 168 16 S223 27 253 14 S298 7 320 15 V40 H0Z'/%3E%3Cpath fill='%2348b9b9' d='M0 25 C34 15 59 33 91 25 S147 15 176 25 S233 36 263 24 S301 18 320 25 V40 H0Z'/%3E%3Cpath d='M0 15 C30 5 53 24 84 15 S138 6 168 16 S223 27 253 14 S298 7 320 15' fill='none' stroke='%23fff8e9' stroke-width='3'/%3E%3Cpath d='M17 22 l8 -3 m5 3 l8 -3 M116 20 l8 -3 m5 3 l8 -3 M225 23 l8 -3 m5 3 l8 -3' stroke='%23eafff7' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+}
+:root[data-theme="beach"] .thumb img.big,
+:root[data-theme="beach"] .thumb .letter { z-index: 3; }
+:root[data-theme="beach"] .thumb.placeholder::after { border: 0; inset: auto; }
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="beach"] .thumb::after { animation: none; }
+}
+
+/* Beach theme: a painted tsunami wave fixed behind the whole workspace.
+   It lives on .app (which never scrolls), so the wave stays put while the cards scroll over it. */
+:root[data-theme="beach"] .app { position: relative; }
+:root[data-theme="beach"] .app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("assets/beach-wave.svg") right bottom / cover no-repeat;
+  opacity: .78; /* faded so the wave sits back in the paper instead of shouting */
+  -webkit-mask-image: linear-gradient(100deg, transparent 10%, #000 50%);
+  mask-image: linear-gradient(100deg, transparent 10%, #000 50%);
+}
+:root[data-theme="beach"] .sidebar { z-index: 2; }
+:root[data-theme="beach"] .main { z-index: 1; }
+/* the sticky search row stays see-through: no extra band behind the search bar and Add button */
+:root[data-theme="beach"] .topbar { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* heading badge: a little painted sun-over-waves tile instead of the plain arrow */
+:root[data-theme="beach"] .heading-mark { position: relative; overflow: hidden; background: #fff4d9; border: 2px solid #174d61; border-radius: 14px; box-shadow: 0 3px 0 rgba(38,100,119,.22); transform: rotate(3deg); }
+:root[data-theme="beach"] .heading-mark > span { display: none; }
+:root[data-theme="beach"] .heading-mark::before { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M36.6 27.6L41.4 26.3M32.4 21.0L35.6 17.2M24.0 18.0L24.0 13.0M15.6 21.0L12.4 17.2M11.4 27.6L6.6 26.3' fill='none' stroke='%23f4a64b' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='31' r='9.5' fill='%23f4a64b' stroke='%23174d61' stroke-width='2'/%3E%3Cpath fill='%2356c3c4' stroke='%23174d61' stroke-width='2' stroke-linejoin='round' d='M-2 33c6-4 11-4 16 0s9 4 14 0 10-3 20 0v18H-2Z'/%3E%3Cpath fill='%23238b9c' d='M-2 41c6-3 11-3 16 0s9 3 14 0 10-2 20 0v10H-2Z'/%3E%3Cpath d='M9 37q3-2 6 0M31 38q3-2 6 0' fill='none' stroke='%23fff7e5' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+@media (max-width: 700px) { :root[data-theme="beach"] .app::before { opacity: .55; } }

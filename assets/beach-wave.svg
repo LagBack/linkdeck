@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMax slice">
+  <defs>
+    <!-- tiny wobble so the edges look brushed, not vector-perfect -->
+    <filter id="paint" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+    </filter>
+  </defs>
+  <g filter="url(#paint)">
+    <!-- distant swells -->
+    <path fill="#d3efe6" d="M0 640 C140 600 260 660 400 630 S650 585 800 625 S1050 670 1200 620 S1480 590 1600 625 V900 H0Z"/>
+    <path fill="#b9e5dc" d="M0 700 C160 668 280 724 430 694 S690 650 840 690 S1100 735 1250 690 S1500 665 1600 695 V900 H0Z"/>
+
+    <!-- the big wave (lifted so the curl sits up in the header sky) -->
+    <g transform="translate(0,-262)">
+      <!-- body: back slope, rounded crest, lip hanging over the face -->
+      <path fill="#8fd6cf" d="M-20 1200 V945 C200 935 330 828 480 822 C690 814 870 792 940 730 C960 660 975 580 975 500 C930 440 872 418 840 440 C840 360 960 262 1160 275 C1330 280 1480 380 1600 480 V1200Z"/>
+      <!-- mid-tone mass -->
+      <path fill="#48b9b9" d="M-20 1200 V995 C200 985 340 858 480 850 C700 842 890 805 985 725 C1060 660 1100 600 1120 545 C1190 525 1270 470 1340 425 C1440 385 1530 430 1600 520 V1200Z"/>
+      <!-- the dark hollow under the lip -->
+      <path fill="#2b8798" d="M840 440 C872 418 930 440 975 500 C972 560 962 620 948 676 C958 610 962 560 958 522 C935 455 882 408 840 440Z"/>
+            <!-- deep water -->
+      <path fill="#2b8798" d="M-20 1200 V1015 C200 1010 340 888 480 880 C700 878 890 850 1010 780 C1100 728 1190 710 1300 650 C1420 590 1520 600 1600 650 V1200Z"/>
+
+      <!-- brush streaks following the flow of the back slope -->
+      <g fill="none" stroke-linecap="round">
+        <path d="M1130 392 C1210 340 1310 335 1410 372" stroke="#c2ece4" stroke-width="5" opacity=".7"/>
+        <path d="M1160 450 C1240 400 1340 400 1450 440" stroke="#b0e4dc" stroke-width="4" opacity=".7"/>
+        <path d="M1190 520 C1270 490 1370 490 1480 525" stroke="#7fd0cc" stroke-width="4" opacity=".7"/>
+        <path d="M1220 600 C1300 575 1400 580 1520 612" stroke="#5fc3c2" stroke-width="4" opacity=".6"/>
+        <path d="M780 850 C860 835 930 815 995 780" stroke="#5fc3c2" stroke-width="4" opacity=".6"/>
+      </g>
+
+      <!-- foam cap with a scalloped lower edge -->
+      <path fill="#fff8e9" d="M840 440 C840 360 960 262 1160 275 C1290 278 1390 330 1470 392 Q1439 397 1424 383 Q1395 390 1379 377 Q1352 385 1341 365 Q1318 369 1305 349 Q1283 355 1268 337 Q1246 345 1230 328 Q1209 338 1192 323 Q1172 334 1151 321 Q1130 333 1111 320 Q1093 334 1072 323 Q1055 338 1035 329 Q1019 346 998 339 Q984 355 960 346 Q949 362 923 358 Q914 375 888 376 Q883 395 859 403 Q847 420 840 440Z"/>
+      <!-- foam claws reaching off the tip -->
+      <g fill="#fff8e9">
+        <path d="M842 440 C826 446 814 462 816 482 C826 472 836 472 842 482 C842 470 850 462 860 460Z"/>
+        <path d="M866 396 C848 394 834 406 832 424 C842 416 852 418 858 428 C860 416 868 408 878 408Z"/>
+        <path d="M912 346 C894 340 880 350 876 366 C886 360 896 362 902 372 C904 362 912 356 922 356Z"/>
+      </g>
+      <!-- spray -->
+      <g fill="#fff8e9">
+        <circle cx="800" cy="410" r="7"/><circle cx="782" cy="440" r="4.5"/><circle cx="812" cy="520" r="5"/>
+        <circle cx="846" cy="340" r="5"/><circle cx="826" cy="372" r="3.5"/><circle cx="960" cy="262" r="4.5"/>
+        <circle cx="1110" cy="256" r="4.5"/><circle cx="776" cy="480" r="3.5"/><circle cx="1155" cy="244" r="3"/>
+      </g>
+      <!-- foam line on the back slope + base of the face -->
+      <path d="M1470 392 C1520 425 1565 450 1600 480" fill="none" stroke="#fff8e9" stroke-width="10" stroke-linecap="round"/>
+      <path d="M940 730 C985 722 1020 704 1045 680" fill="none" stroke="#e6fbf3" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+    </g>
+
+    <!-- foreground swells, same language as the thumbnail waves -->
+    <path fill="#95d9d1" d="M0 770 C120 745 220 795 350 772 S580 735 720 772 S960 810 1100 770 S1380 742 1600 780 V900 H0Z" opacity=".95"/>
+    <path fill="#48b9b9" d="M0 818 C130 792 240 846 380 820 S620 786 770 820 S1010 856 1160 816 S1400 794 1600 826 V900 H0Z"/>
+    <path fill="#2b8798" d="M0 862 C140 840 260 884 410 862 S650 836 800 862 S1060 892 1210 858 S1440 842 1600 866 V900 H0Z"/>
+    <path d="M0 770 C120 745 220 795 350 772 S580 735 720 772 S960 810 1100 770 S1380 742 1600 780" fill="none" stroke="#fff8e9" stroke-width="7" stroke-linecap="round"/>
+    <path d="M0 818 C130 792 240 846 380 820 S620 786 770 820 S1010 856 1160 816 S1400 794 1600 826" fill="none" stroke="#eafff7" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+    <g fill="none" stroke="#eafff7" stroke-width="4" stroke-linecap="round" opacity=".9">
+      <path d="M90 800 q28 -16 56 0 M470 790 q28 -16 56 0 M880 800 q28 -16 56 0 M1290 790 q28 -16 56 0"/>
+    </g>
+  </g>
+</svg>

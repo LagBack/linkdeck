@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="LinkDeck beach logo">
+  <defs><clipPath id="c"><rect x="3" y="3" width="90" height="90" rx="22"/></clipPath></defs>
+  <rect x="3" y="3" width="90" height="90" rx="22" fill="#fff4d9"/>
+  <g clip-path="url(#c)">
+    <!-- gentle swell with a small curl -->
+    <path fill="#56c3c4" stroke="#174d61" stroke-width="2.5" stroke-linejoin="round" d="M0 96 V76 C20 77 36 73 46 66 C54 60 57 52 53 47 C50 43 44 43 41 47 C42 38 54 32 68 35 C80 38 90 46 98 54 V96Z"/>
+    <path fill="#238b9c" d="M0 96 V87 C24 88 46 83 60 73 C72 65 86 63 98 69 V96Z"/>
+    <path fill="none" stroke="#174d61" stroke-width="2.5" stroke-linejoin="round" d="M46 66 C54 60 57 52 53 47 C50 43 44 43 41 47 C42 38 54 32 68 35 C80 38 90 46 98 54"/>
+    <path d="M9 87 q5 -3 10 0 M66 90 q4 -3 9 0" fill="none" stroke="#fff7e5" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- bookmark ribbon: clipped to the frame so nothing pokes out -->
+    <path d="M24 0 H44 V37 L34 30 L24 37 Z" fill="#f4a64b" stroke="#174d61" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+  <rect x="3" y="3" width="90" height="90" rx="22" fill="none" stroke="#174d61" stroke-width="3"/>
+</svg>
