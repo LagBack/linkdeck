@@ -2609,3 +2609,83 @@ hr { border-color: var(--line-soft) !important; }
 :root[data-theme="beach"] .heading-mark > span { display: none; }
 :root[data-theme="beach"] .heading-mark::before { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M36.6 27.6L41.4 26.3M32.4 21.0L35.6 17.2M24.0 18.0L24.0 13.0M15.6 21.0L12.4 17.2M11.4 27.6L6.6 26.3' fill='none' stroke='%23f4a64b' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='31' r='9.5' fill='%23f4a64b' stroke='%23174d61' stroke-width='2'/%3E%3Cpath fill='%2356c3c4' stroke='%23174d61' stroke-width='2' stroke-linejoin='round' d='M-2 33c6-4 11-4 16 0s9 4 14 0 10-3 20 0v18H-2Z'/%3E%3Cpath fill='%23238b9c' d='M-2 41c6-3 11-3 16 0s9 3 14 0 10-2 20 0v10H-2Z'/%3E%3Cpath d='M9 37q3-2 6 0M31 38q3-2 6 0' fill='none' stroke='%23fff7e5' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
 @media (max-width: 700px) { :root[data-theme="beach"] .app::before { opacity: .55; } }
+
+/* Focus/decor cleanup — preserve each theme's intended single focus treatment. */
+:root[data-theme="scenecore"] .scene-xd {
+  z-index: 9999;
+}
+:root[data-theme="scenecore"] .search:focus-within {
+  border-color: #ff35cb;
+  outline: 2px solid #ff35cb;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+:root[data-theme="scenecore"] .search input:focus,
+:root[data-theme="scenecore"] .search input:focus-visible {
+  border-color: #ff35cb !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+:root[data-theme="gxsc"] .search {
+  box-shadow: 2px 2px 0 rgba(17, 37, 57, .22) !important;
+}
+:root[data-theme="gxsc"] .search:focus-within {
+  box-shadow: 0 0 0 2px rgba(166, 231, 243, .10), 0 0 16px rgba(130, 208, 239, .10) !important;
+}
+:root[data-theme="gxsc"] #addBtn {
+  box-shadow: 2px 2px 0 rgba(17, 37, 57, .22) !important;
+}
+:root[data-theme="pixel"] .search {
+  box-shadow: 4px 4px 0 #050b20 !important;
+}
+:root[data-theme="pixel"] .search:focus-within {
+  outline: 2px solid #ffc66e !important;
+  outline-offset: 3px;
+  box-shadow: 4px 4px 0 #050b20 !important;
+}
+:root[data-theme="pixel"] .search input:focus,
+:root[data-theme="pixel"] .search input:focus-visible {
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Keep only the theme-selection step tall; all later onboarding steps size to content. */
+.onboarding-dialog {
+  height: fit-content;
+  max-height: min(92vh, 760px);
+  overflow: visible;
+}
+.onboarding-dialog.theme-selection-step {
+  height: min(92vh, 760px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.onboarding-dialog.theme-selection-step .dlg.onboarding {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.onboarding-dialog.theme-selection-step .onboarding section[data-onboarding-step="1"]:not([hidden]) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.onboarding-dialog.theme-selection-step .theme-preview-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  align-content: start;
+  scrollbar-gutter: stable;
+  padding: 2px 5px 4px 1px;
+}
+.onboarding-dialog.theme-selection-step .dlg-head,
+.onboarding-dialog.theme-selection-step .onboarding-progress,
+.onboarding-dialog.theme-selection-step .onboarding-actions {
+  flex: 0 0 auto;
+}

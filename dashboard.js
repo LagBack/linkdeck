@@ -490,6 +490,7 @@ let onboardingStep = 1;
 let onboardingPreviewChoice = "none";
 function showOnboardingStep(step) {
   onboardingStep = step;
+  $("#firstRunDialog").classList.toggle("theme-selection-step", step === 1);
   document.querySelectorAll("[data-onboarding-step]").forEach((el) => {
     el.hidden = Number(el.dataset.onboardingStep) !== step;
   });
