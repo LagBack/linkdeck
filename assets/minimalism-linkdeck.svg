@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>LinkDeck Minimalism logo</title>
+  <rect x="7.5" y="15.5" width="40" height="39" rx="5" fill="#11161B" stroke="#58636E" stroke-width="2"/>
+  <rect x="12.5" y="10.5" width="40" height="39" rx="5" fill="#171D23" stroke="#77838E" stroke-width="2"/>
+  <rect x="17.5" y="5.5" width="40" height="39" rx="5" fill="#20272E" stroke="#A8B2BB" stroke-width="2"/>
+  <path d="M24 17.5h17" stroke="#DCE2E7" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M24 24.5h23" stroke="#84919D" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M24 31.5h14" stroke="#84919D" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M47 5.5h7v17l-3.5-2.7L47 22.5v-17Z" fill="#AAB5BF"/>
+</svg>

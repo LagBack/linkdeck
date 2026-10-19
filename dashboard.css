@@ -3123,42 +3123,105 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg * {
   stroke: currentColor !important;
 }
 
+/* MINIMALISM — quiet graphite surfaces, restrained slate accents, no decorative noise. */
+.logo-minimalism { display:none; width:52px; height:52px; flex:0 0 52px; object-fit:contain; }
+:root[data-theme="minimalism"] {
+  color-scheme:dark;
+  --bg:#111519;
+  --bg2:#171c21;
+  --card:#1b2127;
+  --card-h:#252d34;
+  --line:#3a444d;
+  --line-soft:#2b333b;
+  --text:#e5e9ed;
+  --muted:#9ba5ae;
+  --accent:#a8b6c2;
+  --accent-ink:#11171c;
+  --accent-soft:#303b44;
+  --green:#a9c2b2;
+  --green-soft:#24332c;
+  --danger:#d18f8f;
+  --radius:8px;
+  --shadow:0 8px 24px rgba(0,0,0,.18);
+  scrollbar-color:#46525d #151a1f;
+}
+:root[data-theme="minimalism"] body {
+  color:var(--text);
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at 50% -30%,rgba(116,132,146,.08),transparent 62%);
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:-.01em;
+}
+:root[data-theme="minimalism"] .sidebar,
+:root[data-theme="minimalism"] .main,
+:root[data-theme="minimalism"] .panel {
+  background:var(--bg2);
+  border:1px solid var(--line-soft);
+  box-shadow:none;
+}
+:root[data-theme="minimalism"] .sidebar { border-radius:10px; padding:18px 12px 14px; }
+:root[data-theme="minimalism"] .brand { border-bottom:1px solid var(--line-soft); padding-bottom:18px; }
+:root[data-theme="minimalism"] .logo,
+:root[data-theme="minimalism"] .logo-xp,
+:root[data-theme="minimalism"] .logo-scene,
+:root[data-theme="minimalism"] .logo-gxsc,
+:root[data-theme="minimalism"] .logo-pixel,
+:root[data-theme="minimalism"] .logo-terminal,
+:root[data-theme="minimalism"] .logo-industrial,
+:root[data-theme="minimalism"] .logo-beach,
+:root[data-theme="minimalism"] .logo-cutecore,
+:root[data-theme="minimalism"] .webcore-logo-gif { display:none !important; }
+:root[data-theme="minimalism"] .logo-minimalism { display:block; }
+:root[data-theme="minimalism"] .brand-text { color:#e5e9ed; font-size:17px; font-weight:650; letter-spacing:-.55px; text-shadow:none; }
+:root[data-theme="minimalism"] .brand-text small { color:#929da6; font-weight:400; }
+:root[data-theme="minimalism"] .nav-head { color:#8f9ba5; border-top-color:#2b333b; font-size:10px; letter-spacing:.9px; }
+:root[data-theme="minimalism"] .nav-item { color:#c7cfd5; border:1px solid transparent; border-radius:6px; font-weight:450; box-shadow:none; }
+:root[data-theme="minimalism"] .nav-item .ico { color:#aab5bf; }
+:root[data-theme="minimalism"] .nav-item:hover,
+:root[data-theme="minimalism"] .nav-item:focus-visible { color:#f0f3f5; background:#222a31; border-color:#303a43; box-shadow:none; }
+:root[data-theme="minimalism"] .nav-item.active { color:#f1f4f6; background:#2b343c; border-color:#424e58; font-weight:600; box-shadow:none; }
+:root[data-theme="minimalism"] .nav-item.active .count { color:#11171c; background:#a8b6c2; }
+:root[data-theme="minimalism"] .main { border-radius:10px; padding:20px; }
+:root[data-theme="minimalism"] .page-heading h1 { color:#e7ebee; font-weight:650; letter-spacing:-.035em; text-shadow:none; }
+:root[data-theme="minimalism"] .page-kicker { color:#95a2ad; letter-spacing:1.2px; }
+:root[data-theme="minimalism"] .page-subtitle { color:#a6b0b9; }
+:root[data-theme="minimalism"] .topbar { background:transparent; border-bottom:1px solid #2b333b; }
+:root[data-theme="minimalism"] .search,
+:root[data-theme="minimalism"] .theme-toggle,
+:root[data-theme="minimalism"] .btn,
+:root[data-theme="minimalism"] .icon-btn,
+:root[data-theme="minimalism"] .seg { background:#1a2026; color:#dce2e7; border:1px solid #3a444d; border-radius:7px; box-shadow:none; }
+:root[data-theme="minimalism"] .search:focus-within { border-color:#8f9eaa; box-shadow:0 0 0 2px rgba(143,158,170,.12); }
+:root[data-theme="minimalism"] .search input:focus,
+:root[data-theme="minimalism"] .search input:focus-visible { outline:none; box-shadow:none; }
+:root[data-theme="minimalism"] .btn.primary { color:#11171c; background:#b4c0ca; border-color:#b4c0ca; font-weight:650; }
+:root[data-theme="minimalism"] .btn:hover,
+:root[data-theme="minimalism"] .icon-btn:hover,
+:root[data-theme="minimalism"] .theme-toggle:hover { background:#293139; border-color:#596570; box-shadow:none; transform:translateY(-1px); }
+:root[data-theme="minimalism"] .card { background:#1a2026; border:1px solid #303942; border-radius:8px; box-shadow:none; }
+:root[data-theme="minimalism"] .card:hover { background:#20272e; border-color:#586570; box-shadow:0 8px 20px rgba(0,0,0,.15); transform:translateY(-2px); }
+:root[data-theme="minimalism"] .thumb { background:#20272d; border-bottom:1px solid #303942; }
+:root[data-theme="minimalism"] .title { color:#e1e6ea; font-weight:600; }
+:root[data-theme="minimalism"] .desc,
+:root[data-theme="minimalism"] .status { color:#939ea7; }
+:root[data-theme="minimalism"] .badge,
+:root[data-theme="minimalism"] .tag { color:#c9d2d9; background:#252e35; border:1px solid #3c4852; }
+:root[data-theme="minimalism"] .pin.on { color:#11171c; background:#a8b6c2; box-shadow:none; }
+:root[data-theme="minimalism"] .theme-menu { background:#171c21; color:#e5e9ed; border:1px solid #3a444d; box-shadow:0 18px 44px rgba(0,0,0,.42); }
+:root[data-theme="minimalism"] .theme-menu button:hover,
+:root[data-theme="minimalism"] .theme-menu button.selected { background:#252d34; border-color:#48545e; }
+:root[data-theme="minimalism"] ::selection { background:#46535f; color:#fff; }
+:root[data-theme="minimalism"] .theme-preview-art.preview-minimalism { background:#151a1f!important; border:1px solid #39434c!important; box-shadow:inset 0 0 0 4px #1b2127; border-radius:6px!important; }
+.preview-minimalism .preview-titlebar { display:block; position:absolute; left:0; right:0; top:0; padding:3px 5px; color:#dfe5e9; background:#20272e; border-bottom:1px solid #39434c; font:600 5px/1.4 "Segoe UI",sans-serif; text-align:left; letter-spacing:.1px; }
+.preview-minimalism .preview-sidebar { top:13px!important; background:#1b2228!important; border-right:1px solid #303942; }
+.preview-minimalism .preview-line { background:#8e9ca7!important; height:2px!important; }
+.preview-minimalism .preview-line.short { background:#56636e!important; }
+.preview-minimalism .preview-tile { background:#20272e!important; border:1px solid #35404a!important; border-radius:3px!important; }
+:root[data-theme="minimalism"] .theme-icon { background:#a8b6c2; }
+/* The onboarding card preview should remain accurate regardless of the currently active theme. */
+.preview-minimalism { position:relative; overflow:hidden; background:#151a1f!important; border:1px solid #39434c!important; box-shadow:inset 0 0 0 4px #1b2127; border-radius:6px!important; }
 
-/* Theme picker palette icon: no badge/backdrop, just a slightly larger icon. */
-dialog.theme-picker-dialog .theme-picker-head {
-  grid-template-columns: 56px minmax(0,1fr) 40px !important;
-}
-dialog.theme-picker-dialog .theme-picker-heading-icon {
-  width: 56px !important;
-  height: 56px !important;
-  padding: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  color: var(--text) !important;
-  box-shadow: none !important;
-}
-dialog.theme-picker-dialog .theme-picker-heading-icon svg {
-  width: 34px !important;
-  height: 34px !important;
-}
-dialog.theme-picker-dialog .theme-picker-heading-icon svg,
-dialog.theme-picker-dialog .theme-picker-heading-icon svg * {
-  stroke: currentColor !important;
-}
-dialog.theme-picker-dialog .theme-picker-heading-icon svg circle {
-  fill: currentColor !important;
-}
-@media (max-width: 700px) {
-  dialog.theme-picker-dialog .theme-picker-head {
-    grid-template-columns: 46px minmax(0,1fr) 36px !important;
-  }
-  dialog.theme-picker-dialog .theme-picker-heading-icon {
-    width: 46px !important;
-    height: 46px !important;
-  }
-  dialog.theme-picker-dialog .theme-picker-heading-icon svg {
-    width: 30px !important;
-    height: 30px !important;
-  }
-}
+
+/* Minimalism: keep utility controls muted and consistent with the graphite palette. */
+:root[data-theme="minimalism"] .heading-mark > span:first-child { color:#7e8992; }
+:root[data-theme="minimalism"] .search input::placeholder { color:#7d8993; opacity:1; }
