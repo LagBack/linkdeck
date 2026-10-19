@@ -66,18 +66,17 @@
         <div class="heading-actions">
           <div class="theme-picker-wrap">
             <button id="themeToggle" class="theme-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" title="Choose appearance"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Theme</span><span class="theme-caret" aria-hidden="true">▾</span></button>
-            <div id="themeMenu" class="theme-menu" role="menu" aria-label="Choose a theme" hidden>
-              <button type="button" role="menuitemradio" data-theme-choice="light" aria-checked="true"><span class="theme-swatch swatch-original" aria-hidden="true"></span><span><strong>LinkDeck Original</strong><small>Warm paper &amp; mustard</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="xp" aria-checked="false"><span class="theme-swatch swatch-xp" aria-hidden="true"></span><span><strong>Windows 98 / XP</strong><small>Classic desktop nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="scenecore" aria-checked="false"><span class="theme-swatch swatch-scene" aria-hidden="true"></span><span><strong>Scenecore</strong><small>Neon chaos &amp; web nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="gxsc" aria-checked="false"><span class="theme-swatch swatch-gxsc" aria-hidden="true"></span><span><strong>GXSC</strong><small>Gen X Soft Club · Y2K haze</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="pixel" aria-checked="false"><span class="theme-swatch swatch-pixel" aria-hidden="true"></span><span><strong>pixel night</strong><small>cozy game desk · 16-bit dreams</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="cutecore" aria-checked="false"><span class="theme-swatch swatch-cutecore" aria-hidden="true"></span><span><strong>Cutecore</strong><small>Pastel stickers &amp; sweet nostalgia</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="webcore" aria-checked="false"><span class="theme-swatch swatch-webcore" aria-hidden="true"></span><span><strong>Old Web</strong><small>2000s internet vibe</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="terminal" aria-checked="false"><span class="theme-swatch swatch-terminal" aria-hidden="true"></span><span><strong>terminal</strong><small>command-line era</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="industrial" aria-checked="false"><span class="theme-swatch swatch-industrial" aria-hidden="true"></span><span><strong>INDUSTRIAL</strong><small>industrial control room</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-              <button type="button" role="menuitemradio" data-theme-choice="beach" aria-checked="false"><span class="theme-swatch swatch-beach" aria-hidden="true"></span><span><strong>Beach</strong><small>sun-warmed sand &amp; sea glass</small></span><span class="theme-check" aria-hidden="true">✓</span></button>
-            </div>
+            <dialog id="themeMenu" class="theme-menu theme-picker-dialog" aria-label="Choose a LinkDeck theme">
+              <div class="theme-picker-head">
+                <span class="theme-picker-heading-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2a8.8 8.8 0 1 0 0 17.6h1.15a2.2 2.2 0 0 0 1.65-3.65 1.4 1.4 0 0 1 1.05-2.3h1.05A4.1 4.1 0 0 0 21 10.75C21 6.58 16.97 3.2 12 3.2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.7" cy="10" r="1" fill="currentColor"/><circle cx="10.1" cy="6.9" r="1" fill="currentColor"/><circle cx="14.1" cy="6.9" r="1" fill="currentColor"/><circle cx="16.5" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <div class="theme-picker-heading-copy"><h2>Choose your theme</h2><p>Pick a look for your desk. You can change it anytime.</p></div>
+                <button type="button" class="icon-btn theme-picker-close" id="themePickerClose" aria-label="Close theme picker" title="Close theme picker">×</button>
+              </div>
+              <div id="themePickerGrid" class="theme-picker-grid" role="radiogroup" aria-label="Available themes"></div>
+              <div class="theme-picker-foot"><span class="theme-picker-info-icon" aria-hidden="true">i</span><span>Your theme applies instantly. You can change it anytime.</span></div>
+            </dialog>
           </div>
           <div class="heading-mark" aria-hidden="true"><span>↗</span><span class="scene-mark">★</span><span class="gxsc-mark">✧</span><span class="cutecore-mark">♡</span><span class="pixel-mark"><img src="assets/pixel-moon-sprite.png" alt="" aria-hidden="true"></span></div>
         </div>
@@ -187,7 +186,7 @@
         <h2>How should thumbnails work?</h2>
         <p class="onboarding-copy">Choose what appears on each bookmark card. You can change this later in Settings.</p>
         <label class="choice-card"><input type="radio" name="previewChoice" value="online"><span><strong>Online previews</strong><small>Load page screenshots from thum.io. Bookmark URLs are sent to that service.</small></span></label>
-        <label class="choice-card"><input type="radio" name="previewChoice" value="local"><span><strong>Capture screenshots locally</strong><small>Capture screenshots for selected bookmarks from Settings when you choose. Nothing is sent to a preview service.</small></span></label>
+        <label class="choice-card"><input type="radio" name="previewChoice" value="local"><span><strong>Capture screenshots locally</strong><small>Save screenshots locally as you browse bookmarked pages. You can also generate previews for existing bookmarks in Settings. Nothing is sent to a preview service.</small></span></label>
         <label class="choice-card"><input type="radio" name="previewChoice" value="none" checked><span><strong>No screenshots</strong><small>Keep the clean icon-based thumbnails. Nothing is sent to a preview service.</small></span></label>
         <p id="onboardingPermissionNote" class="hint" hidden>Page access wasn't granted, so local capture is off. You can enable it later in Settings.</p>
       </section>

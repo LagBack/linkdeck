@@ -5,12 +5,39 @@ function initThemeToggle() {
   const root = document.documentElement;
   const toggle = document.getElementById("themeToggle");
   const menu = document.getElementById("themeMenu");
-  if (!toggle || !menu) return;
+  const pickerGrid = document.getElementById("themePickerGrid");
+  const closeButton = document.getElementById("themePickerClose");
+  if (!toggle || !menu || !pickerGrid) return;
   const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal", "industrial", "beach"]);
+  const themeNames = {light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"terminal",industrial:"INDUSTRIAL",beach:"Beach"};
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
   } catch (_) {}
+
+  // Reuse the onboarding theme artwork so the main picker stays visually consistent as themes grow.
+  document.querySelectorAll("[data-onboarding-theme]").forEach((source) => {
+    const card = source.cloneNode(true);
+    const theme = card.dataset.onboardingTheme;
+    card.removeAttribute("data-onboarding-theme");
+    card.dataset.themeChoice = theme;
+    card.classList.add("theme-picker-card");
+    card.setAttribute("role", "radio");
+    card.setAttribute("aria-checked", "false");
+    card.removeAttribute("aria-pressed");
+    const preview = card.querySelector(".theme-preview-art");
+    if (preview) {
+      const thumbnail = document.createElement("img");
+      thumbnail.className = "theme-picker-thumbnail";
+      thumbnail.src = `assets/theme-thumbnails/${theme}.jpg`;
+      thumbnail.alt = "";
+      thumbnail.loading = "lazy";
+      thumbnail.decoding = "async";
+      thumbnail.setAttribute("aria-hidden", "true");
+      preview.replaceWith(thumbnail);
+    }
+    pickerGrid.appendChild(card);
+  });
 
   const getTheme = () => root.dataset.theme || "light";
   const sync = () => {
@@ -20,12 +47,17 @@ function initThemeToggle() {
       item.setAttribute("aria-checked", String(selected));
       item.classList.toggle("selected", selected);
     });
-    toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"Terminal",industrial:"INDUSTRIAL",beach:"Beach"}[current]}`);
-    toggle.title = `Theme: ${{light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"Terminal",industrial:"INDUSTRIAL",beach:"Beach"}[current]}`;
+    toggle.setAttribute("aria-expanded", String(menu.open));
+    toggle.setAttribute("aria-label", `Choose appearance. Current theme: ${themeNames[current]}`);
+    toggle.title = `Theme: ${themeNames[current]}`;
+    document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
+      const selected = card.dataset.onboardingTheme === current;
+      card.setAttribute("aria-pressed", String(selected));
+      card.classList.toggle("selected", selected);
+    });
   };
   const closeMenu = (returnFocus = false) => {
-    menu.hidden = true;
+    if (menu.open) menu.close();
     sync();
     if (returnFocus) toggle.focus();
   };
@@ -34,35 +66,40 @@ function initThemeToggle() {
     if (theme === "light") delete root.dataset.theme;
     else root.dataset.theme = theme;
     try { localStorage.setItem("linkdeck-theme", theme); } catch (_) {}
-    closeMenu();
-    document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
-      const selected = card.dataset.onboardingTheme === theme;
-      card.setAttribute("aria-pressed", String(selected));
-      card.classList.toggle("selected", selected);
-    });
+    // Keep the picker open so users can preview multiple themes before closing it.
+    sync();
   };
   window.linkdeckSetTheme = setTheme;
   window.linkdeckGetTheme = getTheme;
   toggle.addEventListener("click", () => {
-    menu.hidden = !menu.hidden;
-    sync();
-    if (!menu.hidden) menu.querySelector(`[data-theme-choice="${getTheme()}"]`)?.focus();
+    if (menu.open) closeMenu();
+    else {
+      menu.showModal();
+      sync();
+      menu.querySelector(`[data-theme-choice="${getTheme()}"]`)?.focus();
+    }
   });
+  closeButton?.addEventListener("click", () => closeMenu(true));
+  // The picker is a live preview surface: only the explicit close button dismisses it.
+  menu.addEventListener("click", (event) => {
+    if (event.target === menu) event.preventDefault();
+  });
+  menu.addEventListener("cancel", (event) => event.preventDefault());
+  menu.addEventListener("close", sync);
   menu.querySelectorAll("[data-theme-choice]").forEach((item) => {
     item.addEventListener("click", () => setTheme(item.dataset.themeChoice));
     item.addEventListener("keydown", (event) => {
       const options = [...menu.querySelectorAll("[data-theme-choice]")];
       const index = options.indexOf(item);
-      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        event.preventDefault(); options[(index + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length].focus();
+      if (event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        event.preventDefault();
+        const forward = event.key === "ArrowDown" || event.key === "ArrowRight";
+        options[(index + (forward ? 1 : -1) + options.length) % options.length].focus();
       }
       if (event.key === "Escape") { event.preventDefault(); closeMenu(true); }
     });
   });
-  document.addEventListener("pointerdown", (event) => {
-    if (!event.target.closest(".theme-picker-wrap")) closeMenu();
-  });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) closeMenu(true); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && menu.open) closeMenu(true); });
   sync();
 }
 initThemeToggle();
@@ -515,6 +552,21 @@ document.querySelectorAll("[data-onboarding-theme]").forEach((card) => {
   });
 });
 
+// Local capture needs optional page access. Request it when the user selects this setup option.
+const localPreviewChoice = document.querySelector('input[name="previewChoice"][value="local"]');
+localPreviewChoice?.addEventListener("change", async () => {
+  if (!localPreviewChoice.checked) return;
+  const granted = await ensureHostAccess();
+  if (granted) {
+    state.settings.localShots = true;
+    persist();
+    $("#onboardingPermissionNote").hidden = true;
+  } else {
+    state.settings.localShots = false;
+    $("#onboardingPermissionNote").hidden = false;
+  }
+});
+
 $("#onboardingBack").onclick = () => showOnboardingStep(Math.max(1, onboardingStep - 1));
 $("#onboardingNext").onclick = async () => {
   if (onboardingStep === 1) {
@@ -527,13 +579,21 @@ $("#onboardingNext").onclick = async () => {
     const choice = document.querySelector('input[name="previewChoice"]:checked')?.value || "none";
     onboardingPreviewChoice = choice;
     state.settings.previews = choice === "online";
-    // Local screenshots are intentionally captured on demand from Settings, not silently during setup.
-    state.settings.localShots = false;
-    $("#onboardingPermissionNote").hidden = true;
+    // Local capture runs automatically on visits to bookmarked pages when permission is granted.
+    if (choice === "local") {
+      const granted = await hasHostAccess();
+      state.settings.localShots = granted;
+      $("#onboardingPermissionNote").hidden = granted;
+    } else {
+      state.settings.localShots = false;
+      $("#onboardingPermissionNote").hidden = true;
+    }
     $("#onboardingPreviewSummary").textContent = choice === "online"
       ? "Thumbnails will use the online preview service. You can switch this off in Settings."
       : choice === "local"
-        ? "When you’re ready, open Settings → Generate previews now to capture screenshots locally. LinkDeck will ask for page access at that point."
+        ? state.settings.localShots
+          ? "LinkDeck will capture screenshots locally as you browse bookmarked pages. You can also generate previews for existing bookmarks in Settings. Nothing is sent to a preview service."
+          : "Local capture is off because page access wasn’t granted. You can enable it later in Settings."
         : "You chose no previews. LinkDeck will use the clean icon-based thumbnails.";
     persist();
     render();
