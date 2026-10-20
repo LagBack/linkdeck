@@ -3123,6 +3123,23 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg * {
   stroke: currentColor !important;
 }
 
+/* Keep the palette icon standalone: no colored disc or border behind it. */
+dialog.theme-picker-dialog .theme-picker-heading-icon {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--picker-text, var(--text)) !important;
+}
+dialog.theme-picker-dialog .theme-picker-heading-icon svg {
+  width: 34px !important;
+  height: 34px !important;
+}
+
 /* MINIMALISM — quiet graphite surfaces, restrained slate accents, no decorative noise. */
 .logo-minimalism { display:none; width:52px; height:52px; flex:0 0 52px; object-fit:contain; }
 :root[data-theme="minimalism"] {
