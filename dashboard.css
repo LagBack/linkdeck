@@ -3242,3 +3242,55 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg {
 /* Minimalism: keep utility controls muted and consistent with the graphite palette. */
 :root[data-theme="minimalism"] .heading-mark > span:first-child { color:#7e8992; }
 :root[data-theme="minimalism"] .search input::placeholder { color:#7d8993; opacity:1; }
+
+
+/* Category management */
+.category-head-actions { display:flex; align-items:center; gap:3px; }
+.category-head-actions .icon-btn { min-width:25px; height:25px; display:inline-flex; align-items:center; justify-content:center; line-height:1; }
+.category-manager { gap:12px; max-height:min(78vh, 680px); overflow:hidden; }
+.category-manager-copy { color:var(--muted); font-size:12px; line-height:1.55; margin:0; }
+.category-manager-list { display:flex; flex-direction:column; gap:6px; overflow-y:auto; min-height:0; max-height:52vh; padding:2px 4px 2px 0; }
+.category-manager-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 10px; background:var(--card); border:1px solid var(--line-soft); border-radius:3px; min-width:0; }
+.category-manager-name { display:flex; flex-direction:column; gap:3px; min-width:0; overflow-wrap:anywhere; font-size:13px; font-weight:750; }
+.category-manager-name small { color:var(--muted); font-size:10px; font-weight:500; }
+.category-manager-actions { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.category-manager-actions .btn { padding:5px 8px; font-size:11px; }
+.category-manager-actions .category-delete-btn { color:var(--danger); }
+.category-manager-actions button:disabled { opacity:.4; cursor:not-allowed; }
+.category-manager-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:10px; border-top:1px solid var(--line-soft); color:var(--muted); font-size:10px; }
+@media (max-width:480px) { .category-manager-row { align-items:flex-start; flex-direction:column; } .category-manager-actions { align-self:flex-end; } .category-manager-foot { align-items:flex-start; flex-direction:column; } }
+
+/* Category drag-and-drop ordering */
+.category-manager-list { overscroll-behavior:contain; }
+.category-manager-row { transition: transform 260ms cubic-bezier(.22,1,.36,1), background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, box-shadow 180ms ease; cursor:grab; user-select:none; touch-action:pan-y; will-change:transform; }
+.category-manager-row:active { cursor:grabbing; }
+.category-manager-row.is-dragging { opacity:.52; transform:scale(.975); border:1px dashed var(--accent); background:color-mix(in srgb, var(--accent) 7%, var(--card)); box-shadow:0 8px 22px color-mix(in srgb, var(--accent) 12%, transparent); z-index:1; }
+.category-manager-row.drop-target { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 11%, var(--card)); box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent), 0 4px 14px color-mix(in srgb, var(--accent) 10%, transparent); }
+.category-manager-row.is-fallback { cursor:default; opacity:.78; }
+.category-manager-name-wrap { display:flex; align-items:center; gap:10px; min-width:0; }
+.category-drag-handle { display:flex; align-items:center; justify-content:center; flex:0 0 20px; color:var(--muted); opacity:.72; transition:color 160ms ease, opacity 160ms ease, transform 160ms ease; }
+.category-manager-row:not(.is-fallback):hover .category-drag-handle { color:var(--accent); opacity:1; transform:scale(1.08); }
+.category-manager-row:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.category-manager-row.is-fallback .category-drag-handle { opacity:.28; }
+.category-manager-actions .category-delete-btn { cursor:pointer; }
+@media (prefers-reduced-motion: reduce) { .category-manager-row, .category-drag-handle { transition:none !important; } .category-manager-row { will-change:auto; } }
+@media (max-width:560px) { .category-manager-row { gap:8px; } .category-manager-actions { flex-wrap:wrap; } .category-manager-name-wrap { flex:1; } }
+
+
+/* Keep the category-management wrench aligned with the Add category control. */
+.category-head-actions #manageCatsBtn {
+  color: inherit;
+  font-size: 18px;
+}
+.category-head-actions #manageCatsBtn .manage-cats-wrench {
+  display: block;
+  width: 18px;
+  height: 18px;
+  /* The wrench silhouette sits low-left inside its viewBox; optically center it in theme button frames. */
+  transform: translate(1px, -1.5px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

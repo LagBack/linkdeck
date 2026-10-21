@@ -128,7 +128,15 @@ initThemeToggle();
 })();
 
 const $ = (s) => document.querySelector(s);
-const DEFAULT_CATS = ["Discussions/Forums", "Projects", "Learning", "Tools", "Development", "Entertainment", "Social", "Shopping", "Work", "Other"];
+const DEFAULT_CATS = ["Community", "Projects", "Learning", "Tools & Development", "Social & Entertainment", "Shopping", "Work", "Other"];
+const LEGACY_AUTO_CATS = ["Discussions/Forums", "Tools", "Development", "Entertainment", "Social"];
+const LEGACY_CAT_MAP = {
+  "Discussions/Forums": "Community",
+  "Tools": "Tools & Development",
+  "Development": "Tools & Development",
+  "Entertainment": "Social & Entertainment",
+  "Social": "Social & Entertainment",
+};
 
 const state = {
   items: [],
@@ -276,6 +284,19 @@ function renderNav() {
     `<button class="nav-item ${state.cat === c ? "active" : ""}" data-cat="${esc(c)}">
       <span class="ico">▸</span><span class="label">${esc(c)}</span>
       <span class="count">${count((i) => catOf(i) === c)}</span></button>`).join("");
+  if ($("#manageCatsDialog").open) renderCategoryManager();
+}
+
+function renderCategoryManager() {
+  const count = (category) => state.items.filter((item) => catOf(item) === category).length;
+  $("#manageCatsList").innerHTML = state.cats.map((category, index) => `
+    <div class="category-manager-row ${category === "Other" ? "is-fallback" : ""}" data-category-row="${esc(category)}" draggable="${category !== "Other"}" tabindex="0" role="listitem" aria-label="${esc(category)} category. Drag to reorder; use Alt plus arrow keys to move.">
+      <div class="category-manager-name-wrap"><span class="category-drag-handle" aria-hidden="true"><svg viewBox="0 0 16 20" width="16" height="20" fill="currentColor"><circle cx="5" cy="4" r="1.3"/><circle cx="11" cy="4" r="1.3"/><circle cx="5" cy="10" r="1.3"/><circle cx="11" cy="10" r="1.3"/><circle cx="5" cy="16" r="1.3"/><circle cx="11" cy="16" r="1.3"/></svg></span><div class="category-manager-name"><span>${esc(category)}</span><small>${count(category)} item${count(category) === 1 ? "" : "s"}</small></div></div>
+      <div class="category-manager-actions">
+        <button type="button" class="btn category-edit-btn" data-category-edit="${esc(category)}" ${category === "Other" ? 'disabled title="Other is the fallback category"' : ""}>Rename</button>
+        <button type="button" class="btn danger category-delete-btn" data-category-delete="${esc(category)}" ${category === "Other" ? 'disabled title="Other is the fallback category"' : ""}>Delete</button>
+      </div>
+    </div>`).join("");
 }
 
 /* ---------- Detail panel ---------- */
@@ -327,8 +348,129 @@ function renderChips() {
 
 function closePanel() { state.selected = null; $("#panel").hidden = true; }
 
+/* ---------- Category drag-and-drop ordering ---------- */
+let draggedCategory = null;
+let categoryDropChanged = false;
+const categoryList = $("#manageCatsList");
+
+categoryList.addEventListener("dragstart", (e) => {
+  const row = e.target.closest("[data-category-row]");
+  if (!row || row.dataset.categoryRow === "Other") { e.preventDefault(); return; }
+  draggedCategory = row.dataset.categoryRow;
+  categoryDropChanged = false;
+  row.classList.add("is-dragging");
+  e.dataTransfer.effectAllowed = "move";
+  e.dataTransfer.setData("text/plain", draggedCategory);
+});
+
+function animateCategoryReorder(mutate) {
+  const rows = [...categoryList.querySelectorAll("[data-category-row]")];
+  const before = new Map(rows.map((row) => [row, row.getBoundingClientRect()]));
+  mutate();
+  for (const row of rows) {
+    if (row.classList.contains("is-dragging")) continue;
+    const first = before.get(row);
+    const last = row.getBoundingClientRect();
+    if (!first || !last) continue;
+    const dy = first.top - last.top;
+    if (Math.abs(dy) < 1) continue;
+    row.style.transition = "none";
+    row.style.transform = `translateY(${dy}px)`;
+    row.getBoundingClientRect();
+    row.style.transition = "";
+    requestAnimationFrame(() => { row.style.transform = ""; });
+  }
+}
+
+categoryList.addEventListener("dragover", (e) => {
+  if (!draggedCategory) return;
+  const target = e.target.closest("[data-category-row]");
+  if (!target || target.dataset.categoryRow === draggedCategory || target.dataset.categoryRow === "Other") return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+  const dragging = categoryList.querySelector(".is-dragging");
+  const rect = target.getBoundingClientRect();
+  const insertAfter = e.clientY > rect.top + rect.height / 2;
+  const reference = insertAfter ? target.nextElementSibling : target;
+  if (reference !== dragging) {
+    animateCategoryReorder(() => categoryList.insertBefore(dragging, reference));
+    categoryDropChanged = true;
+  }
+  categoryList.querySelectorAll(".drop-target").forEach((row) => row.classList.remove("drop-target"));
+  target.classList.add("drop-target");
+});
+
+categoryList.addEventListener("dragleave", (e) => {
+  const row = e.target.closest("[data-category-row]");
+  if (row && !row.contains(e.relatedTarget)) row.classList.remove("drop-target");
+});
+
+categoryList.addEventListener("drop", (e) => { if (draggedCategory) e.preventDefault(); });
+categoryList.addEventListener("dragend", () => {
+  categoryList.querySelectorAll(".is-dragging, .drop-target").forEach((row) => row.classList.remove("is-dragging", "drop-target"));
+  if (draggedCategory && categoryDropChanged) {
+    const ordered = [...categoryList.querySelectorAll("[data-category-row]")].map((row) => row.dataset.categoryRow);
+    const fallback = state.cats.includes("Other");
+    state.cats = ordered.filter((name) => name !== "Other");
+    if (fallback) state.cats.push("Other");
+    persist(); render(); renderCategoryManager();
+  } else if (draggedCategory) {
+    renderCategoryManager();
+  }
+  draggedCategory = null;
+  categoryDropChanged = false;
+});
+
+categoryList.addEventListener("keydown", (e) => {
+  if (!e.altKey || !["ArrowUp", "ArrowDown"].includes(e.key)) return;
+  const row = e.target.closest("[data-category-row]");
+  if (!row || row.dataset.categoryRow === "Other") return;
+  e.preventDefault();
+  const index = state.cats.indexOf(row.dataset.categoryRow);
+  const next = index + (e.key === "ArrowUp" ? -1 : 1);
+  if (index < 0 || next < 0 || next >= state.cats.length || state.cats[next] === "Other") return;
+  [state.cats[index], state.cats[next]] = [state.cats[next], state.cats[index]];
+  persist(); render(); renderCategoryManager();
+  categoryList.querySelector(`[data-category-row="${CSS.escape(state.cats[next])}"]`)?.focus();
+});
+
 /* ---------- Events ---------- */
 document.addEventListener("click", async (e) => {
+
+  const editCategoryButton = e.target.closest("[data-category-edit]");
+  if (editCategoryButton) {
+    const oldName = editCategoryButton.dataset.categoryEdit;
+    if (oldName === "Other") return;
+    const entered = prompt(`Rename category\n\nCurrent name: ${oldName}`, oldName);
+    if (entered == null) return;
+    const newName = entered.trim();
+    if (!newName) { alert("Category names cannot be empty."); return; }
+    const duplicate = state.cats.some((name) => name.toLowerCase() === newName.toLowerCase() && name !== oldName);
+    if (duplicate) { alert("A category with that name already exists."); return; }
+    if (newName === oldName) return;
+    state.cats = state.cats.map((name) => name === oldName ? newName : name);
+    Object.values(state.meta).forEach((meta) => { if (meta.category === oldName) meta.category = newName; });
+    if (state.cat === oldName) state.cat = newName;
+    persist(); render(); renderCategoryManager();
+    return;
+  }
+
+  const deleteCategoryButton = e.target.closest("[data-category-delete]");
+  if (deleteCategoryButton) {
+    const category = deleteCategoryButton.dataset.categoryDelete;
+    if (category === "Other") return;
+    const amount = state.items.filter((item) => catOf(item) === category).length;
+    const message = amount
+      ? `Delete “${category}”?\n\n${amount} item${amount === 1 ? " will" : "s will"} be moved to “Other”. This cannot be undone.`
+      : `Delete the empty category “${category}”? This cannot be undone.`;
+    if (!confirm(message)) return;
+    state.cats = state.cats.filter((name) => name !== category);
+    Object.values(state.meta).forEach((meta) => { if (meta.category === category) meta.category = "Other"; });
+    if (state.cat === category) state.cat = null;
+    persist(); render(); renderCategoryManager();
+    return;
+  }
+
   const nav = e.target.closest("[data-type],[data-cat]");
   if (nav) {
     if (nav.dataset.cat) { state.cat = state.cat === nav.dataset.cat ? null : nav.dataset.cat; state.type = "all"; }
@@ -403,7 +545,17 @@ $("#listBtn").onclick = () => { state.settings.view = "list"; persist(); render(
 
 $("#addCatBtn").onclick = () => {
   const name = prompt("New category name")?.trim();
-  if (name && !state.cats.includes(name)) { state.cats.push(name); persist(); render(); }
+  if (!name) return;
+  if (state.cats.some((category) => category.toLowerCase() === name.toLowerCase())) {
+    alert("A category with that name already exists.");
+    return;
+  }
+  state.cats.push(name); persist(); render();
+};
+
+$("#manageCatsBtn").onclick = () => {
+  renderCategoryManager();
+  $("#manageCatsDialog").showModal();
 };
 
 // Add bookmark
@@ -508,6 +660,14 @@ $("#autoSortBtn").onclick = async () => {
   if (!bookmarkCount) { $("#autoSortStatus").textContent = "No bookmarks to sort."; return; }
   if (!confirm(`Auto-sort ${bookmarkCount} bookmarks?\n\nThis will assign categories and tags based on each URL's domain and structure.`)) return;
 
+  // Keep the standard auto-sort taxonomy compact, while preserving user-created categories.
+  const oldStandardCats = new Set(["Discussions/Forums", "Projects", "Learning", "Tools", "Development", "Entertainment", "Social", "Shopping", "Work", "Other"]);
+  const customCats = state.cats.filter((category) => category && !oldStandardCats.has(category) && !DEFAULT_CATS.includes(category));
+  state.cats = [...DEFAULT_CATS.filter((category) => category !== "Other"), ...customCats, "Other"];
+  for (const meta of Object.values(state.meta)) {
+    if (LEGACY_CAT_MAP[meta.category]) meta.category = LEGACY_CAT_MAP[meta.category];
+    if (meta.category && !state.cats.includes(meta.category)) meta.category = "Other";
+  }
   autoSort();
 
   const catCounts = {};
@@ -630,8 +790,8 @@ $("#firstRunLater").onclick = async () => {
 
 /* ---------- Auto-sort helpers ---------- */
 const DOMAIN_CATS = [
-  { patterns: ["youtube.com", "vimeo.com", "twitch.tv", "netflix.com", "hulu.com", "disneyplus.com", "spotify.com"], category: "Entertainment" },
-  { patterns: ["twitter.com", "x.com", "linkedin.com", "facebook.com", "instagram.com", "tiktok.com", "mastodon.social"], category: "Social" },
+  { patterns: ["youtube.com", "vimeo.com", "twitch.tv", "netflix.com", "hulu.com", "disneyplus.com", "spotify.com"], category: "Social & Entertainment" },
+  { patterns: ["twitter.com", "x.com", "linkedin.com", "facebook.com", "instagram.com", "tiktok.com", "mastodon.social", "reddit.com", "discord.com"], category: "Social & Entertainment" },
   { patterns: ["amazon.com", "shopify.com", "ebay.com", "etsy.com", "walmart.com", "target.com"], category: "Shopping" },
   { patterns: ["gmail.com", "outlook.com", "mail.google.com", "proton.me"], category: "Work" },
   { patterns: ["drive.google.com", "docs.google.com", "sheets.google.com", "dropbox.com", "onedrive.live.com", "notion.so", "linear.app", "figma.com", "slack.com", "discord.com", "jira.atlassian.net", "confluence"], category: "Work" },
@@ -656,10 +816,10 @@ const TOOL_KEYWORDS = ["converter", "calculator", "editor", "compress", "resize"
 function inferCategory(url) {
   if (!url || !/^https?:/.test(url)) return null;
 
-  // Priority 1: Discussions/Forums — path keywords first (questions, community, forum, etc.)
+  // Priority 1: Community — discussions, forums, and Q&A sites
   const lowerUrl = url.toLowerCase();
   for (const kw of DISCUSSION_KEYWORDS) {
-    if (lowerUrl.includes(kw)) return "Discussions/Forums";
+    if (lowerUrl.includes(kw)) return "Community";
   }
   // Also check hostname for known question/community sites
   try {
@@ -669,7 +829,7 @@ function inferCategory(url) {
       "quora.com", "groups.google.com", "discourse.org",
       "talk.google.com", "forums.",
     ];
-    for (const dh of discussionHosts) { if (host.includes(dh)) return "Discussions/Forums"; }
+    for (const dh of discussionHosts) { if (host.includes(dh)) return "Community"; }
   } catch {}
 
   // Priority 2: Projects — path keywords or known project hosts
@@ -699,9 +859,9 @@ function inferCategory(url) {
     for (const lh of learnHosts) { if (host === lh || host.endsWith("." + lh)) return "Learning"; }
   } catch {}
 
-  // Priority 4: Tools — path keywords or known tool hosts
+  // Priority 4: Tools & Development — utility sites and developer tools
   for (const tk of TOOL_KEYWORDS) {
-    if (lowerUrl.includes(tk)) return "Tools";
+    if (lowerUrl.includes(tk)) return "Tools & Development";
   }
   try {
     const host = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
@@ -713,7 +873,7 @@ function inferCategory(url) {
       "imgbb.com", "imgur.com", "giphy.com",
       "canva.com", "photoshop.com", "inkscape.org",
     ];
-    for (const th of toolHosts) { if (host === th || host.endsWith("." + th)) return "Tools"; }
+    for (const th of toolHosts) { if (host === th || host.endsWith("." + th)) return "Tools & Development"; }
   } catch {}
 
   // Fallback: known domain→category mapping
@@ -757,9 +917,11 @@ function autoSort(progressCb) {
   for (const it of state.items) {
     if (it.type !== "bookmark") continue;
     const m = getMeta(it.key);
-    if (!m.category || m.category === "Other" || m.category === "") {
-      const inferred = inferCategory(it.url);
-      if (inferred) m.category = inferred;
+    const inferred = inferCategory(it.url);
+    if (inferred && state.cats.includes(inferred)) {
+      m.category = inferred;
+    } else if (!state.cats.includes(m.category) || LEGACY_CAT_MAP[m.category]) {
+      m.category = LEGACY_CAT_MAP[m.category] || "Other";
     }
     if (!m.tags?.length) {
       const inferredTags = inferTags(it.url);
@@ -781,7 +943,7 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
 (async function init() {
   const saved = await chrome.storage.local.get(["meta", "cats", "settings"]);
   if (saved.meta) state.meta = saved.meta;
-  if (saved.cats) state.cats = saved.cats;
+  if (saved.cats) state.cats = [...new Set([...saved.cats, "Other"])];
   if (saved.settings) Object.assign(state.settings, saved.settings);
   await loadShots();
   await refresh();

@@ -32,7 +32,10 @@
 
       <div class="nav-head">
         <span>Categories</span>
-        <button id="addCatBtn" class="icon-btn small" title="New category">+</button>
+        <div class="category-head-actions">
+          <button id="manageCatsBtn" class="icon-btn small" title="Edit or delete categories" aria-label="Manage categories"><svg class="manage-cats-wrench" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.7 6.3a5.2 5.2 0 0 0-6.9 6.9L3 18a2.1 2.1 0 0 0 3 3l4.8-4.8a5.2 5.2 0 0 0 6.9-6.9l-3.2 3.2-3-3 3.2-3.2Z"/></svg></button>
+          <button id="addCatBtn" class="icon-btn small" title="New category" aria-label="Add category">+</button>
+        </div>
       </div>
       <nav id="catNav" class="nav"></nav>
 
@@ -121,6 +124,15 @@
   <div class="pixel-deco pixel-stars pixel-stars-two" aria-hidden="true">✧</div>
   <div class="pixel-deco pixel-plant" aria-hidden="true"><span></span></div>
   <div class="pixel-deco pixel-status" aria-hidden="true"><span>☾</span> save point <b>✦</b></div>
+
+  <dialog id="manageCatsDialog" aria-labelledby="manageCatsTitle">
+    <div class="dlg category-manager">
+      <div class="dlg-head"><h3 id="manageCatsTitle">Manage categories</h3><button type="button" class="icon-btn" data-close aria-label="Close">✕</button></div>
+      <p class="category-manager-copy">Rename categories or remove ones you no longer need. Removing a category moves its items to <strong>Other</strong>.</p>
+      <div id="manageCatsList" class="category-manager-list"></div>
+      <div class="category-manager-foot"><span>“Other” is kept as the default fallback category.</span><button type="button" class="btn" data-close>Done</button></div>
+    </div>
+  </dialog>
 
   <dialog id="addDialog">
     <form method="dialog" id="addForm" class="dlg">
