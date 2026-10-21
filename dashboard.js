@@ -129,6 +129,7 @@ initThemeToggle();
 
 const $ = (s) => document.querySelector(s);
 const DEFAULT_CATS = ["Community", "Projects", "Learning", "Tools & Development", "Social & Entertainment", "Shopping", "Work", "Other"];
+const keepOtherLast = (categories) => [...new Set(categories.filter((category) => category && category !== "Other")), "Other"];
 const LEGACY_AUTO_CATS = ["Discussions/Forums", "Tools", "Development", "Entertainment", "Social"];
 const LEGACY_CAT_MAP = {
   "Discussions/Forums": "Community",
@@ -550,7 +551,10 @@ $("#addCatBtn").onclick = () => {
     alert("A category with that name already exists.");
     return;
   }
-  state.cats.push(name); persist(); render();
+  const otherIndex = state.cats.indexOf("Other");
+  state.cats.splice(otherIndex === -1 ? state.cats.length : otherIndex, 0, name);
+  state.cats = keepOtherLast(state.cats);
+  persist(); render();
 };
 
 $("#manageCatsBtn").onclick = () => {
@@ -650,7 +654,8 @@ $("#importFile").onchange = async (e) => {
   try {
     const data = JSON.parse(await e.target.files[0].text());
     Object.assign(state.meta, data.meta || {});
-    for (const c of data.cats || []) if (!state.cats.includes(c)) state.cats.push(c);
+    for (const c of data.cats || []) if (c && c !== "Other" && !state.cats.includes(c)) state.cats.splice(Math.max(0, state.cats.indexOf("Other")), 0, c);
+    state.cats = keepOtherLast(state.cats);
     persist(); render();
   } catch { alert("That file doesn't look like a LinkDeck export."); }
 };
@@ -1002,7 +1007,7 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
 (async function init() {
   const saved = await chrome.storage.local.get(["meta", "cats", "settings"]);
   if (saved.meta) state.meta = saved.meta;
-  if (saved.cats) state.cats = [...new Set([...saved.cats, "Other"])];
+  if (saved.cats) state.cats = keepOtherLast(saved.cats);
   if (saved.settings) Object.assign(state.settings, saved.settings);
   await loadShots();
   await refresh();
