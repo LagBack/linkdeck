@@ -66,12 +66,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .topbar { display: flex; gap: 10px; align-items: center; position: sticky; top: -30px; padding: 13px 0 15px; margin: 0 auto 0; background: var(--bg); z-index: 5; max-width: 1500px; }
 .search { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 0 13px; box-shadow: 2px 2px 0 rgba(36,34,30,.08); }
 .search:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
-.search .ico { font-size: 22px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; align-self: center; transform: translateY(-2px); }
+.search .ico { font-size: 22px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; align-self: stretch; flex: 0 0 auto; transform: translateY(-3px); }
 .search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; padding: 12px 0; }
 .search input::placeholder { color: #8a8373; }
 .seg { display: flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; background: var(--card); }
 .seg button { background: none; border: 0; border-right: 1px solid var(--line-soft); padding: 10px 12px; color: var(--muted); min-width: 40px; }
-.seg button:last-child { border-right: 0; }
+ .seg button:last-child { border-right: 0; }
+.seg .view-icon { display: block; width: 15px; height: 15px; flex: 0 0 auto; overflow: visible; }
+.seg .view-icon-grid { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; }
 .seg button:hover { background: var(--card-h); }
 .seg button.on { background: var(--accent); color: var(--text); }
 .btn { background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 10px 15px; box-shadow: 2px 2px 0 rgba(36,34,30,.12); transition: transform .14s ease, box-shadow .14s ease, background .14s ease; }
@@ -3293,4 +3295,52 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Pixel Night readability pass: preserve the 16-bit look without undersizing UI text. */
+:root[data-theme="pixel"] body { font-size:15px; }
+:root[data-theme="pixel"] .brand-text { font-size:13px; line-height:1.7; letter-spacing:-.25px; }
+:root[data-theme="pixel"] .brand-text small { font-size:11px; line-height:1.55; }
+:root[data-theme="pixel"] .nav-item { font-size:14px; }
+:root[data-theme="pixel"] .nav-item .count { font-size:12px; }
+:root[data-theme="pixel"] .nav-head { font-size:10px; letter-spacing:.15px; }
+:root[data-theme="pixel"] .page-heading h1 { font-size:clamp(21px,2vw,25px); line-height:1.55; letter-spacing:-.45px; }
+:root[data-theme="pixel"] .page-kicker { font-size:11px; line-height:1.7; }
+:root[data-theme="pixel"] .page-subtitle { font-size:15px; line-height:1.55; }
+:root[data-theme="pixel"] .card-title { font-size:12px; line-height:1.8; letter-spacing:0; }
+:root[data-theme="pixel"] .desc,
+:root[data-theme="pixel"] .note-preview { font-size:13px; line-height:1.55; }
+:root[data-theme="pixel"] .badge,
+:root[data-theme="pixel"] .tag { font-size:11px; line-height:1.4; }
+:root[data-theme="pixel"] .search input { font-size:14px; }
+@media (max-width:760px) {
+  :root[data-theme="pixel"] .page-heading h1 { font-size:20px; }
+  :root[data-theme="pixel"] .card-title { font-size:11px; }
+}
+
+/* Pixel Night: make category navigation readable at a glance. The category
+   rows use the shared nav-item styles, so explicitly size their labels here. */
+:root[data-theme="pixel"] #catNav .nav-item {
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: .2px;
+  min-height: 42px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+:root[data-theme="pixel"] #catNav .nav-item .label {
+  font-size: 15px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+:root[data-theme="pixel"] #catNav .nav-item .count {
+  font-size: 12px;
+  line-height: 1.4;
+}
+:root[data-theme="pixel"] .nav-head {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .5px;
 }
