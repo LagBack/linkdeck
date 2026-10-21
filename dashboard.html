@@ -24,6 +24,7 @@
         <img class="logo-industrial" src="assets/industrial-linkdeck-metal.png" alt="" aria-hidden="true">
         <img class="logo-beach" src="assets/beach-linkdeck.svg" alt="" aria-hidden="true">
         <img class="logo-minimalism" src="assets/minimalism-linkdeck.svg" alt="" aria-hidden="true">
+        <img class="logo-cyberpunk" src="assets/cyberpunk-linkdeck.svg" alt="" aria-hidden="true">
         <img class="logo-cutecore" src="assets/cutecore-logo.svg" alt="" aria-hidden="true">
         <img class="webcore-logo-gif" src="assets/webcore-linkdeck.gif" alt="LinkDeck" aria-hidden="true"><div class="brand-text">LinkDeck<span class="cutecore-brand-deco" aria-hidden="true"> ⊹ ࣪ ˖ ໒꒱</span><small>Bookmarks &amp; extensions</small></div>
       </div>
@@ -68,6 +69,13 @@
           <p class="page-subtitle">Bookmarks, tools, and little things worth coming back to.</p>
         </div>
         <div class="heading-actions">
+          <div class="cyber-billboard" aria-hidden="true">
+            <span class="cyber-billboard-live">
+              <svg class="cyber-eye" viewBox="0 0 64 36" focusable="false"><path d="M2 18C12 5 24 2 32 2s20 3 30 16c-10 13-22 16-30 16S12 31 2 18Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="18" r="3.4" fill="currentColor"/><path d="M2 18h12M50 18h12" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span><span class="cyber-billboard-kanji">電脳広告</span><span class="cyber-billboard-text">NEO·LINK // ONLINE</span></span>
+            </span>
+            <span class="cyber-billboard-art"></span>
+          </div>
           <div class="theme-picker-wrap">
             <button id="themeToggle" class="theme-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" title="Choose appearance"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Theme</span><span class="theme-caret" aria-hidden="true">▾</span></button>
             <dialog id="themeMenu" class="theme-menu theme-picker-dialog" aria-label="Choose a LinkDeck theme">
@@ -115,6 +123,8 @@
   <div class="scene-deco scene-sparkle scene-sparkle-two" aria-hidden="true">✧</div>
   <img class="scene-deco scene-cat" src="assets/nyan-cat.png" alt="" aria-hidden="true">
   <img class="industrial-deco industrial-danger-sign" src="assets/industrial-danger-sign.svg" alt="" aria-hidden="true">
+  <!-- CYBERPUNK: vertical kanji neon sign. Hidden in every other theme. -->
+  <div class="cyber-deco cyber-vsign" aria-hidden="true"><span>ネオン街</span></div>
   <div class="gxsc-deco gxsc-orb gxsc-orb-one" aria-hidden="true"></div>
   <div class="gxsc-deco gxsc-orb gxsc-orb-two" aria-hidden="true"></div>
   <div class="gxsc-deco gxsc-rings" aria-hidden="true"></div>
@@ -185,9 +195,9 @@
             <span class="theme-preview-art preview-terminal"><span class="preview-titlebar">LINKDECK.EXE</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
             <span class="theme-preview-name">terminal</span><span class="theme-preview-desc">command-line era</span>
           </button>
-          <button type="button" class="theme-preview-card" data-onboarding-theme="industrial" aria-pressed="false">
-            <span class="theme-preview-art preview-industrial"><span class="preview-titlebar">LD // CONTROL DECK</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
-            <span class="theme-preview-name">INDUSTRIAL</span><span class="theme-preview-desc">Machined steel · signal amber</span>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="cyberpunk" aria-pressed="false">
+            <span class="theme-preview-art preview-cyberpunk"><span class="preview-titlebar">電脳 // NEO-DECK</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">Cyberpunk</span><span class="theme-preview-desc">High tech, low life · neon rain</span>
           </button>
           <button type="button" class="theme-preview-card" data-onboarding-theme="beach" aria-pressed="false">
             <span class="theme-preview-art preview-beach"><span class="preview-sun"></span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
@@ -196,6 +206,10 @@
           <button type="button" class="theme-preview-card" data-onboarding-theme="minimalism" aria-pressed="false">
             <span class="theme-preview-art preview-minimalism"><span class="preview-titlebar">linkdeck</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
             <span class="theme-preview-name">minimalism</span><span class="theme-preview-desc">Quiet dark · clean and focused</span>
+          </button>
+          <button type="button" class="theme-preview-card" data-onboarding-theme="industrial" aria-pressed="false">
+            <span class="theme-preview-art preview-industrial"><span class="preview-titlebar">LD // CONTROL DECK</span><span class="preview-sidebar"></span><span class="preview-line"></span><span class="preview-line short"></span><span class="preview-tile"></span><span class="preview-tile"></span></span>
+            <span class="theme-preview-name">INDUSTRIAL</span><span class="theme-preview-desc">Machined steel · signal amber</span>
           </button>
         </div>
       </section>

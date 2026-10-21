@@ -8,8 +8,8 @@ function initThemeToggle() {
   const pickerGrid = document.getElementById("themePickerGrid");
   const closeButton = document.getElementById("themePickerClose");
   if (!toggle || !menu || !pickerGrid) return;
-  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal", "industrial", "beach", "minimalism"]);
-  const themeNames = {light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"terminal",industrial:"INDUSTRIAL",beach:"Beach",minimalism:"minimalism"};
+  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal", "industrial", "beach", "minimalism", "cyberpunk"]);
+  const themeNames = {light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"terminal",industrial:"INDUSTRIAL",beach:"Beach",minimalism:"minimalism",cyberpunk:"Cyberpunk"};
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
@@ -937,6 +937,65 @@ function autoSort(progressCb) {
   persist();
 }
 
+/* ---------- Cyberpunk billboard scroll-dock ---------- */
+function initCyberBillboardDock() {
+  const billboard = document.querySelector(".cyber-billboard");
+  if (!billboard || billboard.dataset.dockReady === "true") return;
+  billboard.dataset.dockReady = "true";
+
+  // Keep the original layout slot in the header while the billboard temporarily docks.
+  const anchor = document.createElement("span");
+  anchor.className = "cyber-billboard-anchor";
+  anchor.setAttribute("aria-hidden", "true");
+  billboard.parentNode.insertBefore(anchor, billboard);
+
+  const syncAnchorSize = () => {
+    const rect = billboard.getBoundingClientRect();
+    anchor.style.width = `${rect.width}px`;
+    anchor.style.height = `${rect.height}px`;
+  };
+  syncAnchorSize();
+  window.addEventListener("resize", syncAnchorSize, { passive: true });
+
+  const scrollContainer = document.querySelector(".main") || window;
+  let docked = false;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const isCyberpunk = document.documentElement.dataset.theme === "cyberpunk";
+    const anchorRect = anchor.getBoundingClientRect();
+    const shouldDock = isCyberpunk && (docked ? anchorRect.top < 0 : anchorRect.bottom < 0);
+
+    if (shouldDock === docked) return;
+    docked = shouldDock;
+    billboard.classList.remove("cyber-billboard-returning");
+    if (docked) {
+      syncAnchorSize();
+      billboard.classList.remove("cyber-billboard-returning", "cyber-billboard-docking");
+      // A dedicated one-shot class gives the transition its own animation instead
+      // of letting the billboard's infinite ambient glitch overwrite its transforms.
+      billboard.classList.add("cyber-billboard-docked", "cyber-billboard-docking");
+    } else {
+      billboard.classList.remove("cyber-billboard-docked", "cyber-billboard-docking");
+      if (isCyberpunk) billboard.classList.add("cyber-billboard-returning");
+    }
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  };
+  scrollContainer.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", () => { syncAnchorSize(); onScroll(); }, { passive: true });
+  new MutationObserver(() => { syncAnchorSize(); onScroll(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  billboard.addEventListener("animationend", (event) => {
+    if (event.animationName === "cyber-bb-dock-glitch") billboard.classList.remove("cyber-billboard-docking");
+    if (event.animationName === "cyber-bb-return-glitch") billboard.classList.remove("cyber-billboard-returning");
+  });
+  onScroll();
+}
+
 /* ---------- Init ---------- */
 async function refresh() { await loadItems(); render(); if (state.selected) openPanel(state.selected); }
 
@@ -947,6 +1006,7 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
   if (saved.settings) Object.assign(state.settings, saved.settings);
   await loadShots();
   await refresh();
+  initCyberBillboardDock();
 
   // Show first-run prompt if this is the user's first time opening LinkDeck
   const { linkdeckFirstRunDone } = await chrome.storage.local.get("linkdeckFirstRunDone");

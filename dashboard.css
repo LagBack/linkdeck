@@ -3344,3 +3344,425 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg {
   line-height: 1.5;
   letter-spacing: .5px;
 }
+
+
+/* ==========================================================================
+   CYBERPUNK — "high tech, low life".
+   Electric pink / cyan / violet / acid-green neon cutting through smog-black
+   night. Glitch type, kanji signage, holo-billboards, rain and scanlines.
+   Everything is scoped to [data-theme="cyberpunk"] so other themes are untouched.
+   ========================================================================== */
+.logo-cyberpunk { display:none; width:52px; height:52px; flex:0 0 52px; object-fit:contain; filter:drop-shadow(0 0 7px rgba(25,247,255,.45)); }
+
+:root[data-theme="cyberpunk"] {
+  color-scheme:dark;
+  --bg:#07040f;
+  --bg2:#0d0819;
+  --card:#130a26;
+  --card-h:#1f1040;
+  --line:#ff2bd6;
+  --line-soft:#3b1a63;
+  --text:#ece8ff;
+  --muted:#a99dd8;
+  --accent:#ff2bd6;
+  --accent-ink:#13031a;
+  --accent-soft:#3a0f45;
+  --green:#b6ff3c;
+  --green-soft:#1d2b0a;
+  --danger:#ff5476;
+  --radius:2px;
+  --shadow:0 0 18px rgba(255,43,214,.25);
+  --cy-cyan:#19f7ff;
+  --cy-pink:#ff2bd6;
+  --cy-violet:#8a2bff;
+  --cy-acid:#b6ff3c;
+  --cy-ui:"Bahnschrift","Segoe UI","Inter","Noto Sans",Arial,sans-serif;
+  --cy-mono:"Consolas","JetBrains Mono","SFMono-Regular","Menlo",monospace;
+  --cy-jp:"Noto Sans JP","Noto Sans CJK JP","Yu Gothic","Hiragino Kaku Gothic ProN","Meiryo","MS Gothic",sans-serif;
+  scrollbar-color:#ff2bd6 #0a0514;
+}
+:root[data-theme="cyberpunk"] body {
+  color:var(--text);
+  font-family:var(--cy-ui);
+  letter-spacing:.02em;
+  background-color:#06030d;
+  background-image:
+    url("assets/cyberpunk-skyline.svg"),
+    radial-gradient(ellipse 80% 40% at 50% 100%,rgba(255,43,214,.26),transparent 70%),
+    radial-gradient(ellipse 60% 50% at 85% 0%,rgba(138,43,255,.16),transparent 70%),
+    linear-gradient(180deg,#06030d 0%,#0b0620 52%,#1b0a35 82%,#3c0f4e 100%);
+  background-repeat:repeat-x,no-repeat,no-repeat,no-repeat;
+  background-position:center bottom,center,center,center;
+  background-size:auto 52vh,100% 100%,100% 100%,100% 100%;
+  background-attachment:fixed;
+}
+/* acid-rain layer (two parallax depths) */
+:root[data-theme="cyberpunk"] body::before {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55; mix-blend-mode:screen;
+  background-image:url("assets/cyberpunk-rain.svg"),url("assets/cyberpunk-rain.svg");
+  background-size:100px 500px,64px 320px;
+  animation:cyber-rain 1.15s linear infinite;
+}
+@keyframes cyber-rain { to { background-position:-100px 500px,-64px 320px; } }
+/* scanlines + vignette over everything */
+:root[data-theme="cyberpunk"] body::after {
+  content:""; position:fixed; inset:0; z-index:60; pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.20) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse at center,transparent 58%,rgba(0,0,0,.5) 100%);
+}
+:root[data-theme="cyberpunk"] .app { position:relative; z-index:1; }
+:root[data-theme="cyberpunk"] ::selection { background:#19f7ff; color:#07040f; }
+
+/* --- sidebar --- */
+:root[data-theme="cyberpunk"] .sidebar {
+  background:linear-gradient(180deg,rgba(18,8,38,.9),rgba(8,4,18,.86));
+  border-right:1px solid #ff2bd6;
+  box-shadow:6px 0 28px rgba(255,43,214,.16),inset -1px 0 0 rgba(25,247,255,.3);
+  backdrop-filter:blur(4px);
+}
+:root[data-theme="cyberpunk"] .logo,
+:root[data-theme="cyberpunk"] .logo-xp,
+:root[data-theme="cyberpunk"] .logo-scene,
+:root[data-theme="cyberpunk"] .logo-gxsc,
+:root[data-theme="cyberpunk"] .logo-pixel,
+:root[data-theme="cyberpunk"] .logo-terminal,
+:root[data-theme="cyberpunk"] .logo-industrial,
+:root[data-theme="cyberpunk"] .logo-beach,
+:root[data-theme="cyberpunk"] .logo-minimalism,
+:root[data-theme="cyberpunk"] .logo-cutecore,
+:root[data-theme="cyberpunk"] .webcore-logo-gif { display:none !important; }
+:root[data-theme="cyberpunk"] .logo-cyberpunk { display:block; }
+/* Cyberpunk logo: the same intermittent neon signal corruption as the billboard. */
+:root[data-theme="cyberpunk"] .logo-cyberpunk {
+  animation:cyber-logo-signal 7s infinite steps(1,end);
+  transform-origin:center;
+}
+@keyframes cyber-logo-signal {
+  0%, 18%, 20%, 42%, 44%, 67%, 69%, 100% {
+    opacity:1; transform:translate(0,0) skewX(0); clip-path:inset(0); filter:drop-shadow(0 0 7px rgba(25,247,255,.45));
+  }
+  18.5% { opacity:.35; transform:translate(-1px,0) skewX(7deg); clip-path:inset(0 0 62% 0); filter:drop-shadow(-2px 0 #ff2bd6) drop-shadow(2px 0 #19f7ff); }
+  19% { opacity:1; transform:translate(2px,-1px); clip-path:inset(35% 0 28% 0); filter:drop-shadow(0 0 9px #19f7ff) hue-rotate(45deg); }
+  19.5% { opacity:.55; transform:translate(-2px,1px) skewX(-5deg); clip-path:inset(68% 0 0 0); filter:drop-shadow(-2px 0 #ff2bd6) drop-shadow(2px 0 #19f7ff); }
+  20% { opacity:1; transform:none; clip-path:inset(0); }
+  42.5% { opacity:.25; transform:translate(2px,0); clip-path:inset(10% 0 55% 0); filter:drop-shadow(0 0 8px #ff2bd6); }
+  43% { opacity:1; transform:translate(-1px,0) skewX(-8deg); clip-path:inset(48% 0 15% 0); filter:drop-shadow(-2px 0 #ff2bd6) drop-shadow(2px 0 #19f7ff); }
+  43.5% { opacity:.6; transform:translate(1px,0); clip-path:inset(0 0 70% 0); }
+  44% { opacity:1; transform:none; clip-path:inset(0); }
+  67.5% { opacity:.2; transform:translate(-2px,1px) skewX(8deg); clip-path:inset(20% 0 48% 0); filter:drop-shadow(0 0 10px #ff2bd6); }
+  68% { opacity:1; transform:translate(2px,0); clip-path:inset(55% 0 8% 0); filter:drop-shadow(-2px 0 #ff2bd6) drop-shadow(2px 0 #19f7ff); }
+  68.5% { opacity:.45; transform:translate(-1px,0); clip-path:inset(0 0 62% 0); }
+}
+
+:root[data-theme="cyberpunk"] .brand { border-bottom:1px solid #3b1a63; background:linear-gradient(135deg,rgba(25,247,255,.07),transparent 60%); }
+:root[data-theme="cyberpunk"] .brand-text {
+  font-family:var(--cy-ui); font-weight:800; text-transform:uppercase; letter-spacing:.14em; font-size:16px; color:#fff;
+  text-shadow:1.5px 0 #ff2bd6,-1.5px 0 #19f7ff;
+}
+:root[data-theme="cyberpunk"] .brand-text small {
+  color:#9a8fd0; font:9px/1.5 var(--cy-mono); letter-spacing:.12em; text-transform:uppercase; text-shadow:none;
+}
+:root[data-theme="cyberpunk"] .brand-text small::after {
+  content:"ブックマーク＆拡張"; display:block; margin-top:3px; color:#19f7ff; font:700 9px/1.3 var(--cy-jp); letter-spacing:.08em; text-shadow:0 0 8px rgba(25,247,255,.6);
+}
+:root[data-theme="cyberpunk"] .nav-item {
+  position:relative; color:#cfc7f2; font:600 12px/1.3 var(--cy-mono); letter-spacing:.04em; border-radius:0;
+  border:1px solid transparent; border-left:3px solid transparent; box-shadow:none; transition:background .15s,border-color .15s,color .15s,text-shadow .15s;
+}
+:root[data-theme="cyberpunk"] .nav-item .ico { color:#19f7ff; }
+:root[data-theme="cyberpunk"] .nav-item:hover {
+  color:#fff; background:linear-gradient(90deg,rgba(25,247,255,.14),rgba(25,247,255,0)); border-color:rgba(25,247,255,.35); border-left-color:#19f7ff; text-shadow:0 0 8px rgba(25,247,255,.7);
+}
+:root[data-theme="cyberpunk"] .nav-item.active {
+  color:#fff; font-weight:800; background:linear-gradient(90deg,rgba(255,43,214,.34),rgba(255,43,214,.04));
+  border:1px solid rgba(255,43,214,.65); border-left:3px solid #19f7ff; text-shadow:0 0 9px #ff2bd6; box-shadow:0 0 16px rgba(255,43,214,.22),inset 0 0 14px rgba(255,43,214,.1);
+}
+:root[data-theme="cyberpunk"] .nav-item.active .ico { color:#fff; filter:drop-shadow(0 0 5px #19f7ff); }
+:root[data-theme="cyberpunk"] .nav-item .count,
+:root[data-theme="cyberpunk"] .nav-item.active .count { color:#b6ff3c; background:#06030d; border:1px solid rgba(182,255,60,.45); border-radius:0; font:700 10px var(--cy-mono); text-shadow:none; }
+:root[data-theme="cyberpunk"] .nav-head { color:#ff2bd6; font:800 12px/1.5 var(--cy-mono); letter-spacing:.12em; white-space:nowrap; border-top:1px dashed #3b1a63; text-shadow:0 0 8px rgba(255,43,214,.6); }
+:root[data-theme="cyberpunk"] .nav-head > span:first-child::before { content:""; display:inline-block; width:5px; height:5px; margin-right:7px; background:#19f7ff; box-shadow:0 0 7px #19f7ff; vertical-align:middle; }
+:root[data-theme="cyberpunk"] .nav-head > span:first-child::after { content:none; }
+
+/* --- heading, kanji and glitch type --- */
+:root[data-theme="cyberpunk"] .main { background:transparent; }
+:root[data-theme="cyberpunk"] .page-kicker { color:#19f7ff; font:700 10px/1.5 var(--cy-mono); letter-spacing:.24em; text-shadow:0 0 8px rgba(25,247,255,.55); }
+:root[data-theme="cyberpunk"] .page-kicker::before { content:"▌"; color:#b6ff3c; margin-right:6px; }
+:root[data-theme="cyberpunk"] .page-kicker::after { content:" // 電脳デスク"; color:#ff2bd6; font-family:var(--cy-jp); letter-spacing:.12em; }
+:root[data-theme="cyberpunk"] .page-heading h1 {
+  font-family:var(--cy-ui); font-weight:900; text-transform:uppercase; letter-spacing:.06em; color:#fff;
+  text-shadow:2px 0 #ff2bd6,-2px 0 #19f7ff,0 0 22px rgba(25,247,255,.4);
+  animation:cyber-glitch 6.5s infinite steps(1,end);
+}
+:root[data-theme="cyberpunk"] .page-heading h1::after {
+  content:" 電脳"; font:700 .36em var(--cy-jp); letter-spacing:.24em; color:#19f7ff; vertical-align:super; text-shadow:0 0 10px rgba(25,247,255,.8);
+}
+@keyframes cyber-glitch {
+  0%,90%,100% { transform:none; text-shadow:2px 0 #ff2bd6,-2px 0 #19f7ff,0 0 22px rgba(25,247,255,.4); }
+  91% { transform:translate(3px,-1px) skewX(-8deg); text-shadow:-5px 0 #ff2bd6,5px 0 #19f7ff,0 0 22px rgba(255,43,214,.6); }
+  93% { transform:translate(-4px,1px) skewX(6deg); text-shadow:5px 0 #b6ff3c,-5px 0 #ff2bd6; }
+  95% { transform:translate(2px,0); text-shadow:-3px 0 #19f7ff,3px 0 #ff2bd6; }
+  97% { transform:none; text-shadow:2px 0 #ff2bd6,-2px 0 #19f7ff,0 0 22px rgba(25,247,255,.4); }
+}
+:root[data-theme="cyberpunk"] .page-subtitle { color:#a99dd8; font-family:var(--cy-mono); font-size:12.5px; letter-spacing:.04em; }
+:root[data-theme="cyberpunk"] .page-subtitle::before { content:"> "; color:#b6ff3c; }
+:root[data-theme="cyberpunk"] .heading-mark {
+  position:relative; width:54px; height:54px; transform:none; overflow:hidden; color:#19f7ff;
+  background:linear-gradient(160deg,#1b0b3a,#08030f); border:1px solid #19f7ff; border-radius:0;
+  box-shadow:0 0 14px rgba(25,247,255,.5),inset 0 0 12px rgba(255,43,214,.35); animation:cyber-flicker 7s infinite;
+}
+:root[data-theme="cyberpunk"] .heading-mark > span { display:none !important; }
+:root[data-theme="cyberpunk"] .heading-mark::before { content:"電"; font:900 30px/1 var(--cy-jp); color:#fff; text-shadow:1.5px 0 #ff2bd6,-1.5px 0 #19f7ff,0 0 10px rgba(25,247,255,.7); }
+:root[data-theme="cyberpunk"] .heading-mark::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 4px); }
+@keyframes cyber-flicker {
+  0%,18%,22%,62%,64%,100% { opacity:1; }
+  20% { opacity:.55; } 63% { opacity:.4; } 65% { opacity:.85; }
+}
+
+/* --- controls --- */
+:root[data-theme="cyberpunk"] .topbar { background:transparent; border-bottom:0; }
+:root[data-theme="cyberpunk"] .search { background:#09051a; border:1px solid #4a2380; border-radius:0; box-shadow:inset 0 0 14px rgba(138,43,255,.12); transition:border-color .15s,box-shadow .15s; }
+:root[data-theme="cyberpunk"] .search .ico { color:#19f7ff; }
+:root[data-theme="cyberpunk"] .search:focus-within { outline:none; border-color:#19f7ff; box-shadow:0 0 0 1px #19f7ff,0 0 20px rgba(25,247,255,.35),inset 0 0 14px rgba(25,247,255,.1); }
+:root[data-theme="cyberpunk"] .search input { color:#f2efff; font-family:var(--cy-mono); font-size:13px; }
+:root[data-theme="cyberpunk"] .search input,
+:root[data-theme="cyberpunk"] .search input:focus,
+:root[data-theme="cyberpunk"] .search input:focus-visible { outline:none; box-shadow:none; background:none; border:0; }
+:root[data-theme="cyberpunk"] .search input::placeholder { color:#7f72b5; opacity:1; }
+:root[data-theme="cyberpunk"] .seg { background:#09051a; border:1px solid #4a2380; border-radius:0; }
+:root[data-theme="cyberpunk"] .seg button { color:#9a8fd0; border-right-color:#3b1a63; }
+:root[data-theme="cyberpunk"] .seg button:hover { background:#1f1040; color:#fff; }
+:root[data-theme="cyberpunk"] .seg button.on { background:rgba(25,247,255,.16); color:#19f7ff; box-shadow:inset 0 -2px 0 #19f7ff; }
+:root[data-theme="cyberpunk"] .btn,
+:root[data-theme="cyberpunk"] .theme-toggle {
+  background:#0b0619; color:#19f7ff; border:1px solid rgba(25,247,255,.6); border-radius:0; box-shadow:inset 0 0 10px rgba(25,247,255,.08);
+  font-family:var(--cy-mono); font-weight:700; letter-spacing:.06em; text-transform:uppercase; transition:background .14s,box-shadow .14s,color .14s,border-color .14s,transform .14s;
+}
+:root[data-theme="cyberpunk"] .btn:hover,
+:root[data-theme="cyberpunk"] .theme-toggle:hover { background:rgba(25,247,255,.14); color:#fff; border-color:#19f7ff; box-shadow:0 0 16px rgba(25,247,255,.45); transform:none; }
+:root[data-theme="cyberpunk"] .btn:active { transform:translateY(1px); }
+:root[data-theme="cyberpunk"] .btn.primary { background:linear-gradient(135deg,#ff2bd6,#b61cff); color:#13031a; border-color:#ff7ae8; font-weight:900; box-shadow:0 0 16px rgba(255,43,214,.55); }
+:root[data-theme="cyberpunk"] .btn.primary:hover { background:linear-gradient(135deg,#19f7ff,#6c8bff); color:#07040f; border-color:#c4fdff; box-shadow:0 0 22px rgba(25,247,255,.7); }
+:root[data-theme="cyberpunk"] .btn.danger { color:#ff5476; border-color:rgba(255,84,118,.6); }
+:root[data-theme="cyberpunk"] .btn.danger:hover { background:rgba(255,84,118,.16); box-shadow:0 0 16px rgba(255,84,118,.4); }
+:root[data-theme="cyberpunk"] .icon-btn { color:#a99dd8; border-radius:0; }
+:root[data-theme="cyberpunk"] .icon-btn:hover { color:#19f7ff; background:rgba(25,247,255,.1); border-color:rgba(25,247,255,.5); }
+:root[data-theme="cyberpunk"] .theme-icon { background:#19f7ff; filter:drop-shadow(0 0 4px rgba(25,247,255,.7)); }
+:root[data-theme="cyberpunk"] .status { color:#b6ff3c; font:700 11px var(--cy-mono); letter-spacing:.14em; text-transform:uppercase; text-shadow:0 0 8px rgba(182,255,60,.45); }
+:root[data-theme="cyberpunk"] .status::before { content:"■ "; color:#ff2bd6; }
+:root[data-theme="cyberpunk"] .empty { color:#a99dd8; font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .empty-ico { color:#19f7ff; text-shadow:0 0 14px #19f7ff; }
+
+/* --- cards: HUD windows with corner brackets and neon hover --- */
+:root[data-theme="cyberpunk"] .card {
+  position:relative; background:linear-gradient(160deg,rgba(26,13,52,.94),rgba(11,6,24,.96)); border:1px solid #3b1a63; border-radius:0;
+  box-shadow:inset 0 0 26px rgba(138,43,255,.07),0 4px 18px rgba(0,0,0,.45); transition:transform .16s,border-color .16s,box-shadow .16s,background .16s;
+}
+:root[data-theme="cyberpunk"] .card::before,
+:root[data-theme="cyberpunk"] .card::after { content:""; position:absolute; width:14px; height:14px; z-index:4; pointer-events:none; }
+:root[data-theme="cyberpunk"] .card::before { left:0; top:0; border-top:2px solid #19f7ff; border-left:2px solid #19f7ff; }
+:root[data-theme="cyberpunk"] .card::after { right:0; bottom:0; border-right:2px solid #ff2bd6; border-bottom:2px solid #ff2bd6; }
+:root[data-theme="cyberpunk"] .card:hover {
+  background:linear-gradient(160deg,rgba(38,18,76,.96),rgba(16,8,34,.97)); border-color:#ff2bd6; transform:translateY(-3px);
+  box-shadow:0 0 0 1px rgba(255,43,214,.55),0 0 24px rgba(255,43,214,.38),0 0 44px rgba(25,247,255,.14),inset 0 0 26px rgba(255,43,214,.1);
+}
+:root[data-theme="cyberpunk"] .card:hover .title { animation:cyber-title-glitch .45s steps(1,end) 1; }
+@keyframes cyber-title-glitch {
+  0% { text-shadow:2px 0 #ff2bd6,-2px 0 #19f7ff; transform:translateX(1px); }
+  35% { text-shadow:-3px 0 #ff2bd6,3px 0 #19f7ff; transform:translateX(-2px); }
+  70% { text-shadow:2px 0 #b6ff3c,-2px 0 #ff2bd6; transform:translateX(1px); }
+  100% { text-shadow:0 0 8px rgba(25,247,255,.3); transform:none; }
+}
+:root[data-theme="cyberpunk"] .thumb {
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),
+    linear-gradient(rgba(25,247,255,.07) 1px,transparent 1px) 0 0/22px 22px,
+    linear-gradient(90deg,rgba(255,43,214,.09) 1px,transparent 1px) 0 0/22px 22px,
+    linear-gradient(180deg,#0c0620,#1c0b38);
+  border-bottom:1px solid #3b1a63;
+}
+:root[data-theme="cyberpunk"] .thumb::before { height:3px; background:linear-gradient(90deg,#ff2bd6,#8a2bff 50%,#19f7ff); border:0; box-shadow:0 0 10px rgba(255,43,214,.6); }
+:root[data-theme="cyberpunk"] .thumb.placeholder::after { border:1px solid rgba(25,247,255,.28); border-radius:0; inset:14px; }
+:root[data-theme="cyberpunk"] .thumb img.big { background:#0a0518; border:1px solid #19f7ff; border-radius:0; box-shadow:0 0 14px rgba(25,247,255,.5),inset 0 0 8px rgba(25,247,255,.2); }
+:root[data-theme="cyberpunk"] .thumb.placeholder img.big { box-shadow:0 0 14px rgba(25,247,255,.5),inset 0 0 8px rgba(25,247,255,.2); }
+:root[data-theme="cyberpunk"] .thumb.placeholder .letter { color:#19f7ff; background:#0a0518; border:1px solid #19f7ff; border-radius:0; text-shadow:2px 0 #ff2bd6,-1px 0 #b6ff3c; box-shadow:0 0 14px rgba(25,247,255,.45); font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .thumb img.shot { filter:saturate(1.25) contrast(1.08) hue-rotate(-8deg); }
+:root[data-theme="cyberpunk"] .thumb.has-shot::after {
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),linear-gradient(135deg,rgba(255,43,214,.22),rgba(25,247,255,.16)); mix-blend-mode:hard-light;
+}
+:root[data-theme="cyberpunk"] .pin { background:#0a0518; border:1px solid #ff2bd6; color:#ff7ae8; border-radius:0; }
+:root[data-theme="cyberpunk"] .pin.on { background:#ff2bd6; color:#13031a; box-shadow:0 0 12px rgba(255,43,214,.7); }
+:root[data-theme="cyberpunk"] .title { color:#fff; font-weight:700; letter-spacing:.02em; text-shadow:0 0 8px rgba(25,247,255,.25); }
+:root[data-theme="cyberpunk"] .title-row img.fav { background:#0a0518; border-color:#4a2380; border-radius:0; padding:1px; }
+:root[data-theme="cyberpunk"] .desc { color:#62dbe8; font-family:var(--cy-mono); font-size:11.5px; }
+:root[data-theme="cyberpunk"] .note-preview { color:#c4b9f0; border-left:2px solid #ff2bd6; }
+:root[data-theme="cyberpunk"] .card-foot { border-top:1px dashed #3b1a63; }
+:root[data-theme="cyberpunk"] .badge { color:#ff7ae8; background:rgba(255,43,214,.12); border:1px solid rgba(255,43,214,.5); border-radius:0; font:800 9px var(--cy-mono); letter-spacing:.12em; text-transform:uppercase; }
+:root[data-theme="cyberpunk"] .badge.bm { color:#b6ff3c; background:rgba(182,255,60,.09); border-color:rgba(182,255,60,.5); }
+:root[data-theme="cyberpunk"] .tag { color:#19f7ff; background:rgba(25,247,255,.07); border:1px solid rgba(25,247,255,.38); border-radius:0; font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .note-btn { color:#a99dd8; border-radius:0; }
+:root[data-theme="cyberpunk"] .note-btn:hover,
+:root[data-theme="cyberpunk"] .note-btn.has { color:#19f7ff; background:rgba(25,247,255,.1); border-color:rgba(25,247,255,.5); }
+
+/* --- detail drawer, forms and dialogs --- */
+:root[data-theme="cyberpunk"] .panel { background:rgba(10,5,22,.96); border-left:1px solid #ff2bd6; box-shadow:-10px 0 34px rgba(255,43,214,.16); }
+:root[data-theme="cyberpunk"] .panel-close { background:#0a0518; border:1px solid #ff2bd6; color:#ff7ae8; border-radius:0; }
+:root[data-theme="cyberpunk"] .panel-head .t { color:#fff; text-shadow:1px 0 #ff2bd6,-1px 0 #19f7ff; }
+:root[data-theme="cyberpunk"] .panel-head .u { color:#62dbe8; font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .panel-head img { background:#0a0518; border-radius:0; border-color:#4a2380; }
+:root[data-theme="cyberpunk"] .field-label { color:#19f7ff; font-family:var(--cy-mono); letter-spacing:.06em; }
+:root[data-theme="cyberpunk"] textarea,
+:root[data-theme="cyberpunk"] input[type=text],
+:root[data-theme="cyberpunk"] input[type=url],
+:root[data-theme="cyberpunk"] select { background:#09051a; color:#f2efff; border:1px solid #4a2380; border-radius:0; font-family:var(--cy-mono); font-size:13px; }
+:root[data-theme="cyberpunk"] textarea:focus,
+:root[data-theme="cyberpunk"] input:focus,
+:root[data-theme="cyberpunk"] select:focus { border-color:#19f7ff; box-shadow:0 0 0 1px #19f7ff,0 0 16px rgba(25,247,255,.3); }
+:root[data-theme="cyberpunk"] input::placeholder,
+:root[data-theme="cyberpunk"] textarea::placeholder { color:#7f72b5; opacity:1; }
+:root[data-theme="cyberpunk"] .chip { background:rgba(25,247,255,.07); border:1px solid rgba(25,247,255,.4); color:#19f7ff; border-radius:0; font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .chip button { color:#a99dd8; }
+:root[data-theme="cyberpunk"] dialog {
+  background:#0d0819; color:var(--text); border:1px solid #ff2bd6; border-top:3px solid #19f7ff; border-radius:0;
+  box-shadow:0 0 34px rgba(255,43,214,.35),0 0 80px rgba(25,247,255,.1);
+}
+:root[data-theme="cyberpunk"] dialog::backdrop { background:rgba(3,0,10,.78); -webkit-backdrop-filter:none; backdrop-filter:none; }
+:root[data-theme="cyberpunk"] .dlg-head { border-bottom:1px dashed #3b1a63; }
+:root[data-theme="cyberpunk"] .dlg-head h3 { text-transform:uppercase; letter-spacing:.1em; text-shadow:1px 0 #ff2bd6,-1px 0 #19f7ff; }
+:root[data-theme="cyberpunk"] .dlg label { color:#a99dd8; font-family:var(--cy-mono); }
+:root[data-theme="cyberpunk"] .dlg label.check { color:var(--text); font-family:var(--cy-ui); }
+:root[data-theme="cyberpunk"] .settings-links a { color:#19f7ff; }
+:root[data-theme="cyberpunk"] .settings-links a:hover { color:#fff; text-shadow:0 0 8px #19f7ff; }
+:root[data-theme="cyberpunk"] :is(button,input,textarea,select,a,[tabindex]):focus-visible { outline:2px solid #19f7ff; outline-offset:2px; }
+:root[data-theme="cyberpunk"] dialog.theme-picker-dialog { box-shadow:0 0 34px rgba(255,43,214,.35),0 0 80px rgba(25,247,255,.1) !important; border-color:#ff2bd6 !important; }
+:root[data-theme="cyberpunk"] dialog.theme-picker-dialog .theme-picker-card.selected { box-shadow:0 0 0 1px #ff2bd6,0 0 18px rgba(255,43,214,.45) !important; }
+
+/* --- holo-billboard (in the header) + vertical kanji neon (decorative, click-through) --- */
+.cyber-billboard { display:none; }
+:root[data-theme="cyberpunk"] .cyber-billboard {
+  position:relative; display:flex; align-items:center; gap:10px; height:54px; padding:0 14px 0 10px; overflow:hidden; color:#19f7ff; pointer-events:none;
+  background:linear-gradient(100deg,rgba(25,247,255,.2),rgba(255,43,214,.24)); border:1px solid rgba(25,247,255,.75);
+  box-shadow:0 0 18px rgba(25,247,255,.45),inset 0 0 18px rgba(255,43,214,.28);
+  animation:cyber-flicker 7s infinite,cyber-bb-glitch 17s infinite steps(1,end);
+  --cy-art:url("assets/cyberpunk-eyes.webp");
+}
+.cyber-billboard-anchor { display:none; flex:0 0 auto; pointer-events:none; }
+:root[data-theme="cyberpunk"] .cyber-billboard-anchor { display:block; }
+:root[data-theme="cyberpunk"] .cyber-billboard.cyber-billboard-docked {
+  position:fixed; right:clamp(10px,2.5vw,22px); bottom:clamp(10px,2.5vh,20px); z-index:1000; width:max-content; max-width:min(340px,calc(100vw - 20px));
+  height:54px; padding:0 14px 0 10px; transform-origin:bottom right;
+  animation:cyber-flicker 7s infinite,cyber-bb-glitch 17s infinite steps(1,end);
+  pointer-events:none;
+}
+/* Run the spatial glitch alone so the ambient loop cannot override its transform/clip-path. */
+:root[data-theme="cyberpunk"] .cyber-billboard.cyber-billboard-docking {
+  animation:cyber-bb-dock-glitch .58s steps(1,end) !important;
+}
+:root[data-theme="cyberpunk"] .cyber-billboard.cyber-billboard-returning {
+  animation:cyber-bb-return-glitch .42s steps(1,end) !important;
+}
+@keyframes cyber-bb-dock-glitch {
+  0% { opacity:1; transform:translate(0,0) skewX(0); clip-path:inset(0); }
+  12% { opacity:.15; transform:translate(-12px,3px) skewX(12deg); clip-path:inset(0 0 68% 0); }
+  22% { opacity:1; transform:translate(8px,-2px) skewX(-8deg); clip-path:inset(35% 0 30% 0); }
+  34% { opacity:.35; transform:translate(-5px,0); clip-path:inset(68% 0 0 0); }
+  46% { opacity:1; transform:translate(3px,0); clip-path:inset(0 0 48% 0); }
+  60% { opacity:.55; transform:translate(-2px,-2px) skewX(4deg); clip-path:inset(22% 0 20% 0); }
+  76%,100% { opacity:1; transform:none; clip-path:inset(0); }
+}
+@keyframes cyber-bb-return-glitch {
+  0% { opacity:1; transform:translate(0,0); clip-path:inset(0); }
+  15% { opacity:.2; transform:translate(8px,-2px) skewX(-10deg); clip-path:inset(0 0 60% 0); }
+  30% { opacity:1; transform:translate(-6px,1px); clip-path:inset(40% 0 20% 0); }
+  44% { opacity:.35; transform:translate(4px,0) skewX(6deg); clip-path:inset(65% 0 0 0); }
+  60% { opacity:1; transform:translate(-2px,-1px); clip-path:inset(10% 0 50% 0); }
+  76%,100% { opacity:1; transform:none; clip-path:inset(0); }
+}
+:root[data-theme="cyberpunk"] .cyber-billboard::before { content:""; position:absolute; inset:0; z-index:3; background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px); }
+:root[data-theme="cyberpunk"] .cyber-billboard::after { content:""; position:absolute; left:0; right:0; top:0; z-index:4; height:6px; background:linear-gradient(180deg,transparent,rgba(255,255,255,.5),transparent); animation:cyber-sweep 3.4s linear infinite; }
+@keyframes cyber-sweep { from { transform:translateY(-8px); } to { transform:translateY(60px); } }
+:root[data-theme="cyberpunk"] .cyber-eye { position:relative; flex:0 0 40px; width:40px; height:auto; filter:drop-shadow(0 0 5px currentColor); }
+:root[data-theme="cyberpunk"] .cyber-billboard-kanji { position:relative; display:block; font:900 15px/1.15 var(--cy-jp); letter-spacing:.16em; color:#fff; text-shadow:1.5px 0 #ff2bd6,-1.5px 0 #19f7ff; white-space:nowrap; }
+:root[data-theme="cyberpunk"] .cyber-billboard-text { position:relative; display:block; font:700 8px/1.3 var(--cy-mono); letter-spacing:.16em; color:#b6ff3c; text-shadow:0 0 6px rgba(182,255,60,.7); white-space:nowrap; }
+/* Billboard ad cycle (17s = exactly 5 scanline sweeps):
+   3 sweeps of NEO·LINK -> glitch out -> the eyes ad (~4.6s, same scanlines/sweep/tint/glow on top) -> glitch back. */
+:root[data-theme="cyberpunk"] .cyber-billboard-live { position:relative; z-index:1; display:flex; align-items:center; gap:10px; animation:cyber-bb-live 17s infinite steps(1,end); }
+:root[data-theme="cyberpunk"] .cyber-billboard-art {
+  position:absolute; inset:0; z-index:2; opacity:0; overflow:hidden;
+  background:linear-gradient(100deg,rgba(25,247,255,.30),rgba(255,43,214,.34)),var(--cy-art) center 40%/cover no-repeat;
+  filter:saturate(1.3) contrast(1.12);
+  animation:cyber-bb-art 17s infinite steps(1,end);
+}
+/* RGB-split ghosts so the picture gets the same chromatic glitch as the type */
+:root[data-theme="cyberpunk"] .cyber-billboard-art::before,
+:root[data-theme="cyberpunk"] .cyber-billboard-art::after { content:""; position:absolute; inset:0; mix-blend-mode:screen; opacity:.55; animation:cyber-bb-split 1.1s infinite steps(1,end); }
+:root[data-theme="cyberpunk"] .cyber-billboard-art::before { background:linear-gradient(#ff2bd6,#ff2bd6),var(--cy-art) center 40%/cover no-repeat; background-blend-mode:multiply; transform:translateX(-2px); }
+:root[data-theme="cyberpunk"] .cyber-billboard-art::after { background:linear-gradient(#19f7ff,#19f7ff),var(--cy-art) center 40%/cover no-repeat; background-blend-mode:multiply; transform:translateX(2px); }
+@keyframes cyber-bb-split { 0%,100% { margin-left:0; } 30% { margin-left:1px; } 33% { margin-left:-1px; } 70% { margin-left:2px; } 73% { margin-left:0; } }
+@keyframes cyber-bb-live {
+  0% { opacity:1; } 60.6% { opacity:0; } 61.2% { opacity:1; } 61.8% { opacity:0; } 62.4% { opacity:.8; } 63% { opacity:0; }
+  90% { opacity:0; } 90.6% { opacity:.8; } 91.2% { opacity:0; } 91.8% { opacity:1; } 92.4% { opacity:.3; } 93% { opacity:1; } 100% { opacity:1; }
+}
+@keyframes cyber-bb-art {
+  0% { opacity:0; } 60.6% { opacity:1; } 61.2% { opacity:0; } 61.8% { opacity:1; } 62.4% { opacity:.25; } 63% { opacity:1; }
+  90% { opacity:1; } 90.6% { opacity:.2; } 91.2% { opacity:1; } 91.8% { opacity:0; } 92.4% { opacity:.6; } 93% { opacity:0; } 100% { opacity:0; }
+}
+/* whole-sign jitter: horizontal tearing + hue shifts at both transitions, a tiny hiccup mid-ad */
+@keyframes cyber-bb-glitch {
+  0%,59.9% { transform:none; filter:none; clip-path:none; }
+  60% { transform:translateX(-3px) skewX(8deg); filter:hue-rotate(60deg) saturate(2); clip-path:none; }
+  60.6% { transform:translateX(4px); filter:none; clip-path:inset(10% 0 55% 0); }
+  61.2% { transform:translate(-2px,1px); filter:hue-rotate(-50deg); clip-path:inset(55% 0 8% 0); }
+  61.8% { transform:translateX(3px) skewX(-10deg); filter:none; clip-path:none; }
+  62.4% { transform:translateX(-4px); filter:saturate(2.4); clip-path:inset(30% 0 30% 0); }
+  63%,75.9% { transform:none; filter:none; clip-path:none; }
+  76% { transform:translateX(2px); filter:hue-rotate(40deg); clip-path:inset(0 0 60% 0); }
+  76.5%,89.9% { transform:none; filter:none; clip-path:none; }
+  90% { transform:translateX(3px) skewX(-8deg); filter:hue-rotate(-60deg) saturate(2); clip-path:none; }
+  90.6% { transform:translateX(-4px); filter:none; clip-path:inset(45% 0 10% 0); }
+  91.2% { transform:translate(2px,-1px); filter:hue-rotate(50deg); clip-path:inset(5% 0 60% 0); }
+  91.8% { transform:translateX(-3px) skewX(10deg); filter:none; clip-path:none; }
+  92.4% { transform:translateX(4px); filter:saturate(2.4); clip-path:inset(25% 0 35% 0); }
+  93%,100% { transform:none; filter:none; clip-path:none; }
+}
+.cyber-deco { display:none; pointer-events:none; position:fixed; z-index:5; }
+:root[data-theme="cyberpunk"] .cyber-vsign {
+  display:block; right:0; top:34vh; padding:12px 7px; background:rgba(7,3,15,.7); border-left:2px solid #ff2bd6; border-top:1px solid rgba(255,43,214,.5); border-bottom:1px solid rgba(255,43,214,.5);
+  box-shadow:-6px 0 22px rgba(255,43,214,.4); writing-mode:vertical-rl; text-orientation:upright;
+}
+:root[data-theme="cyberpunk"] .cyber-vsign span { font:900 17px/1.15 var(--cy-jp); letter-spacing:.14em; color:#ff7ae8; text-shadow:0 0 6px #ff2bd6,0 0 18px #ff2bd6; animation:cyber-neon-buzz 5s infinite; }
+@keyframes cyber-neon-buzz { 0%,40%,44%,100% { opacity:1; } 42% { opacity:.35; } 45% { opacity:.8; } 78% { opacity:.6; } 79% { opacity:1; } }
+/* the drawer slides over the right edge, so the vertical sign steps aside */
+:root[data-theme="cyberpunk"] .app:has(.panel:not([hidden])) ~ .cyber-vsign { display:none; }
+/* Billboard remains available at every viewport width; the dock scales to fit. */
+@media (max-width:900px) { :root[data-theme="cyberpunk"] .cyber-vsign { display:none; } }
+
+/* --- onboarding / picker mini-preview (stays accurate under any active theme) --- */
+.preview-cyberpunk { position:relative; overflow:hidden; background:linear-gradient(180deg,#07040f,#1b0a35 80%,#3c0f4e)!important; border:1px solid #ff2bd6!important; box-shadow:inset 0 0 0 1px #19f7ff,0 0 10px rgba(255,43,214,.35); }
+.preview-cyberpunk .preview-titlebar { display:block; position:absolute; left:0; right:0; top:0; padding:2px 5px; color:#07040f; background:linear-gradient(90deg,#ff2bd6,#19f7ff); font:800 5px/1.4 "Noto Sans JP","Yu Gothic",monospace; letter-spacing:.14em; text-align:left; }
+.preview-cyberpunk .preview-sidebar { top:13px!important; background:#130a26!important; border:0!important; border-right:1px solid #19f7ff!important; }
+.preview-cyberpunk .preview-line { background:#ff2bd6!important; height:2px!important; box-shadow:0 0 5px #ff2bd6; }
+.preview-cyberpunk .preview-line.short { background:#19f7ff!important; box-shadow:0 0 5px #19f7ff; }
+.preview-cyberpunk .preview-tile { background:#170c30!important; border:1px solid #8a2bff!important; border-radius:0!important; box-shadow:1px 1px 0 #ff2bd6!important; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="cyberpunk"] body::before { animation:none; }
+  :root[data-theme="cyberpunk"] .logo-cyberpunk,
+  :root[data-theme="cyberpunk"] .page-heading h1,
+  :root[data-theme="cyberpunk"] .heading-mark,
+  :root[data-theme="cyberpunk"] .cyber-billboard,
+  :root[data-theme="cyberpunk"] .cyber-billboard-docked,
+  :root[data-theme="cyberpunk"] .cyber-billboard-docking,
+  :root[data-theme="cyberpunk"] .cyber-billboard-returning,
+  :root[data-theme="cyberpunk"] .cyber-billboard::after,
+  :root[data-theme="cyberpunk"] .cyber-billboard-live,
+  :root[data-theme="cyberpunk"] .cyber-billboard-art,
+  :root[data-theme="cyberpunk"] .cyber-billboard-art::before,
+  :root[data-theme="cyberpunk"] .cyber-billboard-art::after,
+  :root[data-theme="cyberpunk"] .cyber-vsign span,
+  :root[data-theme="cyberpunk"] .card:hover .title { animation:none !important; }
+}
+
+/* Keep the anchor measurable at narrow widths so scroll docking works consistently. */

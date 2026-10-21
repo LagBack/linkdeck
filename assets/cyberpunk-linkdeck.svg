@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52">
+  <defs>
+    <filter id="g" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- chamfered plate -->
+  <path d="M9 3h34l6 6v34l-6 6H9l-6-6V9z" fill="#0b0617"/>
+  <!-- glitch-offset ghost frame in pink -->
+  <path d="M10.5 4.5h34l6 6v34l-6 6h-34l-6-6v-34z" fill="none" stroke="#ff2bd6" stroke-width="1.2" opacity=".85"/>
+  <!-- main frame in cyan -->
+  <path d="M9 3h34l6 6v34l-6 6H9l-6-6V9z" fill="none" stroke="#19f7ff" stroke-width="1.6" filter="url(#g)"/>
+  <!-- neon bookmark glyph: a saved-link mark instead of interlocked rings -->
+  <defs>
+    <linearGradient id="bookmarkNeon" x1="15" y1="14" x2="37" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff2bd6"/>
+      <stop offset="0.52" stop-color="#a83cff"/>
+      <stop offset="1" stop-color="#19f7ff"/>
+    </linearGradient>
+  </defs>
+  <path d="M18 13.5H34V39L26 33.2L18 39Z" fill="#ff2bd6" opacity=".13"/>
+  <path d="M18 13.5H34V39L26 33.2L18 39Z" fill="none" stroke="url(#bookmarkNeon)" stroke-width="2.8" stroke-linejoin="round" filter="url(#g)"/>
+  <path d="M21.5 17H30.5V32.2L26 29L21.5 32.2Z" fill="#19f7ff" opacity=".12"/>
+</svg>
