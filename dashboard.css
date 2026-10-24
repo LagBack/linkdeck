@@ -3766,3 +3766,34 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg {
 }
 
 /* Keep the anchor measurable at narrow widths so scroll docking works consistently. */
+
+/* Keep long category names from pushing their bookmark-count badges outside the sidebar. */
+.nav-item .label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-item .count {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Scenecore: cyan plus glyph to match the wrench; preserve the shared icon-button frame. */
+:root[data-theme="scenecore"] .category-head-actions #addCatBtn {
+  color: #19f7ff;
+}
+
+/* Scenecore: force both glyphs white over the cyan hover/focus fill. */
+:root[data-theme="scenecore"] .category-head-actions #addCatBtn:hover,
+:root[data-theme="scenecore"] .category-head-actions #addCatBtn:focus-visible {
+  color: #fff !important;
+}
+:root[data-theme="scenecore"] .category-head-actions #manageCatsBtn:hover,
+:root[data-theme="scenecore"] .category-head-actions #manageCatsBtn:focus-visible {
+  color: #fff !important;
+}
+:root[data-theme="scenecore"] .category-head-actions #manageCatsBtn:hover .manage-cats-wrench,
+:root[data-theme="scenecore"] .category-head-actions #manageCatsBtn:focus-visible .manage-cats-wrench {
+  stroke: #fff !important;
+}
