@@ -8,8 +8,8 @@ function initThemeToggle() {
   const pickerGrid = document.getElementById("themePickerGrid");
   const closeButton = document.getElementById("themePickerClose");
   if (!toggle || !menu || !pickerGrid) return;
-  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal", "industrial", "beach", "minimalism", "cyberpunk", "retrowave"]);
-  const themeNames = {light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"terminal",industrial:"INDUSTRIAL",beach:"Beach",minimalism:"minimalism",cyberpunk:"Cyberpunk",retrowave:"RETROWAVE"};
+  const validThemes = new Set(["light", "xp", "scenecore", "gxsc", "pixel", "cutecore", "webcore", "terminal", "industrial", "beach", "minimalism", "cyberpunk", "retrowave", "cafe"]);
+  const themeNames = {light:"LinkDeck Original",xp:"Windows 98 / XP",scenecore:"Scenecore",gxsc:"GXSC",pixel:"Pixel Night",cutecore:"Cutecore",webcore:"Old Web",terminal:"terminal",industrial:"INDUSTRIAL",beach:"Beach",minimalism:"minimalism",cyberpunk:"Cyberpunk",retrowave:"RETROWAVE",cafe:"Cafe"};
   try {
     const saved = localStorage.getItem("linkdeck-theme");
     if (validThemes.has(saved) && saved !== "light") root.dataset.theme = saved;
