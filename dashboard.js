@@ -145,6 +145,7 @@ const state = {
   cats: [...DEFAULT_CATS],
   settings: { previews: false, localShots: false, showExtensions: true, view: "grid" },
   shots: new Map(),    // normalized url -> object URL of the saved preview
+  customThumbs: new Map(), // bookmark key -> object URL for user-selected image
   type: "all",         // all | bookmark | extension
   cat: null,
   q: "",
@@ -220,11 +221,18 @@ async function loadShots() {
   try {
     for (const [key, val] of await Shots.entries()) state.shots.set(key, URL.createObjectURL(val.blob));
   } catch { /* previews are optional */ }
+  for (const u of state.customThumbs.values()) URL.revokeObjectURL(u);
+  state.customThumbs.clear();
+  try {
+    for (const [key, val] of await Shots.customEntries()) state.customThumbs.set(key, URL.createObjectURL(val.blob));
+  } catch { /* custom thumbnails are optional */ }
 }
 
 // Real screenshot if available; otherwise use a quiet, theme-aware fallback tile.
 function shotUrl(it) {
   if (it.type !== "bookmark") return null;
+  const custom = state.customThumbs.get(it.key);
+  if (custom) return { src: custom, remote: false, custom: true };
   const local = state.shots.get(Shots.norm(it.url));
   if (local) return { src: local, remote: false };
   if (state.settings.previews && it.url.startsWith("http"))
@@ -237,9 +245,23 @@ function thumbHtml(it) {
   const s = shotUrl(it);
   const fallback = icon ? `<img class="big" src="${esc(icon)}" alt="">`
     : `<span class="letter">${esc(it.title[0]?.toUpperCase() || "?")}</span>`;
-  const shot = s ? `<img class="shot" ${s.remote ? 'loading="lazy"' : ""} src="${esc(s.src)}" alt="" onerror="this.remove();this.parentElement.classList.remove('has-shot');this.parentElement.classList.add('placeholder')">` : "";
+  // Image failures are handled by a delegated listener below; inline onerror attributes
+  // are blocked by Chrome extension Content Security Policy.
+  const shot = s ? `<img class="shot" ${s.remote ? 'loading="lazy"' : ""} src="${esc(s.src)}" alt="">` : "";
   return `<div class="thumb${s ? " has-shot" : " placeholder"}">${fallback}${shot}</div>`;
 }
+
+// Capture image load failures without inline HTML event handlers (MV3 CSP-safe).
+document.addEventListener("error", (event) => {
+  const image = event.target;
+  if (!(image instanceof HTMLImageElement) || !image.classList.contains("shot")) return;
+  const thumb = image.closest(".thumb");
+  image.remove();
+  if (thumb) {
+    thumb.classList.remove("has-shot");
+    thumb.classList.add("placeholder");
+  }
+}, true);
 
 function render() {
   const items = visible();
@@ -315,6 +337,16 @@ function openPanel(key) {
       ${thumbHtml(it)}
     </div>
     <div class="panel-body">
+      ${it.type === "bookmark" ? `<div class="custom-thumb-controls">
+        <div class="field-label"><span>Custom thumbnail</span><small>Use an image from your computer</small></div>
+        <div class="custom-thumb-actions">
+          <button class="btn" type="button" data-act="upload-thumb">Choose image</button>
+          ${state.customThumbs.has(it.key) ? `<button class="btn danger" type="button" data-act="remove-thumb">Remove image</button>` : ""}
+        </div>
+        <input id="customThumbInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        <div class="hint">PNG, JPG, WebP or GIF · up to 10 MB. Custom images take priority over generated previews.</div>
+      </div>` : ""}
+
       <div class="panel-head"><div><div class="t">${esc(dn)}</div><div class="u">${esc(it.url || it.desc)}</div></div></div>
       <div class="panel-actions">
         <button class="btn primary" data-act="open">${it.type === "extension" ? "Settings" : "Open"}</button>
@@ -491,6 +523,14 @@ document.addEventListener("click", async (e) => {
   if (e.target.closest("#panel")) {
     const it = state.items.find((i) => i.key === state.selected);
     if (act === "close") closePanel();
+    if (act === "upload-thumb") { $("#customThumbInput")?.click(); }
+    if (act === "remove-thumb") {
+      await Shots.deleteCustom(it.key);
+      const oldUrl = state.customThumbs.get(it.key);
+      if (oldUrl) URL.revokeObjectURL(oldUrl);
+      state.customThumbs.delete(it.key);
+      render(); openPanel(it.key);
+    }
     if (act === "open") it.type === "extension" ? openExtension(it) : chrome.tabs.create({ url: it.url });
     if (act === "toggle") { await chrome.management.setEnabled(it.id, !it.enabled); await refresh(); openPanel(it.key); }
     if (act === "delete" && confirm(`Delete "${it.title}" from your Chrome bookmarks?`)) {
@@ -525,7 +565,36 @@ document.addEventListener("input", (e) => {
     }
   }
 });
-document.addEventListener("change", (e) => {
+document.addEventListener("change", async (e) => {
+  if (e.target.id === "customThumbInput") {
+    const file = e.target.files?.[0];
+    const it = state.items.find((item) => item.key === state.selected);
+    if (!file || !it || it.type !== "bookmark") return;
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) { alert("Please choose a PNG, JPG, WebP or GIF image."); e.target.value = ""; return; }
+    if (file.size > 10 * 1024 * 1024) { alert("Please choose an image smaller than 10 MB."); e.target.value = ""; return; }
+    try {
+      let blob = file;
+      if (file.type !== "image/gif") {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        bitmap.close();
+        blob = await new Promise((resolve, reject) => canvas.toBlob((result) => result ? resolve(result) : reject(new Error("Image processing failed")), "image/webp", 0.86));
+      }
+      await Shots.putCustom(it.key, blob);
+      const previous = state.customThumbs.get(it.key);
+      if (previous) URL.revokeObjectURL(previous);
+      state.customThumbs.set(it.key, URL.createObjectURL(blob));
+      render(); openPanel(it.key);
+    } catch (error) {
+      console.error("Could not save custom thumbnail:", error);
+      alert("LinkDeck couldn't save that image. Please try another file.");
+    }
+    e.target.value = "";
+  }
   if (e.target.id === "catSelect") { getMeta(state.selected).category = e.target.value; persist(); render(); }
 });
 document.addEventListener("keydown", (e) => {

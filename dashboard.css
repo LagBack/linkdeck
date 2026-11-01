@@ -4071,3 +4071,9 @@ dialog.theme-picker-dialog .theme-picker-heading-icon svg {
   :root[data-theme="cafe"] .sidebar, :root[data-theme="cafe"] .panel,
   :root[data-theme="cafe"] .card { border:1px solid CanvasText; }
 }
+
+/* User-provided bookmark thumbnails */
+.custom-thumb-controls { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--line-soft); border-radius: 4px; background: var(--bg2); }
+.custom-thumb-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.custom-thumb-actions .btn { flex: 1; }
+.custom-thumb-controls .hint { line-height: 1.45; }
