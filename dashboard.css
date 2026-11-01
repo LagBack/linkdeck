@@ -249,6 +249,27 @@ hr { border-color: var(--line-soft) !important; }
 .settings-links a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .settings-links a:hover { color: var(--text); }
 
+/* One-time release notes shown after an extension update. */
+.whats-new-dialog { width: min(510px, 94vw); }
+.dlg.whats-new { gap: 15px; padding: 22px; }
+.whats-new .dlg-head { align-items: flex-start; }
+.whats-new-kicker { display: block; margin-bottom: 5px; color: var(--green); font-size: 9px; font-weight: 900; letter-spacing: 1.5px; }
+.whats-new .dlg-head h3 { font-size: 21px; }
+.whats-new-intro { margin: 0; color: var(--muted); font-size: 13px; }
+.whats-new-list { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+.whats-new-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.whats-new-mark { display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid var(--line); border-radius: 6px; color: var(--green); font-size: 15px; }
+.whats-new-theme-icon::before { content: ""; width: 18px; height: 18px; display: block; background: var(--green); -webkit-mask: url("assets/paintbrush-mask.png") center / contain no-repeat; mask: url("assets/paintbrush-mask.png") center / contain no-repeat; }
+.whats-new-list strong { display: block; color: var(--text); font-size: 13px; }
+.whats-new-list small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.whats-new-footer { padding-top: 13px; border-top: 1px solid var(--line-soft); }
+.whats-new-footer p { margin: 0 0 7px; color: var(--text); font-size: 12px; font-weight: 700; }
+.whats-new-contact { display: flex; flex-wrap: wrap; gap: 5px 12px; color: var(--muted); font-size: 12px; }
+.whats-new-contact a { color: var(--green); text-underline-offset: 3px; }
+.whats-new-contact strong { color: var(--text); }
+.whats-new-actions { display: flex; justify-content: flex-end; padding-top: 2px; }
+
+
 /* Theme picker: a compact palette menu, not a one-click light/dark switch. */
 .theme-picker-wrap { position: relative; }
 .theme-menu { position: absolute; z-index: 30; top: calc(100% + 9px); right: 0; width: 258px; padding: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 12px 28px rgba(28,25,18,.2); }

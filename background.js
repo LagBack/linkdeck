@@ -6,6 +6,13 @@ const hasHostAccess = () => chrome.permissions.contains({ origins: ["<all_urls>"
 const batchTabs = new Set(); // tabs opened by "Generate previews" (skip the on-visit capture for them)
 let cancelBatch = false;
 
+// Remember that an existing user has a new release note to see on their next dashboard visit.
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === "update") {
+    chrome.storage.local.set({ linkdeckWhatsNewPending: chrome.runtime.getManifest().version });
+  }
+});
+
 // Toolbar icon opens (or focuses) the dashboard.
 chrome.action.onClicked.addListener(async () => {
   const url = chrome.runtime.getURL("dashboard.html");

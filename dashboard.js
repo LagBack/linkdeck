@@ -1095,6 +1095,17 @@ async function refresh() { await loadItems(); render(); if (state.selected) open
     $("#firstRunDialog").showModal();
   }
 
+  // Display release notes once per update, on the user's next dashboard visit.
+  const whatsNew = await chrome.storage.local.get("linkdeckWhatsNewPending");
+  const whatsNewDialog = $("#whatsNewDialog");
+  if (whatsNew.linkdeckWhatsNewPending && whatsNewDialog && !whatsNewDialog.open) {
+    const closeWhatsNew = () => { if (whatsNewDialog.open) whatsNewDialog.close(); };
+    whatsNewDialog.querySelectorAll("[data-whats-new-close]").forEach((button) => button.addEventListener("click", closeWhatsNew));
+    whatsNewDialog.addEventListener("click", (event) => { if (event.target === whatsNewDialog) closeWhatsNew(); });
+    whatsNewDialog.showModal();
+    await chrome.storage.local.remove("linkdeckWhatsNewPending");
+  }
+
   for (const ev of ["onCreated", "onRemoved", "onChanged", "onMoved"]) chrome.bookmarks[ev].addListener(() => refresh());
   chrome.management.onInstalled.addListener(refresh);
   chrome.management.onUninstalled.addListener(refresh);
